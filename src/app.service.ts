@@ -3,6 +3,8 @@ import Anthropic from '@anthropic-ai/sdk';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 import { ChatGroq } from '@langchain/groq';
 import Groq from 'groq-sdk';
+// import nlp from 'compromise';
+var nlp = require('compromise');
 
 @Injectable()
 export class AppService {
@@ -22,6 +24,21 @@ export class AppService {
     // });
 
     this.groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+  }
+
+  async a() {
+    let doc = nlp('she sells seashells by the seashore. price seashells is 100 dollars');
+    doc.verbs().toPastTense();
+    doc.text();
+
+    // var t = nlp('dinosaur').nouns().toPlural();
+    // console.log(t.text());
+
+    if (doc.has('price')) {
+      return { a: doc.text(), b: true };
+    }
+
+    return { a: doc.text(), b: false };
   }
 
   async getHello() {

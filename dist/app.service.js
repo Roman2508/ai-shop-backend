@@ -13,12 +13,22 @@ exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
 const sdk_1 = require("@anthropic-ai/sdk");
 const groq_sdk_1 = require("groq-sdk");
+var nlp = require('compromise');
 let AppService = class AppService {
     constructor() {
         this.anthropic = new sdk_1.default({
             apiKey: process.env.ANTHROPIC_API_KEY,
         });
         this.groq = new groq_sdk_1.default({ apiKey: process.env.GROQ_API_KEY });
+    }
+    async a() {
+        let doc = nlp('she sells seashells by the seashore. price seashells is 100 dollars');
+        doc.verbs().toPastTense();
+        doc.text();
+        if (doc.has('price')) {
+            return { a: doc.text(), b: true };
+        }
+        return { a: doc.text(), b: false };
     }
     async getHello() {
         return this.groq.chat.completions.create({
