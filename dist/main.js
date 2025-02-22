@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@nestjs/core");
-const app_module_1 = require("./app.module");
+const core_module_1 = require("./core/core.module");
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const app = await core_1.NestFactory.create(core_module_1.CoreModule);
     await app.listen(7777);
 }
 bootstrap();
