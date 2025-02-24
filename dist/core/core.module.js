@@ -15,6 +15,8 @@ const is_dev_util_1 = require("../shared/util/is-dev.util");
 const apollo_1 = require("@nestjs/apollo");
 const graphql_2 = require("./config/graphql");
 const langchain_module_1 = require("../langchain/langchain.module");
+const redis_module_1 = require("./redis/redis.module");
+const account_module_1 = require("../modules/auth/account/account.module");
 let CoreModule = class CoreModule {
 };
 exports.CoreModule = CoreModule;
@@ -33,6 +35,8 @@ exports.CoreModule = CoreModule = __decorate([
             }),
             langchain_module_1.LangchainModule,
             prisma_module_1.PrismaModule,
+            redis_module_1.RedisModule,
+            account_module_1.AccountModule,
         ],
     })
 ], CoreModule);

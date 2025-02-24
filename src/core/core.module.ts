@@ -9,6 +9,7 @@ import { ApolloDriver } from '@nestjs/apollo';
 import { getGraphglConfig } from './config/graphql';
 import { LangchainModule } from 'src/langchain/langchain.module';
 import { RedisModule } from './redis/redis.module';
+import { AccountModule } from 'src/modules/auth/account/account.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { RedisModule } from './redis/redis.module';
     LangchainModule,
     PrismaModule,
     RedisModule,
+    AccountModule,
   ],
 })
 export class CoreModule {}
