@@ -12,12 +12,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccountResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const account_service_1 = require("./account.service");
+const user_model_1 = require("./models/user.model");
 let AccountResolver = class AccountResolver {
     constructor(accountService) {
         this.accountService = accountService;
     }
+    async findAll() {
+        return this.accountService.findAll();
+    }
 };
 exports.AccountResolver = AccountResolver;
+__decorate([
+    (0, graphql_1.Query)(() => [user_model_1.UserModel], { name: 'findAllUsers' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AccountResolver.prototype, "findAll", null);
 exports.AccountResolver = AccountResolver = __decorate([
     (0, graphql_1.Resolver)('Account'),
     __metadata("design:paramtypes", [account_service_1.AccountService])
