@@ -34,3 +34,30 @@ model User {
 
   @@map("users")
  */
+
+
+model Product {
+  id String @id @default(uuid())
+
+  title String
+  price Int
+  ram Int
+  builtInMemory Int @map("built_in_memory")
+  color String
+  frontCamera Int @map("front_camera")
+  mainCamera Int @map("main_camera")
+  screen_diagonal Int @map("screen_diagonal")
+  simCount Int @map("sim_count")
+  simFormat String[] @map("sim_format")
+  os String
+  processorName String @map("processor_name")
+  processorCores String @map("processor_cores")
+  battery Int
+  materials String
+  deliverySet String @map("delivery_set")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("products")
+}

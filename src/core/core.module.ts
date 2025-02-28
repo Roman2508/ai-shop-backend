@@ -1,16 +1,18 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { NlpModule } from '../modules/nlp/nlp.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
+import { RedisModule } from './redis/redis.module';
+import { getGraphglConfig } from './config/graphql';
 import { PrismaModule } from './prisma/prisma.module';
 import { IS_DEV_ENV } from 'src/shared/util/is-dev.util';
-import { ApolloDriver } from '@nestjs/apollo';
-import { getGraphglConfig } from './config/graphql';
 import { LangchainModule } from 'src/langchain/langchain.module';
-import { RedisModule } from './redis/redis.module';
 import { AccountModule } from 'src/modules/auth/account/account.module';
 import { SessionModule } from 'src/modules/auth/session/session.module';
+import { ProductModule } from 'src/modules/product/product.module';
 
 @Module({
   imports: [
@@ -42,6 +44,8 @@ import { SessionModule } from 'src/modules/auth/session/session.module';
     RedisModule,
     AccountModule,
     SessionModule,
+    NlpModule,
+    ProductModule,
   ],
 })
 export class CoreModule {}

@@ -8,15 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CoreModule = void 0;
 const common_1 = require("@nestjs/common");
-const config_1 = require("@nestjs/config");
+const apollo_1 = require("@nestjs/apollo");
 const graphql_1 = require("@nestjs/graphql");
+const nlp_module_1 = require("../modules/nlp/nlp.module");
+const config_1 = require("@nestjs/config");
+const redis_module_1 = require("./redis/redis.module");
+const graphql_2 = require("./config/graphql");
 const prisma_module_1 = require("./prisma/prisma.module");
 const is_dev_util_1 = require("../shared/util/is-dev.util");
-const apollo_1 = require("@nestjs/apollo");
-const graphql_2 = require("./config/graphql");
 const langchain_module_1 = require("../langchain/langchain.module");
-const redis_module_1 = require("./redis/redis.module");
 const account_module_1 = require("../modules/auth/account/account.module");
+const session_module_1 = require("../modules/auth/session/session.module");
+const product_module_1 = require("../modules/product/product.module");
 let CoreModule = class CoreModule {
 };
 exports.CoreModule = CoreModule;
@@ -37,6 +40,9 @@ exports.CoreModule = CoreModule = __decorate([
             prisma_module_1.PrismaModule,
             redis_module_1.RedisModule,
             account_module_1.AccountModule,
+            session_module_1.SessionModule,
+            nlp_module_1.NlpModule,
+            product_module_1.ProductModule,
         ],
     })
 ], CoreModule);

@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccountService = void 0;
+const argon2_1 = require("argon2");
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../../core/prisma/prisma.service");
 let AccountService = class AccountService {
@@ -19,6 +20,21 @@ let AccountService = class AccountService {
     async findAll() {
         const users = await this.prismaService.user.findMany();
         return users;
+    }
+    async create(input) {
+        const { email, password, username } = input;
+        const isUsernameExist = await this.prismaService.user.findUnique({ where: { username } });
+        if (isUsernameExist) {
+            throw new common_1.ConflictException("Це ім'я вже зайнято");
+        }
+        const isEmailExist = await this.prismaService.user.findUnique({ where: { email } });
+        if (isEmailExist) {
+            throw new common_1.ConflictException('Ця пошта вже зареєстрована');
+        }
+        await this.prismaService.user.create({
+            data: { email, username, password: await (0, argon2_1.hash)(password), displayName: username },
+        });
+        return true;
     }
 };
 exports.AccountService = AccountService;
