@@ -25,7 +25,7 @@ __decorate([
     (0, graphql_1.Field)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.MinLength)(8),
+    (0, class_validator_1.MinLength)(8, { message: 'Мінімальна довжина паролю - 8 символів' }),
     __metadata("design:type", String)
 ], LoginInput.prototype, "password", void 0);
 exports.LoginInput = LoginInput = __decorate([

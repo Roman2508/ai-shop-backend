@@ -1,9 +1,10 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { User } from 'prisma/generated';
 
 @ObjectType()
-export class UserModel {
+export class UserModel implements User {
   @Field(() => ID)
-  id: number;
+  id: string;
 
   @Field(() => String)
   email: string;

@@ -10,9 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RedisService = void 0;
-const config_1 = require("@nestjs/config");
 const ioredis_1 = require("ioredis");
 const common_1 = require("@nestjs/common");
+const config_1 = require("@nestjs/config");
 let RedisService = class RedisService extends ioredis_1.default {
     constructor(configService) {
         super(configService.getOrThrow('REDIS_URI'));

@@ -18,6 +18,28 @@ let ProductService = class ProductService {
         this.nlpService = nlpService;
         this.prismaService = prismaService;
     }
+    async getAll() {
+        return this.prismaService.product.findMany({
+            orderBy: {
+                createdAt: 'desc',
+            },
+        });
+    }
+    async getById(id) {
+        const product = await this.prismaService.product.findUnique({
+            where: { id },
+            include: {
+                reviews: {
+                    include: {
+                        user: true,
+                    },
+                },
+            },
+        });
+        if (!product)
+            throw new common_1.NotFoundException('Товар не знайдено');
+        return product;
+    }
     async search(input) {
         const response = await this.nlpService.analyze(input);
         if (response.message !== 'success') {
@@ -30,6 +52,47 @@ let ProductService = class ProductService {
             throw new common_1.NotFoundException('Нічого не знайдено');
         }
         return products;
+    }
+    async getMostPopular() {
+        const mostPopularProducts = await this.prismaService.orderItem.groupBy({
+            by: ['productId'],
+            _count: { id: true },
+            orderBy: { _count: { id: 'desc' } },
+        });
+        const productIds = mostPopularProducts.map((item) => item.productId);
+        const products = await this.prismaService.product.findMany({
+            where: { id: { in: productIds } },
+        });
+        return products;
+    }
+    async getSimilar(id) {
+        const currentProduct = await this.getById(id);
+        if (!currentProduct)
+            throw new common_1.NotFoundException('Поточний товар не знайдений');
+        const products = await this.prismaService.product.findMany({
+            where: {
+                title: currentProduct.title,
+                NOT: { id: currentProduct.id },
+            },
+            orderBy: { createdAt: 'desc' },
+        });
+        return products;
+    }
+    async create(input) {
+        await this.prismaService.product.create({ data: input });
+        return true;
+    }
+    async update(input) {
+        const { productId, ...data } = input;
+        await this.prismaService.product.update({
+            where: { id: productId },
+            data,
+        });
+        return true;
+    }
+    async delete(id) {
+        this.getById(id);
+        return this.prismaService.product.delete({ where: { id } });
     }
 };
 exports.ProductService = ProductService;

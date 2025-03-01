@@ -16,15 +16,52 @@ exports.ProductResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const product_service_1 = require("./product.service");
 const product_model_1 = require("./models/product.model");
+const create_product_input_1 = require("./inputs/create-product.input");
+const update_product_input_1 = require("./inputs/update-product.input");
+const auth_decorator_1 = require("../../shared/decorators/auth.decorator");
 let ProductResolver = class ProductResolver {
     constructor(productService) {
         this.productService = productService;
     }
+    async getAll() {
+        return this.productService.getAll();
+    }
+    async getById(productId) {
+        return this.productService.getById(productId);
+    }
     async search(input) {
         return this.productService.search(input);
     }
+    async getMostPopular() {
+        return this.productService.getMostPopular();
+    }
+    async getSimilar(productId) {
+        return this.productService.getSimilar(productId);
+    }
+    async create(input) {
+        return this.productService.create(input);
+    }
+    async update(input) {
+        return this.productService.update(input);
+    }
+    async delete(productId) {
+        return this.productService.delete(productId);
+    }
 };
 exports.ProductResolver = ProductResolver;
+__decorate([
+    (0, graphql_1.Query)(() => [product_model_1.ProductModel], { name: 'getAllProducts' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "getAll", null);
+__decorate([
+    (0, graphql_1.Query)(() => product_model_1.ProductModel, { name: 'getProductById' }),
+    __param(0, (0, graphql_1.Args)('productId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "getById", null);
 __decorate([
     (0, graphql_1.Query)(() => [product_model_1.ProductModel], { name: 'searchProduct' }),
     __param(0, (0, graphql_1.Args)('data')),
@@ -32,6 +69,43 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "search", null);
+__decorate([
+    (0, graphql_1.Query)(() => [product_model_1.ProductModel], { name: 'getMostPopularProducts' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "getMostPopular", null);
+__decorate([
+    (0, graphql_1.Query)(() => product_model_1.ProductModel, { name: 'getSimilarProducts' }),
+    __param(0, (0, graphql_1.Args)('productId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "getSimilar", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Query)(() => product_model_1.ProductModel, { name: 'CreateProduct' }),
+    __param(0, (0, graphql_1.Args)('data')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_product_input_1.CreateProductInput]),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "create", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Query)(() => product_model_1.ProductModel, { name: 'UpdateProduct' }),
+    __param(0, (0, graphql_1.Args)('data')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [update_product_input_1.UpdateProductInput]),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "update", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Query)(() => product_model_1.ProductModel, { name: 'UpdateProduct' }),
+    __param(0, (0, graphql_1.Args)('productId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "delete", null);
 exports.ProductResolver = ProductResolver = __decorate([
     (0, graphql_1.Resolver)('Product'),
     __metadata("design:paramtypes", [product_service_1.ProductService])

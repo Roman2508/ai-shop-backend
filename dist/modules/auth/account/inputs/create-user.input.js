@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserInput = void 0;
-const class_validator_1 = require("class-validator");
 const graphql_1 = require("@nestjs/graphql");
+const class_validator_1 = require("class-validator");
 let CreateUserInput = class CreateUserInput {
 };
 exports.CreateUserInput = CreateUserInput;

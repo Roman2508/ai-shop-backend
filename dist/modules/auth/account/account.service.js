@@ -21,6 +21,10 @@ let AccountService = class AccountService {
         const users = await this.prismaService.user.findMany();
         return users;
     }
+    async me(id) {
+        const user = await this.prismaService.user.findUnique({ where: { id } });
+        return user;
+    }
     async create(input) {
         const { email, password, username } = input;
         const isUsernameExist = await this.prismaService.user.findUnique({ where: { username } });
@@ -33,6 +37,49 @@ let AccountService = class AccountService {
         }
         await this.prismaService.user.create({
             data: { email, username, password: await (0, argon2_1.hash)(password), displayName: username },
+        });
+        return true;
+    }
+    async changeEmail(user, input) {
+        const { email } = input;
+        await this.prismaService.user.update({
+            where: { id: user.id },
+            data: { email },
+        });
+        return true;
+    }
+    async changePassword(user, input) {
+        const { oldPassword, newPassword } = input;
+        const isValidPassword = await (0, argon2_1.verify)(user.password, oldPassword);
+        if (!isValidPassword) {
+            throw new common_1.UnauthorizedException('Паролі не співпадають');
+        }
+        await this.prismaService.user.update({
+            where: { id: user.id },
+            data: { password: await (0, argon2_1.hash)(newPassword) },
+        });
+        return true;
+    }
+    async toggleFavorite(productId, userId) {
+        const user = await this.prismaService.user.findUnique({
+            where: { id: userId },
+            include: { favorites: true },
+        });
+        if (!user) {
+            throw new Error('Користувача не знайдено');
+        }
+        const isExists = user.favorites.some((product) => product.id === productId);
+        await this.prismaService.user.update({
+            where: {
+                id: user.id,
+            },
+            data: {
+                favorites: {
+                    [isExists ? 'disconnect' : 'connect']: {
+                        id: productId,
+                    },
+                },
+            },
         });
         return true;
     }

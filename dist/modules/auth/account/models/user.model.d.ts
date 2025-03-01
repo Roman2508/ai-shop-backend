@@ -1,5 +1,6 @@
-export declare class UserModel {
-    id: number;
+import { User } from 'prisma/generated';
+export declare class UserModel implements User {
+    id: string;
     email: string;
     password: string;
     username: string;

@@ -19,6 +19,10 @@ model User {
 
   avatar String?
 
+  favorites Product[]
+  reviews   Review[]
+  orders    Order[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -27,22 +31,91 @@ model User {
 
 // npx prisma db push
 
-/**
- * id String @id @default(uuid())
- * createdAt DateTime @default(now()) @map("created_at")
- * updatedAt DateTime @updatedAt @map("updated_at")
- * @@map("users")
- */
-
 model Product {
   id String @id @default(uuid())
 
-  title String
-  price Int
-  color String
+  images     String[]
+  reviews    Review[]
+  orderItems OrderItem[]
+
+  title          String
+  price          Int
+  ram            Int
+  builtInMemory  Int      @map("built_in_memory")
+  color          String
+  frontCamera    Int      @map("front_camera")
+  mainCamera     Int      @map("main_camera")
+  screenDiagonal Int      @map("screen_diagonal")
+  simCount       Int      @map("sim_count")
+  simFormat      String[] @map("sim_format")
+  os             String
+  processorName  String   @map("processor_name")
+  processorCores String   @map("processor_cores")
+  battery        Int
+  materials      String
+  deliverySet    String   @map("delivery_set")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @map("user_id")
+
   @@map("products")
+}
+
+model Review {
+  id String @id @default(uuid())
+
+  text   String
+  rating Int
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @map("user_id")
+
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @map("product_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("reviews")
+}
+
+model Order {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  status EnumOrderStatus @default(PENDING)
+
+  items OrderItem[]
+  total Int
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @map("user_id")
+
+  @@map("order")
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  quantity Int
+  price    Int
+
+  order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @map("order_id")
+
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @map("product_id")
+
+  @@map("order_item")
+}
+
+enum EnumOrderStatus {
+  PENDING
+  PAYED
 }

@@ -17,6 +17,10 @@ const graphql_1 = require("@nestjs/graphql");
 const user_model_1 = require("./models/user.model");
 const account_service_1 = require("./account.service");
 const create_user_input_1 = require("./inputs/create-user.input");
+const authorized_decorator_1 = require("../../../shared/decorators/authorized.decorator");
+const auth_decorator_1 = require("../../../shared/decorators/auth.decorator");
+const change_email_input_1 = require("./inputs/change-email.input");
+const change_password_input_1 = require("./inputs/change-password.input");
 let AccountResolver = class AccountResolver {
     constructor(accountService) {
         this.accountService = accountService;
@@ -24,8 +28,20 @@ let AccountResolver = class AccountResolver {
     async findAll() {
         return this.accountService.findAll();
     }
+    async me(id) {
+        return this.accountService.me(id);
+    }
     async create(input) {
         return this.accountService.create(input);
+    }
+    async changeEmail(user, input) {
+        return this.accountService.changeEmail(user, input);
+    }
+    async changePassword(user, input) {
+        return this.accountService.changePassword(user, input);
+    }
+    async toggleFavorite(userId, productId) {
+        return this.accountService.toggleFavorite(productId, userId);
     }
 };
 exports.AccountResolver = AccountResolver;
@@ -36,12 +52,47 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AccountResolver.prototype, "findAll", null);
 __decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Query)(() => user_model_1.UserModel, { name: 'findProfile' }),
+    __param(0, (0, authorized_decorator_1.Authorized)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AccountResolver.prototype, "me", null);
+__decorate([
     (0, graphql_1.Mutation)(() => Boolean, { name: 'createUser' }),
     __param(0, (0, graphql_1.Args)('data')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_input_1.CreateUserInput]),
     __metadata("design:returntype", Promise)
 ], AccountResolver.prototype, "create", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'changeEmail' }),
+    __param(0, (0, authorized_decorator_1.Authorized)()),
+    __param(1, (0, graphql_1.Args)('data')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, change_email_input_1.ChangeEmailInput]),
+    __metadata("design:returntype", Promise)
+], AccountResolver.prototype, "changeEmail", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'changePassword' }),
+    __param(0, (0, authorized_decorator_1.Authorized)()),
+    __param(1, (0, graphql_1.Args)('data')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, change_password_input_1.ChangePasswordInput]),
+    __metadata("design:returntype", Promise)
+], AccountResolver.prototype, "changePassword", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'toggleFavorite' }),
+    __param(0, (0, authorized_decorator_1.Authorized)('id')),
+    __param(1, (0, graphql_1.Args)('data')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], AccountResolver.prototype, "toggleFavorite", null);
 exports.AccountResolver = AccountResolver = __decorate([
     (0, graphql_1.Resolver)('Account'),
     __metadata("design:paramtypes", [account_service_1.AccountService])

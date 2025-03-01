@@ -130,11 +130,55 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.ProductScalarFieldEnum = {
   id: 'id',
+  images: 'images',
   title: 'title',
   price: 'price',
+  ram: 'ram',
+  builtInMemory: 'builtInMemory',
   color: 'color',
+  frontCamera: 'frontCamera',
+  mainCamera: 'mainCamera',
+  screenDiagonal: 'screenDiagonal',
+  simCount: 'simCount',
+  simFormat: 'simFormat',
+  os: 'os',
+  processorName: 'processorName',
+  processorCores: 'processorCores',
+  battery: 'battery',
+  materials: 'materials',
+  deliverySet: 'deliverySet',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  rating: 'rating',
+  userId: 'userId',
+  productId: 'productId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  status: 'status',
+  total: 'total',
+  userId: 'userId'
+};
+
+exports.Prisma.OrderItemScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  quantity: 'quantity',
+  price: 'price',
+  orderId: 'orderId',
+  productId: 'productId'
 };
 
 exports.Prisma.SortOrder = {
@@ -151,11 +195,17 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.EnumOrderStatus = exports.$Enums.EnumOrderStatus = {
+  PENDING: 'PENDING',
+  PAYED: 'PAYED'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Product: 'Product'
+  Product: 'Product',
+  Review: 'Review',
+  Order: 'Order',
+  OrderItem: 'OrderItem'
 };
 
 /**

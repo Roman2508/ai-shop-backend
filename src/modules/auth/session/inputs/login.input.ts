@@ -11,6 +11,6 @@ export class LoginInput {
   @Field()
   @IsString()
   @IsNotEmpty()
-  @MinLength(8)
+  @MinLength(8, { message: 'Мінімальна довжина паролю - 8 символів' })
   password: string;
 }

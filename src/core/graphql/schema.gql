@@ -2,6 +2,35 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input ChangeEmailInput {
+  email: String!
+}
+
+input ChangePasswordInput {
+  newPassword: String!
+  oldPassword: String!
+}
+
+input CreateProductInput {
+  battery: Float!
+  builtInMemory: Float!
+  color: String!
+  deliverySet: String!
+  frontCamera: Float!
+  images: [String!]!
+  mainCamera: Float!
+  materials: String!
+  os: String!
+  price: Float!
+  processorCores: String!
+  processorName: String!
+  ram: Float!
+  screenDiagonal: Float!
+  simCount: Float!
+  simFormat: [String!]!
+  title: String!
+}
+
 input CreateUserInput {
   email: String!
   password: String!
@@ -13,15 +42,33 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type DeviceModel {
+  browser: String!
+  os: String!
+  type: String!
+}
+
+type LocationModel {
+  city: String!
+  country: String!
+  latitude: Float!
+  longitude: Float!
+}
+
 input LoginInput {
   login: String!
   password: String!
 }
 
 type Mutation {
+  changeEmail(data: ChangeEmailInput!): Boolean!
+  changePassword(data: ChangePasswordInput!): Boolean!
+  clearSessionCookie: Boolean!
   createUser(data: CreateUserInput!): Boolean!
-  login(data: LoginInput!): UserModel!
-  logout: Boolean!
+  loginUser(data: LoginInput!): UserModel!
+  logoutUser: Boolean!
+  removeSession(id: String!): Boolean!
+  toggleFavorite(data: String!): Boolean!
 }
 
 type ProductModel {
@@ -33,8 +80,30 @@ type ProductModel {
 }
 
 type Query {
+  CreateProduct(data: CreateProductInput!): ProductModel!
+  UpdateProduct(productId: String!): ProductModel!
   findAllUsers: [UserModel!]!
+  findCurrentSession: SessionModel!
+  findProfile: UserModel!
+  findSessionsByUser: [SessionModel!]!
+  getAllProducts: [ProductModel!]!
+  getMostPopularProducts: [ProductModel!]!
+  getProductById(productId: String!): ProductModel!
+  getSimilarProducts(productId: String!): ProductModel!
   searchProduct(data: String!): [ProductModel!]!
+}
+
+type SessionMetadataModel {
+  device: DeviceModel!
+  ip: String!
+  location: LocationModel!
+}
+
+type SessionModel {
+  createdAt: String!
+  id: ID!
+  metadata: SessionMetadataModel!
+  userId: String!
 }
 
 type UserModel {
