@@ -10,12 +10,14 @@ exports.ReviewModule = void 0;
 const common_1 = require("@nestjs/common");
 const review_service_1 = require("./review.service");
 const review_resolver_1 = require("./review.resolver");
+const product_module_1 = require("../product/product.module");
 let ReviewModule = class ReviewModule {
 };
 exports.ReviewModule = ReviewModule;
 exports.ReviewModule = ReviewModule = __decorate([
     (0, common_1.Module)({
         providers: [review_resolver_1.ReviewResolver, review_service_1.ReviewService],
+        imports: [product_module_1.ProductModule],
     })
 ], ReviewModule);
 //# sourceMappingURL=review.module.js.map

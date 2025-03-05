@@ -12,22 +12,27 @@ import * as Upload from 'graphql-upload/Upload.js';
 export class FileResolver {
   constructor(private readonly fileService: FileService) {}
 
-  @Authorization()
-  @Mutation(() => Boolean, { name: 'changeStreamThumbnail' })
-  public async changeThumbnail(
-    @Authorized() user: User,
-    @Args('thumbnail', { type: () => GraphQLUpload }, FileValidationPipe)
-    thumbnail: Upload,
-  ) {
-    return this.fileService.changeThumbnail(user, thumbnail);
-  }
+  // @Authorization()
+  // @Mutation(() => Boolean, { name: 'changeStreamThumbnail' })
+  // public async changeThumbnail(
+  //   @Authorized() user: User,
+  //   @Args('thumbnail', { type: () => GraphQLUpload }, FileValidationPipe)
+  //   thumbnail: Upload,
+  // ) {
+  //   return this.fileService.changeThumbnail(user, thumbnail);
+  // }
 
-  @Authorization()
-  @Mutation(() => Boolean, { name: 'removeStreamThumbnail' })
-  public async removeThumbnail(@Authorized() user: User) {
-    return this.fileService.removeThumbnail(user);
-  }
+  // @Authorization()
+  // @Mutation(() => Boolean, { name: 'removeStreamThumbnail' })
+  // public async removeThumbnail(@Authorized() user: User) {
+  //   return this.fileService.removeThumbnail(user);
+  // }
 
+  //
+  //
+  //
+  //
+  //
   // @Mutation(() => String)
   // async uploadFile(@Args('input') input: UploadFileInput): Promise<string> {
   //   return await this.fileService.saveFile(input.file);

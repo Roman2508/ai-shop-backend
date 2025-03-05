@@ -1,18 +1,18 @@
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+  UnauthorizedException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { verify } from 'argon2';
 import { Request } from 'express';
 import { ConfigService } from '@nestjs/config';
-import {
-  ConflictException,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
 
 import { LoginInput } from './inputs/login.input';
+import { RedisService } from 'src/core/redis/redis.service';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { getSessionMetadata } from 'src/shared/util/session-metadata.util';
-import { RedisService } from 'src/core/redis/redis.service';
 
 @Injectable()
 export class SessionService {

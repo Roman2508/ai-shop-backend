@@ -13,58 +13,11 @@ exports.FileService = void 0;
 const path = require('path');
 const common_1 = require("@nestjs/common");
 let FileService = class FileService {
-    constructor(storageService) {
-        this.storageService = storageService;
-    }
-    async changeThumbnail(user, file) {
-        const stream = await this.findByUserId(user);
-        if (stream.thumbnailUrl) {
-            await this.storageService.remove(stream.thumbnailUrl);
-        }
-        const chunks = [];
-        for await (const chunk of file.createReadStream()) {
-            chunks.push(chunk);
-        }
-        const buffer = Buffer.concat(chunks);
-        const fileName = `/streams/${user.username}.webp`;
-        if (file.filename && file.filename.endsWith('.gif')) {
-            const processedBuffer = await sharp(buffer, { animated: true }).resize(1280, 720).webp().toBuffer();
-            await this.storageService.upload(processedBuffer, fileName, 'image/webp');
-        }
-        else {
-            const processedBuffer = await sharp(buffer).resize(1280, 720).webp().toBuffer();
-            await this.storageService.upload(processedBuffer, fileName, 'image/webp');
-        }
-        await this.prismaService.stream.update({
-            where: {
-                userId: user.id,
-            },
-            data: {
-                thumbnailUrl: fileName,
-            },
-        });
-        return true;
-    }
-    async removeThumbnail(user) {
-        const stream = await this.findByUserId(user);
-        if (!stream.thumbnailUrl) {
-            return;
-        }
-        await this.storageService.remove(stream.thumbnailUrl);
-        await this.prismaService.stream.update({
-            where: {
-                userId: user.id,
-            },
-            data: {
-                thumbnailUrl: null,
-            },
-        });
-        return true;
-    }
+    constructor() { }
 };
 exports.FileService = FileService;
 exports.FileService = FileService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:paramtypes", [])
 ], FileService);
 //# sourceMappingURL=file.service.js.map

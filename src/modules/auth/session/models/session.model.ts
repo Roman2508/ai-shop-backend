@@ -2,7 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { DeviceInfo, LocationInfo, SessionMetadata } from 'src/shared/types/session-metadata.types';
 
 @ObjectType()
-export class LocationModel implements LocationInfo {
+class LocationModel implements LocationInfo {
   @Field(() => String)
   country: string;
 
@@ -17,7 +17,7 @@ export class LocationModel implements LocationInfo {
 }
 
 @ObjectType()
-export class DeviceModel implements DeviceInfo {
+class DeviceModel implements DeviceInfo {
   @Field(() => String)
   browser: string;
 
@@ -29,7 +29,7 @@ export class DeviceModel implements DeviceInfo {
 }
 
 @ObjectType()
-export class SessionMetadataModel implements SessionMetadata {
+class SessionMetadataModel implements SessionMetadata {
   @Field(() => LocationModel)
   location: LocationModel;
 

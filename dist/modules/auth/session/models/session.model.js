@@ -9,11 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SessionModel = exports.SessionMetadataModel = exports.DeviceModel = exports.LocationModel = void 0;
+exports.SessionModel = void 0;
 const graphql_1 = require("@nestjs/graphql");
 let LocationModel = class LocationModel {
 };
-exports.LocationModel = LocationModel;
 __decorate([
     (0, graphql_1.Field)(() => String),
     __metadata("design:type", String)
@@ -30,12 +29,11 @@ __decorate([
     (0, graphql_1.Field)(() => Number),
     __metadata("design:type", Number)
 ], LocationModel.prototype, "longitude", void 0);
-exports.LocationModel = LocationModel = __decorate([
+LocationModel = __decorate([
     (0, graphql_1.ObjectType)()
 ], LocationModel);
 let DeviceModel = class DeviceModel {
 };
-exports.DeviceModel = DeviceModel;
 __decorate([
     (0, graphql_1.Field)(() => String),
     __metadata("design:type", String)
@@ -48,12 +46,11 @@ __decorate([
     (0, graphql_1.Field)(() => String),
     __metadata("design:type", String)
 ], DeviceModel.prototype, "type", void 0);
-exports.DeviceModel = DeviceModel = __decorate([
+DeviceModel = __decorate([
     (0, graphql_1.ObjectType)()
 ], DeviceModel);
 let SessionMetadataModel = class SessionMetadataModel {
 };
-exports.SessionMetadataModel = SessionMetadataModel;
 __decorate([
     (0, graphql_1.Field)(() => LocationModel),
     __metadata("design:type", LocationModel)
@@ -66,7 +63,7 @@ __decorate([
     (0, graphql_1.Field)(() => String),
     __metadata("design:type", String)
 ], SessionMetadataModel.prototype, "ip", void 0);
-exports.SessionMetadataModel = SessionMetadataModel = __decorate([
+SessionMetadataModel = __decorate([
     (0, graphql_1.ObjectType)()
 ], SessionMetadataModel);
 let SessionModel = class SessionModel {

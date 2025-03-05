@@ -5,6 +5,7 @@ import { NlpModule } from '../nlp/nlp.module';
 
 @Module({
   providers: [ProductResolver, ProductService],
+  exports: [ProductService],
   imports: [NlpModule],
 })
 export class ProductModule {}

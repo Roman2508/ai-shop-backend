@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CoreModule = void 0;
-const graphql_upload_1 = require("graphql-upload");
 const common_1 = require("@nestjs/common");
 const apollo_1 = require("@nestjs/apollo");
 const graphql_1 = require("@nestjs/graphql");
@@ -25,7 +24,6 @@ const order_module_1 = require("../modules/order/order.module");
 const file_module_1 = require("../modules/file/file.module");
 let CoreModule = class CoreModule {
     configure(consumer) {
-        consumer.apply((0, graphql_upload_1.graphqlUploadExpress)()).forRoutes('*');
     }
 };
 exports.CoreModule = CoreModule;
@@ -35,12 +33,6 @@ exports.CoreModule = CoreModule = __decorate([
             config_1.ConfigModule.forRoot({
                 ignoreEnvFile: !is_dev_util_1.IS_DEV_ENV,
                 isGlobal: true,
-            }),
-            graphql_1.GraphQLModule.forRootAsync({
-                driver: apollo_1.ApolloDriver,
-                imports: [config_1.ConfigModule],
-                useFactory: graphql_config_1.getGraphglConfig,
-                inject: [config_1.ConfigService],
             }),
             graphql_1.GraphQLModule.forRootAsync({
                 driver: apollo_1.ApolloDriver,

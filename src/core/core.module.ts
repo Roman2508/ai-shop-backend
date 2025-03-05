@@ -1,4 +1,4 @@
-import { graphqlUploadExpress } from 'graphql-upload';
+// import { graphqlUploadExpress } from 'graphql-upload';
 import { Module } from '@nestjs/common';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -49,12 +49,7 @@ import { FileModule } from 'src/modules/file/file.module';
     //   entities: [],
     //   synchronize: true,
     // }),
-    GraphQLModule.forRootAsync({
-      driver: ApolloDriver,
-      imports: [ConfigModule],
-      useFactory: getGraphglConfig,
-      inject: [ConfigService],
-    }),
+
     PrismaModule,
     RedisModule,
     AccountModule,
@@ -68,6 +63,6 @@ import { FileModule } from 'src/modules/file/file.module';
 })
 export class CoreModule {
   configure(consumer) {
-    consumer.apply(graphqlUploadExpress()).forRoutes('*');
+    // consumer.apply(graphqlUploadExpress()).forRoutes('*');
   }
 }

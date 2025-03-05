@@ -11,13 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UploadFileInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
-const graphql_upload_1 = require("graphql-upload");
 let UploadFileInput = class UploadFileInput {
 };
 exports.UploadFileInput = UploadFileInput;
 __decorate([
-    (0, graphql_1.Field)(() => graphql_upload_1.GraphQLUpload),
-    __metadata("design:type", Promise)
+    (0, graphql_1.Field)(),
+    __metadata("design:type", Object)
 ], UploadFileInput.prototype, "file", void 0);
 exports.UploadFileInput = UploadFileInput = __decorate([
     (0, graphql_1.InputType)()

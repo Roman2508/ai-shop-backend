@@ -11,6 +11,11 @@ input ChangePasswordInput {
   oldPassword: String!
 }
 
+input CreateOrderInput {
+  items: [OrderItemDto!]!
+  status: String!
+}
+
 input CreateProductInput {
   battery: Float!
   builtInMemory: Float!
@@ -29,6 +34,12 @@ input CreateProductInput {
   simCount: Float!
   simFormat: [String!]!
   title: String!
+}
+
+input CreateReviewInput {
+  productId: String!
+  rating: Float!
+  text: String!
 }
 
 input CreateUserInput {
@@ -64,11 +75,21 @@ type Mutation {
   changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
   clearSessionCookie: Boolean!
+  createPayment(data: CreateOrderInput!): Boolean!
+  createReview(data: CreateReviewInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
+  deleteReview(id: String!): Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
   removeSession(id: String!): Boolean!
   toggleFavorite(data: String!): Boolean!
+  updateStatus: Boolean!
+}
+
+input OrderItemDto {
+  price: Float!
+  productId: String!
+  quantity: Float!
 }
 
 type ProductModel {

@@ -17,6 +17,7 @@ exports.ProductModule = ProductModule;
 exports.ProductModule = ProductModule = __decorate([
     (0, common_1.Module)({
         providers: [product_resolver_1.ProductResolver, product_service_1.ProductService],
+        exports: [product_service_1.ProductService],
         imports: [nlp_module_1.NlpModule],
     })
 ], ProductModule);

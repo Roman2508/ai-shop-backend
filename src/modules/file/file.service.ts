@@ -1,75 +1,82 @@
 import * as fs from 'fs';
 const path = require('path');
 import { Injectable } from '@nestjs/common';
-import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
-import * as Upload from 'graphql-upload/Upload.js';
+// import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
+// import * as Upload from 'graphql-upload/Upload.js';
 
 // const PATH = path.join(process.cwd(), 'uploads');
 
 @Injectable()
 export class FileService {
-  constructor(private readonly storageService: any) {}
+  constructor() // private readonly storageService: any
 
-  public async changeThumbnail(user: User, file: Upload) {
-    const stream = await this.findByUserId(user);
+  {}
 
-    if (stream.thumbnailUrl) {
-      await this.storageService.remove(stream.thumbnailUrl);
-    }
+  // public async changeThumbnail(user: User, file: Upload) {
+  //   const stream = await this.findByUserId(user);
 
-    const chunks: Buffer[] = [];
+  //   if (stream.thumbnailUrl) {
+  //     await this.storageService.remove(stream.thumbnailUrl);
+  //   }
 
-    for await (const chunk of file.createReadStream()) {
-      chunks.push(chunk);
-    }
+  //   const chunks: Buffer[] = [];
 
-    const buffer = Buffer.concat(chunks);
+  //   for await (const chunk of file.createReadStream()) {
+  //     chunks.push(chunk);
+  //   }
 
-    const fileName = `/streams/${user.username}.webp`;
+  //   const buffer = Buffer.concat(chunks);
 
-    if (file.filename && file.filename.endsWith('.gif')) {
-      const processedBuffer = await sharp(buffer, { animated: true }).resize(1280, 720).webp().toBuffer();
+  //   const fileName = `/streams/${user.username}.webp`;
 
-      await this.storageService.upload(processedBuffer, fileName, 'image/webp');
-    } else {
-      const processedBuffer = await sharp(buffer).resize(1280, 720).webp().toBuffer();
+  //   if (file.filename && file.filename.endsWith('.gif')) {
+  //     const processedBuffer = await sharp(buffer, { animated: true }).resize(1280, 720).webp().toBuffer();
 
-      await this.storageService.upload(processedBuffer, fileName, 'image/webp');
-    }
+  //     await this.storageService.upload(processedBuffer, fileName, 'image/webp');
+  //   } else {
+  //     const processedBuffer = await sharp(buffer).resize(1280, 720).webp().toBuffer();
 
-    await this.prismaService.stream.update({
-      where: {
-        userId: user.id,
-      },
-      data: {
-        thumbnailUrl: fileName,
-      },
-    });
+  //     await this.storageService.upload(processedBuffer, fileName, 'image/webp');
+  //   }
 
-    return true;
-  }
+  //   await this.prismaService.stream.update({
+  //     where: {
+  //       userId: user.id,
+  //     },
+  //     data: {
+  //       thumbnailUrl: fileName,
+  //     },
+  //   });
 
-  public async removeThumbnail(user: User) {
-    const stream = await this.findByUserId(user);
+  //   return true;
+  // }
 
-    if (!stream.thumbnailUrl) {
-      return;
-    }
+  // public async removeThumbnail(user: User) {
+  //   const stream = await this.findByUserId(user);
 
-    await this.storageService.remove(stream.thumbnailUrl);
+  //   if (!stream.thumbnailUrl) {
+  //     return;
+  //   }
 
-    await this.prismaService.stream.update({
-      where: {
-        userId: user.id,
-      },
-      data: {
-        thumbnailUrl: null,
-      },
-    });
+  //   await this.storageService.remove(stream.thumbnailUrl);
 
-    return true;
-  }
+  //   await this.prismaService.stream.update({
+  //     where: {
+  //       userId: user.id,
+  //     },
+  //     data: {
+  //       thumbnailUrl: null,
+  //     },
+  //   });
 
+  //   return true;
+  // }
+
+  //
+  //
+  //
+  //
+  //
   // async saveFile(file: Promise<GraphQLUpload>): Promise<string> {
   //   const { createReadStream, filename } = await file;
 

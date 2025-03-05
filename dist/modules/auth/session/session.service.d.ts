@@ -1,8 +1,8 @@
 import { Request } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { LoginInput } from './inputs/login.input';
-import { PrismaService } from 'src/core/prisma/prisma.service';
 import { RedisService } from 'src/core/redis/redis.service';
+import { PrismaService } from 'src/core/prisma/prisma.service';
 export declare class SessionService {
     private readonly prismaService;
     private readonly redisService;
