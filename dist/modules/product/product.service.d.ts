@@ -9,6 +9,7 @@ export declare class ProductService {
     getAll(): Promise<{
         title: string;
         price: number;
+        brand: string;
         images: string[];
         ram: number;
         builtInMemory: number;
@@ -53,6 +54,7 @@ export declare class ProductService {
     } & {
         title: string;
         price: number;
+        brand: string;
         images: string[];
         ram: number;
         builtInMemory: number;
@@ -76,6 +78,7 @@ export declare class ProductService {
     search(input: string): Promise<{
         title: string;
         price: number;
+        brand: string;
         images: string[];
         ram: number;
         builtInMemory: number;
@@ -99,6 +102,7 @@ export declare class ProductService {
     getMostPopular(): Promise<{
         title: string;
         price: number;
+        brand: string;
         images: string[];
         ram: number;
         builtInMemory: number;
@@ -122,6 +126,7 @@ export declare class ProductService {
     getSimilar(id: string): Promise<{
         title: string;
         price: number;
+        brand: string;
         images: string[];
         ram: number;
         builtInMemory: number;
@@ -143,10 +148,12 @@ export declare class ProductService {
         userId: string | null;
     }[]>;
     create(input: CreateProductInput): Promise<boolean>;
+    createMany(): Promise<boolean>;
     update(input: UpdateProductInput): Promise<boolean>;
     delete(id: string): Promise<{
         title: string;
         price: number;
+        brand: string;
         images: string[];
         ram: number;
         builtInMemory: number;

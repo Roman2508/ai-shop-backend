@@ -28,6 +28,12 @@ __decorate([
     __metadata("design:type", Number)
 ], CreateProductInput.prototype, "price", void 0);
 __decorate([
+    (0, graphql_1.Field)(() => String),
+    (0, class_validator_1.IsString)({ message: 'Це поле не може бути пустим' }),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateProductInput.prototype, "brand", void 0);
+__decorate([
     (0, graphql_1.Field)(() => [String]),
     (0, class_validator_1.IsString)({ message: 'Вкажіть хоча б одне фото', each: true }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Це поле не може бути пустим' }),

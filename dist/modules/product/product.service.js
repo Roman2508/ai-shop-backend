@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductService = void 0;
+const fs = require("fs");
 const common_1 = require("@nestjs/common");
 const nlp_service_1 = require("./../nlp/nlp.service");
 const prisma_service_1 = require("../../core/prisma/prisma.service");
@@ -80,6 +81,25 @@ let ProductService = class ProductService {
     }
     async create(input) {
         await this.prismaService.product.create({ data: input });
+        return true;
+    }
+    async createMany() {
+        const data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+        const dataWithCorrectTypes = data.map((el) => ({
+            ...el,
+            price: Number(el.price),
+            ram: Number(el.ram.split(' ')[0]),
+            builtInMemory: Number(el.builtInMemory.split(' ')[0]),
+            frontCamera: Number(el.frontCamera.split(' ')[0]),
+            mainCamera: Number(el.mainCamera.split(' ')[0]),
+            screenDiagonal: Number(el.screenDiagonal),
+            simCount: Number(el.simCount),
+            battery: Number(el.battery.split(' ')[0]),
+            simFormat: JSON.parse(el.simFormat.replace(/'/g, '"')),
+        }));
+        const slicedData = dataWithCorrectTypes.slice(0, 4);
+        await this.prismaService.product.createMany({ data: slicedData });
+        console.log('Дані успішно імпортовано');
         return true;
     }
     async update(input) {

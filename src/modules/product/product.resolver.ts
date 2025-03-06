@@ -41,6 +41,11 @@ export class ProductResolver {
     return this.productService.create(input);
   }
 
+  @Query(() => ProductModel, { name: 'CreateManyProducts' })
+  async createMany() {
+    return this.productService.createMany();
+  }
+
   @Authorization()
   @Query(() => ProductModel, { name: 'UpdateProduct' })
   async update(@Args('data') input: UpdateProductInput) {

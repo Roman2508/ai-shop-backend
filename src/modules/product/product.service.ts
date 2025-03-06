@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 
 import { NlpService } from './../nlp/nlp.service';
@@ -89,6 +90,29 @@ export class ProductService {
 
   async create(input: CreateProductInput) {
     await this.prismaService.product.create({ data: input });
+    return true;
+  }
+
+  async createMany() {
+    const data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+
+    const dataWithCorrectTypes = data.map((el) => ({
+      ...el,
+      price: Number(el.price),
+      ram: Number(el.ram.split(' ')[0]),
+      builtInMemory: Number(el.builtInMemory.split(' ')[0]),
+      frontCamera: Number(el.frontCamera.split(' ')[0]),
+      mainCamera: Number(el.mainCamera.split(' ')[0]),
+      screenDiagonal: Number(el.screenDiagonal),
+      simCount: Number(el.simCount),
+      battery: Number(el.battery.split(' ')[0]),
+      simFormat: JSON.parse(el.simFormat.replace(/'/g, '"')),
+    }));
+
+    const slicedData = dataWithCorrectTypes.slice(0, 4);
+
+    await this.prismaService.product.createMany({ data: slicedData });
+    console.log('Дані успішно імпортовано');
     return true;
   }
 

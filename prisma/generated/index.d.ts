@@ -2569,6 +2569,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     price: number | null
+    brand: string | null
     ram: number | null
     builtInMemory: number | null
     color: string | null
@@ -2591,6 +2592,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     price: number | null
+    brand: string | null
     ram: number | null
     builtInMemory: number | null
     color: string | null
@@ -2614,6 +2616,7 @@ export namespace Prisma {
     images: number
     title: number
     price: number
+    brand: number
     ram: number
     builtInMemory: number
     color: number
@@ -2661,6 +2664,7 @@ export namespace Prisma {
     id?: true
     title?: true
     price?: true
+    brand?: true
     ram?: true
     builtInMemory?: true
     color?: true
@@ -2683,6 +2687,7 @@ export namespace Prisma {
     id?: true
     title?: true
     price?: true
+    brand?: true
     ram?: true
     builtInMemory?: true
     color?: true
@@ -2706,6 +2711,7 @@ export namespace Prisma {
     images?: true
     title?: true
     price?: true
+    brand?: true
     ram?: true
     builtInMemory?: true
     color?: true
@@ -2817,6 +2823,7 @@ export namespace Prisma {
     images: string[]
     title: string
     price: number
+    brand: string
     ram: number
     builtInMemory: number
     color: string
@@ -2860,6 +2867,7 @@ export namespace Prisma {
     images?: boolean
     title?: boolean
     price?: boolean
+    brand?: boolean
     ram?: boolean
     builtInMemory?: boolean
     color?: boolean
@@ -2888,6 +2896,7 @@ export namespace Prisma {
     images?: boolean
     title?: boolean
     price?: boolean
+    brand?: boolean
     ram?: boolean
     builtInMemory?: boolean
     color?: boolean
@@ -2913,6 +2922,7 @@ export namespace Prisma {
     images?: boolean
     title?: boolean
     price?: boolean
+    brand?: boolean
     ram?: boolean
     builtInMemory?: boolean
     color?: boolean
@@ -2938,6 +2948,7 @@ export namespace Prisma {
     images?: boolean
     title?: boolean
     price?: boolean
+    brand?: boolean
     ram?: boolean
     builtInMemory?: boolean
     color?: boolean
@@ -2957,7 +2968,7 @@ export namespace Prisma {
     userId?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "images" | "title" | "price" | "ram" | "builtInMemory" | "color" | "frontCamera" | "mainCamera" | "screenDiagonal" | "simCount" | "simFormat" | "os" | "processorName" | "processorCores" | "battery" | "materials" | "deliverySet" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "images" | "title" | "price" | "brand" | "ram" | "builtInMemory" | "color" | "frontCamera" | "mainCamera" | "screenDiagonal" | "simCount" | "simFormat" | "os" | "processorName" | "processorCores" | "battery" | "materials" | "deliverySet" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reviews?: boolean | Product$reviewsArgs<ExtArgs>
     orderItems?: boolean | Product$orderItemsArgs<ExtArgs>
@@ -2983,6 +2994,7 @@ export namespace Prisma {
       images: string[]
       title: string
       price: number
+      brand: string
       ram: number
       builtInMemory: number
       color: string
@@ -3430,6 +3442,7 @@ export namespace Prisma {
     readonly images: FieldRef<"Product", 'String[]'>
     readonly title: FieldRef<"Product", 'String'>
     readonly price: FieldRef<"Product", 'Int'>
+    readonly brand: FieldRef<"Product", 'String'>
     readonly ram: FieldRef<"Product", 'Int'>
     readonly builtInMemory: FieldRef<"Product", 'Int'>
     readonly color: FieldRef<"Product", 'String'>
@@ -7447,6 +7460,7 @@ export namespace Prisma {
     images: 'images',
     title: 'title',
     price: 'price',
+    brand: 'brand',
     ram: 'ram',
     builtInMemory: 'builtInMemory',
     color: 'color',
@@ -7693,6 +7707,7 @@ export namespace Prisma {
     images?: StringNullableListFilter<"Product">
     title?: StringFilter<"Product"> | string
     price?: IntFilter<"Product"> | number
+    brand?: StringFilter<"Product"> | string
     ram?: IntFilter<"Product"> | number
     builtInMemory?: IntFilter<"Product"> | number
     color?: StringFilter<"Product"> | string
@@ -7720,6 +7735,7 @@ export namespace Prisma {
     images?: SortOrder
     title?: SortOrder
     price?: SortOrder
+    brand?: SortOrder
     ram?: SortOrder
     builtInMemory?: SortOrder
     color?: SortOrder
@@ -7750,6 +7766,7 @@ export namespace Prisma {
     images?: StringNullableListFilter<"Product">
     title?: StringFilter<"Product"> | string
     price?: IntFilter<"Product"> | number
+    brand?: StringFilter<"Product"> | string
     ram?: IntFilter<"Product"> | number
     builtInMemory?: IntFilter<"Product"> | number
     color?: StringFilter<"Product"> | string
@@ -7777,6 +7794,7 @@ export namespace Prisma {
     images?: SortOrder
     title?: SortOrder
     price?: SortOrder
+    brand?: SortOrder
     ram?: SortOrder
     builtInMemory?: SortOrder
     color?: SortOrder
@@ -7809,6 +7827,7 @@ export namespace Prisma {
     images?: StringNullableListFilter<"Product">
     title?: StringWithAggregatesFilter<"Product"> | string
     price?: IntWithAggregatesFilter<"Product"> | number
+    brand?: StringWithAggregatesFilter<"Product"> | string
     ram?: IntWithAggregatesFilter<"Product"> | number
     builtInMemory?: IntWithAggregatesFilter<"Product"> | number
     color?: StringWithAggregatesFilter<"Product"> | string
@@ -8127,6 +8146,7 @@ export namespace Prisma {
     images?: ProductCreateimagesInput | string[]
     title: string
     price: number
+    brand: string
     ram: number
     builtInMemory: number
     color: string
@@ -8153,6 +8173,7 @@ export namespace Prisma {
     images?: ProductCreateimagesInput | string[]
     title: string
     price: number
+    brand: string
     ram: number
     builtInMemory: number
     color: string
@@ -8179,6 +8200,7 @@ export namespace Prisma {
     images?: ProductUpdateimagesInput | string[]
     title?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
     ram?: IntFieldUpdateOperationsInput | number
     builtInMemory?: IntFieldUpdateOperationsInput | number
     color?: StringFieldUpdateOperationsInput | string
@@ -8205,6 +8227,7 @@ export namespace Prisma {
     images?: ProductUpdateimagesInput | string[]
     title?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
     ram?: IntFieldUpdateOperationsInput | number
     builtInMemory?: IntFieldUpdateOperationsInput | number
     color?: StringFieldUpdateOperationsInput | string
@@ -8231,6 +8254,7 @@ export namespace Prisma {
     images?: ProductCreateimagesInput | string[]
     title: string
     price: number
+    brand: string
     ram: number
     builtInMemory: number
     color: string
@@ -8255,6 +8279,7 @@ export namespace Prisma {
     images?: ProductUpdateimagesInput | string[]
     title?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
     ram?: IntFieldUpdateOperationsInput | number
     builtInMemory?: IntFieldUpdateOperationsInput | number
     color?: StringFieldUpdateOperationsInput | string
@@ -8278,6 +8303,7 @@ export namespace Prisma {
     images?: ProductUpdateimagesInput | string[]
     title?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
     ram?: IntFieldUpdateOperationsInput | number
     builtInMemory?: IntFieldUpdateOperationsInput | number
     color?: StringFieldUpdateOperationsInput | string
@@ -8697,6 +8723,7 @@ export namespace Prisma {
     images?: SortOrder
     title?: SortOrder
     price?: SortOrder
+    brand?: SortOrder
     ram?: SortOrder
     builtInMemory?: SortOrder
     color?: SortOrder
@@ -8731,6 +8758,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     price?: SortOrder
+    brand?: SortOrder
     ram?: SortOrder
     builtInMemory?: SortOrder
     color?: SortOrder
@@ -8753,6 +8781,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     price?: SortOrder
+    brand?: SortOrder
     ram?: SortOrder
     builtInMemory?: SortOrder
     color?: SortOrder
@@ -9486,6 +9515,7 @@ export namespace Prisma {
     images?: ProductCreateimagesInput | string[]
     title: string
     price: number
+    brand: string
     ram: number
     builtInMemory: number
     color: string
@@ -9511,6 +9541,7 @@ export namespace Prisma {
     images?: ProductCreateimagesInput | string[]
     title: string
     price: number
+    brand: string
     ram: number
     builtInMemory: number
     color: string
@@ -9621,6 +9652,7 @@ export namespace Prisma {
     images?: StringNullableListFilter<"Product">
     title?: StringFilter<"Product"> | string
     price?: IntFilter<"Product"> | number
+    brand?: StringFilter<"Product"> | string
     ram?: IntFilter<"Product"> | number
     builtInMemory?: IntFilter<"Product"> | number
     color?: StringFilter<"Product"> | string
@@ -9902,6 +9934,7 @@ export namespace Prisma {
     images?: ProductCreateimagesInput | string[]
     title: string
     price: number
+    brand: string
     ram: number
     builtInMemory: number
     color: string
@@ -9927,6 +9960,7 @@ export namespace Prisma {
     images?: ProductCreateimagesInput | string[]
     title: string
     price: number
+    brand: string
     ram: number
     builtInMemory: number
     color: string
@@ -10005,6 +10039,7 @@ export namespace Prisma {
     images?: ProductUpdateimagesInput | string[]
     title?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
     ram?: IntFieldUpdateOperationsInput | number
     builtInMemory?: IntFieldUpdateOperationsInput | number
     color?: StringFieldUpdateOperationsInput | string
@@ -10030,6 +10065,7 @@ export namespace Prisma {
     images?: ProductUpdateimagesInput | string[]
     title?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
     ram?: IntFieldUpdateOperationsInput | number
     builtInMemory?: IntFieldUpdateOperationsInput | number
     color?: StringFieldUpdateOperationsInput | string
@@ -10190,6 +10226,7 @@ export namespace Prisma {
     images?: ProductCreateimagesInput | string[]
     title: string
     price: number
+    brand: string
     ram: number
     builtInMemory: number
     color: string
@@ -10215,6 +10252,7 @@ export namespace Prisma {
     images?: ProductCreateimagesInput | string[]
     title: string
     price: number
+    brand: string
     ram: number
     builtInMemory: number
     color: string
@@ -10285,6 +10323,7 @@ export namespace Prisma {
     images?: ProductUpdateimagesInput | string[]
     title?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
     ram?: IntFieldUpdateOperationsInput | number
     builtInMemory?: IntFieldUpdateOperationsInput | number
     color?: StringFieldUpdateOperationsInput | string
@@ -10310,6 +10349,7 @@ export namespace Prisma {
     images?: ProductUpdateimagesInput | string[]
     title?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
     ram?: IntFieldUpdateOperationsInput | number
     builtInMemory?: IntFieldUpdateOperationsInput | number
     color?: StringFieldUpdateOperationsInput | string
@@ -10335,6 +10375,7 @@ export namespace Prisma {
     images?: ProductCreateimagesInput | string[]
     title: string
     price: number
+    brand: string
     ram: number
     builtInMemory: number
     color: string
@@ -10375,6 +10416,7 @@ export namespace Prisma {
     images?: ProductUpdateimagesInput | string[]
     title?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
     ram?: IntFieldUpdateOperationsInput | number
     builtInMemory?: IntFieldUpdateOperationsInput | number
     color?: StringFieldUpdateOperationsInput | string
@@ -10400,6 +10442,7 @@ export namespace Prisma {
     images?: ProductUpdateimagesInput | string[]
     title?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
     ram?: IntFieldUpdateOperationsInput | number
     builtInMemory?: IntFieldUpdateOperationsInput | number
     color?: StringFieldUpdateOperationsInput | string
@@ -10425,6 +10468,7 @@ export namespace Prisma {
     images?: ProductUpdateimagesInput | string[]
     title?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
     ram?: IntFieldUpdateOperationsInput | number
     builtInMemory?: IntFieldUpdateOperationsInput | number
     color?: StringFieldUpdateOperationsInput | string

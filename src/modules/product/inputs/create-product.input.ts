@@ -13,6 +13,11 @@ export class CreateProductInput {
   @IsNotEmpty({ message: 'Це поле не може бути пустим' })
   price: number;
 
+  @Field(() => String)
+  @IsString({ message: 'Це поле не може бути пустим' })
+  @IsNotEmpty()
+  brand: string;
+
   @Field(() => [String])
   @IsString({ message: 'Вкажіть хоча б одне фото', each: true })
   @IsNotEmpty({ message: 'Це поле не може бути пустим' })

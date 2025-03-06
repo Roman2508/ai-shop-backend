@@ -27,6 +27,70 @@ __decorate([
     __metadata("design:type", Number)
 ], ProductModel.prototype, "price", void 0);
 __decorate([
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], ProductModel.prototype, "brand", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => [String]),
+    __metadata("design:type", Array)
+], ProductModel.prototype, "images", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => Number),
+    __metadata("design:type", Number)
+], ProductModel.prototype, "ram", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => Number),
+    __metadata("design:type", Number)
+], ProductModel.prototype, "builtInMemory", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], ProductModel.prototype, "color", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => Number),
+    __metadata("design:type", Number)
+], ProductModel.prototype, "frontCamera", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => Number),
+    __metadata("design:type", Number)
+], ProductModel.prototype, "mainCamera", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => Number),
+    __metadata("design:type", Number)
+], ProductModel.prototype, "screenDiagonal", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => Number),
+    __metadata("design:type", Number)
+], ProductModel.prototype, "simCount", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => [String]),
+    __metadata("design:type", Array)
+], ProductModel.prototype, "simFormat", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], ProductModel.prototype, "os", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], ProductModel.prototype, "processorName", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], ProductModel.prototype, "processorCores", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => Number),
+    __metadata("design:type", Number)
+], ProductModel.prototype, "battery", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], ProductModel.prototype, "materials", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], ProductModel.prototype, "deliverySet", void 0);
+__decorate([
     (0, graphql_1.Field)(() => Date),
     __metadata("design:type", Date)
 ], ProductModel.prototype, "createdAt", void 0);

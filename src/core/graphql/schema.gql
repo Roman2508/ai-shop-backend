@@ -18,6 +18,7 @@ input CreateOrderInput {
 
 input CreateProductInput {
   battery: Float!
+  brand: String!
   builtInMemory: Float!
   color: String!
   deliverySet: String!
@@ -93,14 +94,31 @@ input OrderItemDto {
 }
 
 type ProductModel {
+  battery: Float!
+  brand: String!
+  builtInMemory: Float!
+  color: String!
   createdAt: DateTime!
+  deliverySet: String!
+  frontCamera: Float!
   id: ID!
+  images: [String!]!
+  mainCamera: Float!
+  materials: String!
+  os: String!
   price: Float!
+  processorCores: String!
+  processorName: String!
+  ram: Float!
+  screenDiagonal: Float!
+  simCount: Float!
+  simFormat: [String!]!
   title: String!
   updatedAt: DateTime!
 }
 
 type Query {
+  CreateManyProducts: ProductModel!
   CreateProduct(data: CreateProductInput!): ProductModel!
   UpdateProduct(productId: String!): ProductModel!
   findAllUsers: [UserModel!]!

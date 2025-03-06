@@ -133,6 +133,7 @@ exports.Prisma.ProductScalarFieldEnum = {
   images: 'images',
   title: 'title',
   price: 'price',
+  brand: 'brand',
   ram: 'ram',
   builtInMemory: 'builtInMemory',
   color: 'color',
