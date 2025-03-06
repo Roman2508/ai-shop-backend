@@ -33,7 +33,7 @@ model User {
 model Product {
   id String @id @default(uuid())
 
-  images String[]
+  images String[] @default([])
   reviews    Review[]
   orderItems OrderItem[]
 
@@ -44,7 +44,7 @@ model Product {
   color String
   frontCamera Int     @map("front_camera")
   mainCamera Int      @map("main_camera")
-  screenDiagonal Int @map("screen_diagonal")
+  screenDiagonal Int  @map("screen_diagonal")
   simCount Int        @map("sim_count")
   simFormat String[]  @map("sim_format")
   os String

@@ -34,7 +34,7 @@ model User {
 model Product {
   id String @id @default(uuid())
 
-  images     String[]
+  images     String[]    @default([])
   reviews    Review[]
   orderItems OrderItem[]
 
