@@ -1,4 +1,4 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ProductService } from './product.service';
 import { ProductModel } from './models/product.model';
@@ -36,24 +36,24 @@ export class ProductResolver {
   }
 
   @Authorization()
-  @Query(() => ProductModel, { name: 'CreateProduct' })
+  @Mutation(() => ProductModel, { name: 'createProduct' })
   async create(@Args('data') input: CreateProductInput) {
     return this.productService.create(input);
   }
 
-  @Query(() => ProductModel, { name: 'CreateManyProducts' })
+  @Mutation(() => Boolean, { name: 'createManyProducts' })
   async createMany() {
     return this.productService.createMany();
   }
 
   @Authorization()
-  @Query(() => ProductModel, { name: 'UpdateProduct' })
+  @Mutation(() => ProductModel, { name: 'updateProduct' })
   async update(@Args('data') input: UpdateProductInput) {
     return this.productService.update(input);
   }
 
   @Authorization()
-  @Query(() => ProductModel, { name: 'UpdateProduct' })
+  @Mutation(() => ProductModel, { name: 'updateProduct' })
   async delete(@Args('productId') productId: string) {
     return this.productService.delete(productId);
   }

@@ -109,7 +109,8 @@ export class ProductService {
       simFormat: JSON.parse(el.simFormat.replace(/'/g, '"')),
     }));
 
-    const slicedData = dataWithCorrectTypes.slice(0, 4);
+    const slicedData = dataWithCorrectTypes;
+    // const slicedData = dataWithCorrectTypes.slice(0, 4);
 
     await this.prismaService.product.createMany({ data: slicedData });
     console.log('Дані успішно імпортовано');

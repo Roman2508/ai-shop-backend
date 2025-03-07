@@ -4,21 +4,21 @@ export declare class ReviewResolver {
     private readonly reviewService;
     constructor(reviewService: ReviewService);
     create(userId: string, input: CreateReviewInput): Promise<{
-        text: string;
-        productId: string | null;
         id: string;
         createdAt: Date;
         updatedAt: Date;
         userId: string | null;
+        text: string;
         rating: number;
+        productId: string | null;
     }>;
     delete(userId: string, id: string): Promise<{
-        text: string;
-        productId: string | null;
         id: string;
         createdAt: Date;
         updatedAt: Date;
         userId: string | null;
+        text: string;
         rating: number;
+        productId: string | null;
     }>;
 }

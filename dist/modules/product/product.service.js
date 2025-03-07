@@ -97,7 +97,7 @@ let ProductService = class ProductService {
             battery: Number(el.battery.split(' ')[0]),
             simFormat: JSON.parse(el.simFormat.replace(/'/g, '"')),
         }));
-        const slicedData = dataWithCorrectTypes.slice(0, 4);
+        const slicedData = dataWithCorrectTypes;
         await this.prismaService.product.createMany({ data: slicedData });
         console.log('Дані успішно імпортовано');
         return true;

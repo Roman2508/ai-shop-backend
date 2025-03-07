@@ -76,7 +76,9 @@ type Mutation {
   changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
   clearSessionCookie: Boolean!
+  createManyProducts: Boolean!
   createPayment(data: CreateOrderInput!): Boolean!
+  createProduct(data: CreateProductInput!): ProductModel!
   createReview(data: CreateReviewInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deleteReview(id: String!): Boolean!
@@ -84,6 +86,7 @@ type Mutation {
   logoutUser: Boolean!
   removeSession(id: String!): Boolean!
   toggleFavorite(data: String!): Boolean!
+  updateProduct(productId: String!): ProductModel!
   updateStatus: Boolean!
 }
 
@@ -118,9 +121,6 @@ type ProductModel {
 }
 
 type Query {
-  CreateManyProducts: ProductModel!
-  CreateProduct(data: CreateProductInput!): ProductModel!
-  UpdateProduct(productId: String!): ProductModel!
   findAllUsers: [UserModel!]!
   findCurrentSession: SessionModel!
   findProfile: UserModel!

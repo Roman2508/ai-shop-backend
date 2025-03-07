@@ -87,21 +87,21 @@ __decorate([
 ], ProductResolver.prototype, "getSimilar", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
-    (0, graphql_1.Query)(() => product_model_1.ProductModel, { name: 'CreateProduct' }),
+    (0, graphql_1.Mutation)(() => product_model_1.ProductModel, { name: 'createProduct' }),
     __param(0, (0, graphql_1.Args)('data')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_product_input_1.CreateProductInput]),
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "create", null);
 __decorate([
-    (0, graphql_1.Query)(() => product_model_1.ProductModel, { name: 'CreateManyProducts' }),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'createManyProducts' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "createMany", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
-    (0, graphql_1.Query)(() => product_model_1.ProductModel, { name: 'UpdateProduct' }),
+    (0, graphql_1.Mutation)(() => product_model_1.ProductModel, { name: 'updateProduct' }),
     __param(0, (0, graphql_1.Args)('data')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [update_product_input_1.UpdateProductInput]),
@@ -109,7 +109,7 @@ __decorate([
 ], ProductResolver.prototype, "update", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
-    (0, graphql_1.Query)(() => product_model_1.ProductModel, { name: 'UpdateProduct' }),
+    (0, graphql_1.Mutation)(() => product_model_1.ProductModel, { name: 'updateProduct' }),
     __param(0, (0, graphql_1.Args)('productId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
