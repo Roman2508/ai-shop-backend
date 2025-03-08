@@ -7,29 +7,59 @@ export declare class ProductService {
     private readonly prismaService;
     constructor(nlpService: NlpService, prismaService: PrismaService);
     getAll(): Promise<{
-        id: string;
-        images: string[];
-        title: string;
-        price: number;
-        brand: string;
-        ram: number;
-        builtInMemory: number;
-        color: string;
-        frontCamera: number;
-        mainCamera: number;
-        screenDiagonal: number;
-        simCount: number;
-        simFormat: string[];
-        os: string;
-        processorName: string;
-        processorCores: string;
-        battery: number;
-        materials: string;
-        deliverySet: string;
-        createdAt: Date;
-        updatedAt: Date;
-        userId: string | null;
-    }[]>;
+        products: {
+            id: string;
+            images: string[];
+            title: string;
+            price: number;
+            brand: string;
+            ram: number;
+            builtInMemory: number;
+            color: string;
+            frontCamera: number;
+            mainCamera: number;
+            screenDiagonal: number;
+            simCount: number;
+            simFormat: string[];
+            os: string;
+            processorName: string;
+            processorCores: string;
+            battery: number;
+            materials: string;
+            deliverySet: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string | null;
+        }[];
+        total: number;
+    }>;
+    paginateAndFilter(query: any): Promise<{
+        products: {
+            id: string;
+            images: string[];
+            title: string;
+            price: number;
+            brand: string;
+            ram: number;
+            builtInMemory: number;
+            color: string;
+            frontCamera: number;
+            mainCamera: number;
+            screenDiagonal: number;
+            simCount: number;
+            simFormat: string[];
+            os: string;
+            processorName: string;
+            processorCores: string;
+            battery: number;
+            materials: string;
+            deliverySet: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string | null;
+        }[];
+        total: number;
+    }>;
     getById(id: string): Promise<{
         reviews: ({
             user: {

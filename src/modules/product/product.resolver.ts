@@ -5,14 +5,21 @@ import { ProductModel } from './models/product.model';
 import { CreateProductInput } from './inputs/create-product.input';
 import { UpdateProductInput } from './inputs/update-product.input';
 import { Authorization } from 'src/shared/decorators/auth.decorator';
+import { PaginateAndFilterInput } from './inputs/paginate-and-filter.input';
+import { ProductsAndTotalModel } from './models/products-and-total.model';
 
 @Resolver('Product')
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
 
-  @Query(() => [ProductModel], { name: 'getAllProducts' })
+  @Query(() => ProductsAndTotalModel, { name: 'getAllProducts' })
   async getAll() {
     return this.productService.getAll();
+  }
+
+  @Query(() => ProductsAndTotalModel, { name: 'paginateAndFilter' })
+  async paginateAndFilter(@Args('data') query: PaginateAndFilterInput) {
+    return this.productService.paginateAndFilter(query);
   }
 
   @Query(() => ProductModel, { name: 'getProductById' })

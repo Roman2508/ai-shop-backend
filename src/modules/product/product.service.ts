@@ -14,11 +14,108 @@ export class ProductService {
   ) {}
 
   async getAll() {
-    return this.prismaService.product.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
+    const total = await this.prismaService.product.count();
+
+    const products = await this.prismaService.product.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 24,
+      skip: 0,
     });
+    return { products, total };
+  }
+
+  async paginateAndFilter(query: any) {
+    const { sortBy, limit, skip, priceFrom, priceTo, ...filterParams } = query;
+
+    const filter = [] as any;
+    const order = {} as any;
+
+    if (sortBy) {
+      if (sortBy === 'price:asc') {
+        order.price = 'asc';
+      } else if (sortBy === 'price:desc') {
+        order.price = 'desc';
+      } else if (sortBy === 'new') {
+        order.createdAt = 'asc';
+      } else if (sortBy === 'rating') {
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        order.createdAt = 'desc';
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+      }
+    } else {
+      order.createdAt = 'desc';
+    }
+
+    if (priceFrom && priceTo) {
+      filter.push({ OR: { gte: query.priceFrom, lte: query.priceTo } });
+    }
+
+    if (priceFrom && !priceTo) {
+      filter.push({ OR: { gte: query.priceFrom } });
+    }
+
+    if (!priceFrom && priceTo) {
+      filter.push({ OR: { lte: query.priceTo } });
+    }
+
+    // Int = ram builtInMemory frontCamera mainCamera screenDiagonal battery
+    // Str = color os processorName processorCores materials
+    // Arr = simFormat deliverySet
+
+    if (Object.keys(filterParams).length) {
+      const keys = ['ram', 'builtInMemory', 'frontCamera', 'mainCamera', 'screenDiagonal', 'battery'];
+
+      for (const key in filterParams) {
+        if (keys.includes(key)) {
+          const selectedFilters = filterParams[key].split(';');
+          const keyFilter = [];
+          selectedFilters.forEach((f) => {
+            const [from, to] = f.split('-');
+            keyFilter.push({ [key]: { gte: Number(from), lte: Number(to) } });
+          });
+
+          filter.push({ OR: keyFilter });
+        }
+        //
+        else if (key === 'simFormat' || key === 'deliverySet') {
+          const selectedFilters = filterParams[key].split(';');
+          filter.push({ OR: { [key]: { hasSome: selectedFilters } } });
+        }
+        //
+        else {
+          const query = filterParams[key].split(';');
+          const queryFilter = query.map((q: string) => ({ [key]: { contains: q } }));
+          filter.push({ OR: queryFilter });
+        }
+      }
+    }
+
+    const products = await this.prismaService.product.findMany({
+      where: { AND: filter },
+      orderBy: order,
+      take: limit ? limit : 24,
+      skip: skip ? skip : 0,
+    });
+
+    return { products, total: products.length };
+
+    // where: { AND: [
+    //     { OR: [{ ram: { gte: 8, lte: 9 } }, { ram: { gte: 11, lte: 12 } }] },
+    //     { OR: [{ frontCamera: { gte: 13, lte: 14 } }, { frontCamera: { gte: 30, lte: 33 } }] },
+    //   ]},
   }
 
   async getById(id: string) {
@@ -95,7 +192,6 @@ export class ProductService {
 
   async createMany() {
     const data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
-
     const dataWithCorrectTypes = data.map((el) => ({
       ...el,
       price: Number(el.price),
@@ -107,12 +203,10 @@ export class ProductService {
       simCount: Number(el.simCount),
       battery: Number(el.battery.split(' ')[0]),
       simFormat: JSON.parse(el.simFormat.replace(/'/g, '"')),
+      processorCores: String(el.processorCores),
     }));
 
-    const slicedData = dataWithCorrectTypes;
-    // const slicedData = dataWithCorrectTypes.slice(0, 4);
-
-    await this.prismaService.product.createMany({ data: slicedData });
+    await this.prismaService.product.createMany({ data: dataWithCorrectTypes });
     console.log('Дані успішно імпортовано');
     return true;
   }

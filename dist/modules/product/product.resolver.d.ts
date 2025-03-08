@@ -1,33 +1,64 @@
 import { ProductService } from './product.service';
 import { CreateProductInput } from './inputs/create-product.input';
 import { UpdateProductInput } from './inputs/update-product.input';
+import { PaginateAndFilterInput } from './inputs/paginate-and-filter.input';
 export declare class ProductResolver {
     private readonly productService;
     constructor(productService: ProductService);
     getAll(): Promise<{
-        id: string;
-        images: string[];
-        title: string;
-        price: number;
-        brand: string;
-        ram: number;
-        builtInMemory: number;
-        color: string;
-        frontCamera: number;
-        mainCamera: number;
-        screenDiagonal: number;
-        simCount: number;
-        simFormat: string[];
-        os: string;
-        processorName: string;
-        processorCores: string;
-        battery: number;
-        materials: string;
-        deliverySet: string;
-        createdAt: Date;
-        updatedAt: Date;
-        userId: string | null;
-    }[]>;
+        products: {
+            id: string;
+            images: string[];
+            title: string;
+            price: number;
+            brand: string;
+            ram: number;
+            builtInMemory: number;
+            color: string;
+            frontCamera: number;
+            mainCamera: number;
+            screenDiagonal: number;
+            simCount: number;
+            simFormat: string[];
+            os: string;
+            processorName: string;
+            processorCores: string;
+            battery: number;
+            materials: string;
+            deliverySet: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string | null;
+        }[];
+        total: number;
+    }>;
+    paginateAndFilter(query: PaginateAndFilterInput): Promise<{
+        products: {
+            id: string;
+            images: string[];
+            title: string;
+            price: number;
+            brand: string;
+            ram: number;
+            builtInMemory: number;
+            color: string;
+            frontCamera: number;
+            mainCamera: number;
+            screenDiagonal: number;
+            simCount: number;
+            simFormat: string[];
+            os: string;
+            processorName: string;
+            processorCores: string;
+            battery: number;
+            materials: string;
+            deliverySet: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string | null;
+        }[];
+        total: number;
+    }>;
     getById(productId: string): Promise<{
         reviews: ({
             user: {

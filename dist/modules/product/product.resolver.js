@@ -19,12 +19,17 @@ const product_model_1 = require("./models/product.model");
 const create_product_input_1 = require("./inputs/create-product.input");
 const update_product_input_1 = require("./inputs/update-product.input");
 const auth_decorator_1 = require("../../shared/decorators/auth.decorator");
+const paginate_and_filter_input_1 = require("./inputs/paginate-and-filter.input");
+const products_and_total_model_1 = require("./models/products-and-total.model");
 let ProductResolver = class ProductResolver {
     constructor(productService) {
         this.productService = productService;
     }
     async getAll() {
         return this.productService.getAll();
+    }
+    async paginateAndFilter(query) {
+        return this.productService.paginateAndFilter(query);
     }
     async getById(productId) {
         return this.productService.getById(productId);
@@ -53,11 +58,18 @@ let ProductResolver = class ProductResolver {
 };
 exports.ProductResolver = ProductResolver;
 __decorate([
-    (0, graphql_1.Query)(() => [product_model_1.ProductModel], { name: 'getAllProducts' }),
+    (0, graphql_1.Query)(() => products_and_total_model_1.ProductsAndTotalModel, { name: 'getAllProducts' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "getAll", null);
+__decorate([
+    (0, graphql_1.Query)(() => products_and_total_model_1.ProductsAndTotalModel, { name: 'paginateAndFilter' }),
+    __param(0, (0, graphql_1.Args)('data')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [paginate_and_filter_input_1.PaginateAndFilterInput]),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "paginateAndFilter", null);
 __decorate([
     (0, graphql_1.Query)(() => product_model_1.ProductModel, { name: 'getProductById' }),
     __param(0, (0, graphql_1.Args)('productId')),

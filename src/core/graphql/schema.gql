@@ -96,6 +96,29 @@ input OrderItemDto {
   quantity: Float!
 }
 
+input PaginateAndFilterInput {
+  battery: String
+  brand: String
+  builtInMemory: String
+  color: String
+  deliverySet: String
+  frontCamera: String
+  limit: Int = 24
+  mainCamera: String
+  materials: String
+  os: String
+  priceFrom: Int
+  priceTo: Int
+  processorCores: String
+  processorName: String
+  ram: String
+  screenDiagonal: String
+  simCount: String
+  simFormat: String
+  skip: Int = 0
+  sortBy: String
+}
+
 type ProductModel {
   battery: Float!
   brand: String!
@@ -120,15 +143,21 @@ type ProductModel {
   updatedAt: DateTime!
 }
 
+type ProductsAndTotalModel {
+  products: [ProductModel!]!
+  total: Int!
+}
+
 type Query {
   findAllUsers: [UserModel!]!
   findCurrentSession: SessionModel!
   findProfile: UserModel!
   findSessionsByUser: [SessionModel!]!
-  getAllProducts: [ProductModel!]!
+  getAllProducts: ProductsAndTotalModel!
   getMostPopularProducts: [ProductModel!]!
   getProductById(productId: String!): ProductModel!
   getSimilarProducts(productId: String!): ProductModel!
+  paginateAndFilter(data: PaginateAndFilterInput!): ProductsAndTotalModel!
   searchProduct(data: String!): [ProductModel!]!
 }
 

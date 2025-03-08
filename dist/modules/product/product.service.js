@@ -20,11 +20,74 @@ let ProductService = class ProductService {
         this.prismaService = prismaService;
     }
     async getAll() {
-        return this.prismaService.product.findMany({
-            orderBy: {
-                createdAt: 'desc',
-            },
+        const total = await this.prismaService.product.count();
+        const products = await this.prismaService.product.findMany({
+            orderBy: { createdAt: 'desc' },
+            take: 24,
+            skip: 0,
         });
+        return { products, total };
+    }
+    async paginateAndFilter(query) {
+        const { sortBy, limit, skip, priceFrom, priceTo, ...filterParams } = query;
+        const filter = [];
+        const order = {};
+        if (sortBy) {
+            if (sortBy === 'price:asc') {
+                order.price = 'asc';
+            }
+            else if (sortBy === 'price:desc') {
+                order.price = 'desc';
+            }
+            else if (sortBy === 'new') {
+                order.createdAt = 'asc';
+            }
+            else if (sortBy === 'rating') {
+                order.createdAt = 'desc';
+            }
+        }
+        else {
+            order.createdAt = 'desc';
+        }
+        if (priceFrom && priceTo) {
+            filter.push({ OR: { gte: query.priceFrom, lte: query.priceTo } });
+        }
+        if (priceFrom && !priceTo) {
+            filter.push({ OR: { gte: query.priceFrom } });
+        }
+        if (!priceFrom && priceTo) {
+            filter.push({ OR: { lte: query.priceTo } });
+        }
+        if (Object.keys(filterParams).length) {
+            const keys = ['ram', 'builtInMemory', 'frontCamera', 'mainCamera', 'screenDiagonal', 'battery'];
+            for (const key in filterParams) {
+                if (keys.includes(key)) {
+                    const selectedFilters = filterParams[key].split(';');
+                    const keyFilter = [];
+                    selectedFilters.forEach((f) => {
+                        const [from, to] = f.split('-');
+                        keyFilter.push({ [key]: { gte: Number(from), lte: Number(to) } });
+                    });
+                    filter.push({ OR: keyFilter });
+                }
+                else if (key === 'simFormat' || key === 'deliverySet') {
+                    const selectedFilters = filterParams[key].split(';');
+                    filter.push({ OR: { [key]: { hasSome: selectedFilters } } });
+                }
+                else {
+                    const query = filterParams[key].split(';');
+                    const queryFilter = query.map((q) => ({ [key]: { contains: q } }));
+                    filter.push({ OR: queryFilter });
+                }
+            }
+        }
+        const products = await this.prismaService.product.findMany({
+            where: { AND: filter },
+            orderBy: order,
+            take: limit ? limit : 24,
+            skip: skip ? skip : 0,
+        });
+        return { products, total: products.length };
     }
     async getById(id) {
         const product = await this.prismaService.product.findUnique({
@@ -96,9 +159,9 @@ let ProductService = class ProductService {
             simCount: Number(el.simCount),
             battery: Number(el.battery.split(' ')[0]),
             simFormat: JSON.parse(el.simFormat.replace(/'/g, '"')),
+            processorCores: String(el.processorCores),
         }));
-        const slicedData = dataWithCorrectTypes;
-        await this.prismaService.product.createMany({ data: slicedData });
+        await this.prismaService.product.createMany({ data: dataWithCorrectTypes });
         console.log('Дані успішно імпортовано');
         return true;
     }
