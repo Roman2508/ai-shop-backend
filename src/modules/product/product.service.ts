@@ -110,7 +110,15 @@ export class ProductService {
       skip: skip ? skip : 0,
     });
 
-    return { products, total: products.length };
+    let totalProductsCount = 0;
+
+    if (priceFrom || priceTo || Object.keys(filterParams).length) {
+      totalProductsCount = products.length;
+    } else {
+      totalProductsCount = await this.prismaService.product.count();
+    }
+
+    return { products, total: totalProductsCount };
 
     // where: { AND: [
     //     { OR: [{ ram: { gte: 8, lte: 9 } }, { ram: { gte: 11, lte: 12 } }] },

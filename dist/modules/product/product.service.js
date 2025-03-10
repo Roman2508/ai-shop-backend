@@ -87,7 +87,14 @@ let ProductService = class ProductService {
             take: limit ? limit : 24,
             skip: skip ? skip : 0,
         });
-        return { products, total: products.length };
+        let totalProductsCount = 0;
+        if (priceFrom || priceTo || Object.keys(filterParams).length) {
+            totalProductsCount = products.length;
+        }
+        else {
+            totalProductsCount = await this.prismaService.product.count();
+        }
+        return { products, total: totalProductsCount };
     }
     async getById(id) {
         const product = await this.prismaService.product.findUnique({
