@@ -9,7 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RedisModule } from './redis/redis.module';
 import { getGraphglConfig } from './config/graphql.config';
 import { PrismaModule } from './prisma/prisma.module';
-import { IS_DEV_ENV } from 'src/shared/util/is-dev.util';
+import { IS_DEV_ENV } from 'src/shared/utils/is-dev.util';
 import { ProductModule } from 'src/modules/product/product.module';
 import { AccountModule } from 'src/modules/auth/account/account.module';
 import { SessionModule } from 'src/modules/auth/session/session.module';
@@ -27,14 +27,21 @@ import { FileModule } from 'src/modules/file/file.module';
       // envFilePath: '.env', // Specifies the path to the .env file (optional if using the default)
     }),
 
-    // GraphQLModule.forRoot<ApolloDriverConfig>({
+    // GraphQLModule.forRootAsync({
     //   driver: ApolloDriver,
-    //   autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    //   imports: [ConfigModule],
+    //   useFactory: getGraphglConfig,
+    //   inject: [ConfigService],
     // }),
-    GraphQLModule.forRootAsync({
+
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       imports: [ConfigModule],
-      useFactory: getGraphglConfig,
+      useFactory: async (configService: ConfigService) => ({
+        autoSchemaFile: true,
+        uploads: false,
+        csrfPrevention: false,
+      }),
       inject: [ConfigService],
     }),
 

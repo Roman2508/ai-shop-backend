@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getGraphglConfig = void 0;
 const path_1 = require("path");
-const is_dev_util_1 = require("../../shared/util/is-dev.util");
+const is_dev_util_1 = require("../../shared/utils/is-dev.util");
 const getGraphglConfig = (configService) => {
     return {
         playground: (0, is_dev_util_1.isDev)(configService),

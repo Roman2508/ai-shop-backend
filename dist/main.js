@@ -6,15 +6,17 @@ const connect_redis_1 = require("connect-redis");
 const cookieParser = require("cookie-parser");
 const config_1 = require("@nestjs/config");
 const common_1 = require("@nestjs/common");
+const graphqlUploadExpress = require("graphql-upload/graphqlUploadExpress.js");
 const core_module_1 = require("./core/core.module");
-const ms_util_1 = require("./shared/util/ms.util");
+const ms_util_1 = require("./shared/utils/ms.util");
 const redis_service_1 = require("./core/redis/redis.service");
-const parse_boolean_util_1 = require("./shared/util/parse-boolean.util");
+const parse_boolean_util_1 = require("./shared/utils/parse-boolean.util");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(core_module_1.CoreModule);
     const config = app.get(config_1.ConfigService);
     const redis = app.get(redis_service_1.RedisService);
     app.use(cookieParser(config.getOrThrow('COOKIES_SECRET')));
+    app.use(graphqlUploadExpress());
     app.useGlobalPipes(new common_1.ValidationPipe({ transform: true }));
     app.use(session({
         secret: config.getOrThrow('SESSION_SECRET'),

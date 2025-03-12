@@ -13,9 +13,8 @@ const graphql_1 = require("@nestjs/graphql");
 const nlp_module_1 = require("../modules/nlp/nlp.module");
 const config_1 = require("@nestjs/config");
 const redis_module_1 = require("./redis/redis.module");
-const graphql_config_1 = require("./config/graphql.config");
 const prisma_module_1 = require("./prisma/prisma.module");
-const is_dev_util_1 = require("../shared/util/is-dev.util");
+const is_dev_util_1 = require("../shared/utils/is-dev.util");
 const product_module_1 = require("../modules/product/product.module");
 const account_module_1 = require("../modules/auth/account/account.module");
 const session_module_1 = require("../modules/auth/session/session.module");
@@ -37,7 +36,11 @@ exports.CoreModule = CoreModule = __decorate([
             graphql_1.GraphQLModule.forRootAsync({
                 driver: apollo_1.ApolloDriver,
                 imports: [config_1.ConfigModule],
-                useFactory: graphql_config_1.getGraphglConfig,
+                useFactory: async (configService) => ({
+                    autoSchemaFile: true,
+                    uploads: false,
+                    csrfPrevention: false,
+                }),
                 inject: [config_1.ConfigService],
             }),
             prisma_module_1.PrismaModule,

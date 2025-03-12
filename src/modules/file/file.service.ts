@@ -1,6 +1,9 @@
 import * as fs from 'fs';
 const path = require('path');
 import { Injectable } from '@nestjs/common';
+import { User } from 'prisma/generated';
+
+import * as Upload from 'graphql-upload/Upload.js';
 // import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 // import * as Upload from 'graphql-upload/Upload.js';
 
@@ -8,9 +11,53 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class FileService {
-  constructor() // private readonly storageService: any
+  constructor() {} // private readonly storageService: any
 
-  {}
+  async upload(user: User, file: Upload) {}
+
+  // async upload(user: User, file: Upload) {
+  //   if (user.avatar) {
+  //     await this.storageService.remove(user.avatar);
+  //   }
+
+  //   const chunks: Buffer[] = [];
+
+  //   for await (const chunk of file.createReadStream()) {
+  //     chunks.push(chunk);
+  //   }
+
+  //   const buffer = Buffer.concat(chunks);
+
+  //   const fileName = `/channels/${user.username}.webp`;
+
+  //   if (file.filename && file.filename.endsWith('.gif')) {
+  //     const processedBuffer = await sharp(buffer, { animated: true }).resize(512, 512).webp().toBuffer();
+
+  //     await this.storageService.upload(processedBuffer, fileName, 'image/webp');
+  //   } else {
+  //     const processedBuffer = await sharp(buffer).resize(512, 512).webp().toBuffer();
+
+  //     await this.storageService.upload(processedBuffer, fileName, 'image/webp');
+  //   }
+
+  //   await this.prismaService.user.update({
+  //     where: {
+  //       id: user.id,
+  //     },
+  //     data: {
+  //       avatar: fileName,
+  //     },
+  //   });
+
+  //   return true;
+  // }
+
+  /*  */
+  /*  */
+  /*  */
+  /*  */
+  /*  */
+  /*  */
 
   // public async changeThumbnail(user: User, file: Upload) {
   //   const stream = await this.findByUserId(user);

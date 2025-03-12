@@ -4,11 +4,12 @@ import { RedisStore } from 'connect-redis';
 import * as cookieParser from 'cookie-parser';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
+import * as graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
 
 import { CoreModule } from './core/core.module';
-import { ms, StringValue } from './shared/util/ms.util';
+import { ms, StringValue } from './shared/utils/ms.util';
 import { RedisService } from './core/redis/redis.service';
-import { parseBoolean } from './shared/util/parse-boolean.util';
+import { parseBoolean } from './shared/utils/parse-boolean.util';
 
 async function bootstrap() {
   const app = await NestFactory.create(CoreModule);
@@ -17,6 +18,8 @@ async function bootstrap() {
   const redis = app.get(RedisService);
 
   app.use(cookieParser(config.getOrThrow<string>('COOKIES_SECRET')));
+  // app.use(config.getOrThrow<string>('GRAPHQL_PREFIX'), graphqlUploadExpress);
+  app.use(graphqlUploadExpress());
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
@@ -41,6 +44,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
+    // origin: '*',
     origin: config.getOrThrow<string>('ALLOWED_ORIGIN'),
     credentials: true,
     exposedHeaders: ['set-cookie'],

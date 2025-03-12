@@ -15,7 +15,7 @@ const argon2_1 = require("argon2");
 const config_1 = require("@nestjs/config");
 const redis_service_1 = require("../../../core/redis/redis.service");
 const prisma_service_1 = require("../../../core/prisma/prisma.service");
-const session_metadata_util_1 = require("../../../shared/util/session-metadata.util");
+const session_metadata_util_1 = require("../../../shared/utils/session-metadata.util");
 let SessionService = class SessionService {
     constructor(prismaService, redisService, configService) {
         this.prismaService = prismaService;

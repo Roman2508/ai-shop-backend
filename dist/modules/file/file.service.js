@@ -14,6 +14,7 @@ const path = require('path');
 const common_1 = require("@nestjs/common");
 let FileService = class FileService {
     constructor() { }
+    async upload(user, file) { }
 };
 exports.FileService = FileService;
 exports.FileService = FileService = __decorate([
