@@ -1,19 +1,25 @@
-import * as fs from 'fs';
 const path = require('path');
+
+import { createWriteStream } from 'fs';
 import { Injectable } from '@nestjs/common';
-import { User } from 'prisma/generated';
-
 import * as Upload from 'graphql-upload/Upload.js';
-// import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
-// import * as Upload from 'graphql-upload/Upload.js';
-
-// const PATH = path.join(process.cwd(), 'uploads');
 
 @Injectable()
 export class FileService {
-  constructor() {} // private readonly storageService: any
+  constructor() {}
 
-  async upload(user: User, file: Upload) {}
+  async upload(file: Upload) {
+    const { createReadStream, filename } = await file;
+
+    const filePath = path.join(process.cwd(), 'uploads', filename);
+
+    return new Promise((resolve, reject) => {
+      createReadStream()
+        .pipe(createWriteStream(filePath))
+        .on('finish', () => resolve(`Файл загружен: ${filename}`))
+        .on('error', reject);
+    });
+  }
 
   // async upload(user: User, file: Upload) {
   //   if (user.avatar) {

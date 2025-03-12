@@ -14,42 +14,22 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
-const file_service_1 = require("./file.service");
 const GraphQLUpload = require("graphql-upload/GraphQLUpload.js");
-const fs_1 = require("fs");
-const path_1 = require("path");
+const file_service_1 = require("./file.service");
 let FileResolver = class FileResolver {
     constructor(fileService) {
         this.fileService = fileService;
     }
-    async uploadFile1(file) {
-    }
-    async uploadFile(file, context) {
-        console.log('Headers:', context.req.headers);
-        const { createReadStream, filename } = await file;
-        const filePath = (0, path_1.join)(__dirname, '../../uploads', filename);
-        console.log(filePath);
-        return new Promise((resolve, reject) => {
-            createReadStream()
-                .pipe((0, fs_1.createWriteStream)(filePath))
-                .on('finish', () => resolve(`Файл загружен: ${filename}`))
-                .on('error', reject);
-        });
+    async uploadFile(file) {
+        return this.fileService.upload(file);
     }
 };
 exports.FileResolver = FileResolver;
 __decorate([
-    (0, graphql_1.Mutation)(() => String, { name: 'uploadFile' }),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'uploadFile' }),
     __param(0, (0, graphql_1.Args)({ name: 'file', type: () => GraphQLUpload })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], FileResolver.prototype, "uploadFile1", null);
-__decorate([
-    __param(0, (0, graphql_1.Args)({ name: 'file', type: () => GraphQLUpload })),
-    __param(1, (0, graphql_1.Context)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], FileResolver.prototype, "uploadFile", null);
 exports.FileResolver = FileResolver = __decorate([

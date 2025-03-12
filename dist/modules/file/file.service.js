@@ -11,10 +11,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileService = void 0;
 const path = require('path');
+const fs_1 = require("fs");
 const common_1 = require("@nestjs/common");
 let FileService = class FileService {
     constructor() { }
-    async upload(user, file) { }
+    async upload(file) {
+        const { createReadStream, filename } = await file;
+        const filePath = path.join(process.cwd(), 'uploads', filename);
+        return new Promise((resolve, reject) => {
+            createReadStream()
+                .pipe((0, fs_1.createWriteStream)(filePath))
+                .on('finish', () => resolve(`Файл загружен: ${filename}`))
+                .on('error', reject);
+        });
+    }
 };
 exports.FileService = FileService;
 exports.FileService = FileService = __decorate([

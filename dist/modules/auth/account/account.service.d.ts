@@ -11,8 +11,8 @@ export declare class AccountService {
         createdAt: Date;
         updatedAt: Date;
         email: string;
-        password: string;
         username: string;
+        password: string;
         displayName: string;
         avatar: string | null;
     }[]>;
@@ -21,8 +21,8 @@ export declare class AccountService {
         createdAt: Date;
         updatedAt: Date;
         email: string;
-        password: string;
         username: string;
+        password: string;
         displayName: string;
         avatar: string | null;
     }>;

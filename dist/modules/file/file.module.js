@@ -10,13 +10,12 @@ exports.FileModule = void 0;
 const common_1 = require("@nestjs/common");
 const file_service_1 = require("./file.service");
 const file_resolver_1 = require("./file.resolver");
-const file_storage_module_1 = require("../file-storage/file-storage.module");
 let FileModule = class FileModule {
 };
 exports.FileModule = FileModule;
 exports.FileModule = FileModule = __decorate([
     (0, common_1.Module)({
-        imports: [file_storage_module_1.FileStorageModule],
+        imports: [],
         providers: [file_resolver_1.FileResolver, file_service_1.FileService],
     })
 ], FileModule);

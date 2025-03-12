@@ -8,22 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CoreModule = void 0;
 const common_1 = require("@nestjs/common");
-const apollo_1 = require("@nestjs/apollo");
 const graphql_1 = require("@nestjs/graphql");
 const nlp_module_1 = require("../modules/nlp/nlp.module");
 const config_1 = require("@nestjs/config");
+const apollo_1 = require("@nestjs/apollo");
 const redis_module_1 = require("./redis/redis.module");
 const prisma_module_1 = require("./prisma/prisma.module");
 const is_dev_util_1 = require("../shared/utils/is-dev.util");
+const file_module_1 = require("../modules/file/file.module");
+const order_module_1 = require("../modules/order/order.module");
+const review_module_1 = require("../modules/review/review.module");
 const product_module_1 = require("../modules/product/product.module");
 const account_module_1 = require("../modules/auth/account/account.module");
 const session_module_1 = require("../modules/auth/session/session.module");
-const review_module_1 = require("../modules/review/review.module");
-const order_module_1 = require("../modules/order/order.module");
-const file_module_1 = require("../modules/file/file.module");
 let CoreModule = class CoreModule {
-    configure(consumer) {
-    }
 };
 exports.CoreModule = CoreModule;
 exports.CoreModule = CoreModule = __decorate([

@@ -1,22 +1,18 @@
-// import { graphqlUploadExpress } from 'graphql-upload';
 import { Module } from '@nestjs/common';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { NlpModule } from '../modules/nlp/nlp.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 import { RedisModule } from './redis/redis.module';
-import { getGraphglConfig } from './config/graphql.config';
 import { PrismaModule } from './prisma/prisma.module';
 import { IS_DEV_ENV } from 'src/shared/utils/is-dev.util';
+import { FileModule } from 'src/modules/file/file.module';
+import { OrderModule } from 'src/modules/order/order.module';
+import { ReviewModule } from 'src/modules/review/review.module';
 import { ProductModule } from 'src/modules/product/product.module';
 import { AccountModule } from 'src/modules/auth/account/account.module';
 import { SessionModule } from 'src/modules/auth/session/session.module';
-import { join } from 'path';
-import { ReviewModule } from 'src/modules/review/review.module';
-import { OrderModule } from 'src/modules/order/order.module';
-import { FileModule } from 'src/modules/file/file.module';
 
 @Module({
   imports: [
@@ -26,13 +22,6 @@ import { FileModule } from 'src/modules/file/file.module';
       // isGlobal: true, // Makes the ConfigModule available globally
       // envFilePath: '.env', // Specifies the path to the .env file (optional if using the default)
     }),
-
-    // GraphQLModule.forRootAsync({
-    //   driver: ApolloDriver,
-    //   imports: [ConfigModule],
-    //   useFactory: getGraphglConfig,
-    //   inject: [ConfigService],
-    // }),
 
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -45,18 +34,6 @@ import { FileModule } from 'src/modules/file/file.module';
       inject: [ConfigService],
     }),
 
-    // TypeOrmModule.forRoot({
-    //   type: 'postgres',
-    //   host: 'localhost',
-    //   port: 5432,
-    //   username: 'username',
-    //   password: 'password',
-    //   database: 'testdb',
-    //   // entities: users, products,
-    //   entities: [],
-    //   synchronize: true,
-    // }),
-
     PrismaModule,
     RedisModule,
     AccountModule,
@@ -68,8 +45,4 @@ import { FileModule } from 'src/modules/file/file.module';
     FileModule,
   ],
 })
-export class CoreModule {
-  configure(consumer) {
-    // consumer.apply(graphqlUploadExpress()).forRoutes('*');
-  }
-}
+export class CoreModule {}
