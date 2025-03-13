@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateProductInput = void 0;
-const graphql_1 = require("@nestjs/graphql");
 const class_validator_1 = require("class-validator");
+const graphql_1 = require("@nestjs/graphql");
 const create_product_input_1 = require("./create-product.input");
 let UpdateProductInput = class UpdateProductInput extends (0, graphql_1.PartialType)(create_product_input_1.CreateProductInput) {
 };

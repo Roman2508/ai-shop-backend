@@ -18,11 +18,6 @@ export class CreateProductInput {
   @IsNotEmpty()
   brand: string;
 
-  // @Field(() => [String])
-  // @IsString({ message: 'Вкажіть хоча б одне фото', each: true })
-  // @IsNotEmpty({ message: 'Це поле не може бути пустим' })
-  // images: string[];
-
   @Field(() => Number)
   @IsNumber()
   @IsNotEmpty({ message: 'Це поле не може бути пустим' })
@@ -59,7 +54,6 @@ export class CreateProductInput {
   simCount: number;
 
   @Field(() => [String])
-  // @IsArray({ message: 'Вкажіть хоча б один формат' })
   @IsNotEmpty({ message: 'Це поле не може бути пустим', each: true })
   simFormat: string[];
 
@@ -89,7 +83,6 @@ export class CreateProductInput {
   materials: string;
 
   @Field(() => String)
-  // @IsString()
   @IsNotEmpty({ message: 'Це поле не може бути пустим', each: true })
   deliverySet: string;
 }

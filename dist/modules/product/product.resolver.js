@@ -146,7 +146,7 @@ __decorate([
 ], ProductResolver.prototype, "update", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
-    (0, graphql_1.Mutation)(() => product_model_1.ProductModel, { name: 'updateProduct' }),
+    (0, graphql_1.Mutation)(() => product_model_1.ProductModel, { name: 'deleteProduct' }),
     __param(0, (0, graphql_1.Args)('productId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

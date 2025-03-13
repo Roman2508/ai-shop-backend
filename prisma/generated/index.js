@@ -192,7 +192,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\PAPKA\\projects\\ai-shop\\MAIN\\backend\\prisma\\generated",
+      "value": "D:\\projects\\ai-shop\\MAIN\\backend\\prisma\\generated",
       "fromEnvVar": null
     },
     "config": {
@@ -206,7 +206,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\PAPKA\\projects\\ai-shop\\MAIN\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\projects\\ai-shop\\MAIN\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

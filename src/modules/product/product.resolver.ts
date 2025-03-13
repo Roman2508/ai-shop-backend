@@ -73,7 +73,7 @@ export class ProductResolver {
   }
 
   @Authorization()
-  @Mutation(() => ProductModel, { name: 'updateProduct' })
+  @Mutation(() => ProductModel, { name: 'deleteProduct' })
   async delete(@Args('productId') productId: string) {
     return this.productService.delete(productId);
   }
