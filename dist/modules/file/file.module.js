@@ -17,6 +17,7 @@ exports.FileModule = FileModule = __decorate([
     (0, common_1.Module)({
         imports: [],
         providers: [file_resolver_1.FileResolver, file_service_1.FileService],
+        exports: [file_service_1.FileService],
     })
 ], FileModule);
 //# sourceMappingURL=file.module.js.map

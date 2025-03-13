@@ -1,3 +1,5 @@
+import { join } from 'path';
+import * as express from 'express';
 import { NestFactory } from '@nestjs/core';
 import * as session from 'express-session';
 import { RedisStore } from 'connect-redis';
@@ -18,8 +20,8 @@ async function bootstrap() {
   const redis = app.get(RedisService);
 
   app.use(cookieParser(config.getOrThrow<string>('COOKIES_SECRET')));
-  // app.use(config.getOrThrow<string>('GRAPHQL_PREFIX'), graphqlUploadExpress);
   app.use(graphqlUploadExpress());
+  app.use('/uploads', express.static(join(__dirname, '..', 'uploads')));
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 

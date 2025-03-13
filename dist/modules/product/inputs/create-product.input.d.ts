@@ -2,7 +2,6 @@ export declare class CreateProductInput {
     title: string;
     price: number;
     brand: string;
-    images: string[];
     ram: number;
     builtInMemory: number;
     color: string;

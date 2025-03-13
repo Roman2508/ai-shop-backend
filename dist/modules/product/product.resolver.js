@@ -13,14 +13,15 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductResolver = void 0;
+const GraphQLUpload = require("graphql-upload/GraphQLUpload.js");
 const graphql_1 = require("@nestjs/graphql");
 const product_service_1 = require("./product.service");
 const product_model_1 = require("./models/product.model");
 const create_product_input_1 = require("./inputs/create-product.input");
 const update_product_input_1 = require("./inputs/update-product.input");
 const auth_decorator_1 = require("../../shared/decorators/auth.decorator");
-const paginate_and_filter_input_1 = require("./inputs/paginate-and-filter.input");
 const products_and_total_model_1 = require("./models/products-and-total.model");
+const paginate_and_filter_input_1 = require("./inputs/paginate-and-filter.input");
 let ProductResolver = class ProductResolver {
     constructor(productService) {
         this.productService = productService;
@@ -45,6 +46,12 @@ let ProductResolver = class ProductResolver {
     }
     async create(input) {
         return this.productService.create(input);
+    }
+    async addPhoto(productId, file) {
+        return this.productService.addPhoto(productId, file);
+    }
+    async removePhotos(productId, filename) {
+        return this.productService.removePhotos(productId, filename);
     }
     async createMany() {
         return this.productService.createMany();
@@ -105,6 +112,24 @@ __decorate([
     __metadata("design:paramtypes", [create_product_input_1.CreateProductInput]),
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "create", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'addProductPhoto' }),
+    __param(0, (0, graphql_1.Args)('productId')),
+    __param(1, (0, graphql_1.Args)({ name: 'file', type: () => GraphQLUpload })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "addPhoto", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'removeProductPhoto' }),
+    __param(0, (0, graphql_1.Args)('productId')),
+    __param(1, (0, graphql_1.Args)('filename')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "removePhotos", null);
 __decorate([
     (0, graphql_1.Mutation)(() => Boolean, { name: 'createManyProducts' }),
     __metadata("design:type", Function),

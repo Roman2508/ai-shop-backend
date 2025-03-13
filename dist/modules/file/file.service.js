@@ -14,16 +14,22 @@ const path = require('path');
 const fs_1 = require("fs");
 const common_1 = require("@nestjs/common");
 let FileService = class FileService {
-    constructor() { }
-    async upload(file) {
+    constructor() {
+        this.generateId = () => {
+            return [...Array(6)].map(() => Math.round(Math.random() * 6).toString(6)).join('');
+        };
+    }
+    async upload(file, folderName = 'products') {
         const { createReadStream, filename } = await file;
-        const filePath = path.join(process.cwd(), 'uploads', filename);
-        return new Promise((resolve, reject) => {
+        const newFilename = `${this.generateId()}_${filename}`;
+        const filePath = path.join(process.cwd(), `uploads/${folderName}`, newFilename);
+        await new Promise((resolve, reject) => {
             createReadStream()
                 .pipe((0, fs_1.createWriteStream)(filePath))
-                .on('finish', () => resolve(`Файл загружен: ${filename}`))
+                .on('finish', () => resolve(`Файл завантажений: ${newFilename}`))
                 .on('error', reject);
         });
+        return newFilename;
     }
 };
 exports.FileService = FileService;

@@ -34,12 +34,6 @@ __decorate([
     __metadata("design:type", String)
 ], CreateProductInput.prototype, "brand", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => [String]),
-    (0, class_validator_1.IsString)({ message: 'Вкажіть хоча б одне фото', each: true }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Це поле не може бути пустим' }),
-    __metadata("design:type", Array)
-], CreateProductInput.prototype, "images", void 0);
-__decorate([
     (0, graphql_1.Field)(() => Number),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)({ message: 'Це поле не може бути пустим' }),
@@ -83,13 +77,12 @@ __decorate([
 ], CreateProductInput.prototype, "simCount", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [String]),
-    (0, class_validator_1.IsString)({ message: 'Вкажіть хоча б один формат' }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Це поле не може бути пустим', each: true }),
     __metadata("design:type", Array)
 ], CreateProductInput.prototype, "simFormat", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
-    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)({ message: 'Це поле не може бути пустим' }),
     __metadata("design:type", String)
 ], CreateProductInput.prototype, "os", void 0);
@@ -119,8 +112,7 @@ __decorate([
 ], CreateProductInput.prototype, "materials", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Це поле не може бути пустим' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'Це поле не може бути пустим', each: true }),
     __metadata("design:type", String)
 ], CreateProductInput.prototype, "deliverySet", void 0);
 exports.CreateProductInput = CreateProductInput = __decorate([

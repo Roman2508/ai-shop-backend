@@ -1,3 +1,4 @@
+import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ProductService } from './product.service';
@@ -5,8 +6,8 @@ import { ProductModel } from './models/product.model';
 import { CreateProductInput } from './inputs/create-product.input';
 import { UpdateProductInput } from './inputs/update-product.input';
 import { Authorization } from 'src/shared/decorators/auth.decorator';
-import { PaginateAndFilterInput } from './inputs/paginate-and-filter.input';
 import { ProductsAndTotalModel } from './models/products-and-total.model';
+import { PaginateAndFilterInput } from './inputs/paginate-and-filter.input';
 
 @Resolver('Product')
 export class ProductResolver {
@@ -46,6 +47,18 @@ export class ProductResolver {
   @Mutation(() => ProductModel, { name: 'createProduct' })
   async create(@Args('data') input: CreateProductInput) {
     return this.productService.create(input);
+  }
+
+  @Authorization()
+  @Mutation(() => Boolean, { name: 'addProductPhoto' })
+  async addPhoto(@Args('productId') productId: string, @Args({ name: 'file', type: () => GraphQLUpload }) file: any) {
+    return this.productService.addPhoto(productId, file);
+  }
+
+  @Authorization()
+  @Mutation(() => Boolean, { name: 'removeProductPhoto' })
+  async removePhotos(@Args('productId') productId: string, @Args('filename') filename: string) {
+    return this.productService.removePhotos(productId, filename);
   }
 
   @Mutation(() => Boolean, { name: 'createManyProducts' })

@@ -5,11 +5,13 @@ import { NlpService } from './../nlp/nlp.service';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { CreateProductInput } from './inputs/create-product.input';
 import { UpdateProductInput } from './inputs/update-product.input';
+import { FileService } from '../file/file.service';
 
 @Injectable()
 export class ProductService {
   constructor(
     private readonly nlpService: NlpService,
+    private readonly fileService: FileService,
     private readonly prismaService: PrismaService,
   ) {}
 
@@ -194,7 +196,21 @@ export class ProductService {
   }
 
   async create(input: CreateProductInput) {
-    await this.prismaService.product.create({ data: input });
+    const newProduct = await this.prismaService.product.create({ data: input });
+    return newProduct;
+  }
+
+  async addPhoto(id: string, file: any) {
+    const filename = await this.fileService.upload(file, 'products');
+    await this.prismaService.product.update({ where: { id }, data: { images: { push: filename } } });
+    return true;
+  }
+
+  async removePhotos(id: string, filename: string) {
+    const product = await this.prismaService.product.findUnique({ where: { id } });
+    if (!product) throw new NotFoundException('Товар не знайдено');
+    const filteredImages = product.images.filter((el) => el !== filename);
+    await this.prismaService.product.update({ where: { id }, data: { images: filteredImages } });
     return true;
   }
 

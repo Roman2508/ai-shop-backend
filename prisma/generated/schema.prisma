@@ -31,6 +31,7 @@ model User {
 
 // npx prisma db push
 
+// processorCores === Int
 model Product {
   id String @id @default(uuid())
 

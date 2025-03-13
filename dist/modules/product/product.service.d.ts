@@ -2,10 +2,12 @@ import { NlpService } from './../nlp/nlp.service';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { CreateProductInput } from './inputs/create-product.input';
 import { UpdateProductInput } from './inputs/update-product.input';
+import { FileService } from '../file/file.service';
 export declare class ProductService {
     private readonly nlpService;
+    private readonly fileService;
     private readonly prismaService;
-    constructor(nlpService: NlpService, prismaService: PrismaService);
+    constructor(nlpService: NlpService, fileService: FileService, prismaService: PrismaService);
     getAll(): Promise<{
         products: {
             price: number;
@@ -177,7 +179,32 @@ export declare class ProductService {
         materials: string;
         deliverySet: string;
     }[]>;
-    create(input: CreateProductInput): Promise<boolean>;
+    create(input: CreateProductInput): Promise<{
+        price: number;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string | null;
+        images: string[];
+        title: string;
+        brand: string;
+        ram: number;
+        builtInMemory: number;
+        color: string;
+        frontCamera: number;
+        mainCamera: number;
+        screenDiagonal: number;
+        simCount: number;
+        simFormat: string[];
+        os: string;
+        processorName: string;
+        processorCores: string;
+        battery: number;
+        materials: string;
+        deliverySet: string;
+    }>;
+    addPhoto(id: string, file: any): Promise<boolean>;
+    removePhotos(id: string, filename: string): Promise<boolean>;
     createMany(): Promise<boolean>;
     update(input: UpdateProductInput): Promise<boolean>;
     delete(id: string): Promise<{

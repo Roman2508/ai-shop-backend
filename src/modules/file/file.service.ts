@@ -8,17 +8,24 @@ import * as Upload from 'graphql-upload/Upload.js';
 export class FileService {
   constructor() {}
 
-  async upload(file: Upload) {
+  generateId = () => {
+    return [...Array(6)].map(() => Math.round(Math.random() * 6).toString(6)).join('');
+  };
+
+  async upload(file: Upload, folderName: 'products' | 'users' = 'products') {
     const { createReadStream, filename } = await file;
 
-    const filePath = path.join(process.cwd(), 'uploads', filename);
+    const newFilename = `${this.generateId()}_${filename}`;
+    const filePath = path.join(process.cwd(), `uploads/${folderName}`, newFilename);
 
-    return new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       createReadStream()
         .pipe(createWriteStream(filePath))
-        .on('finish', () => resolve(`Файл загружен: ${filename}`))
+        .on('finish', () => resolve(`Файл завантажений: ${newFilename}`))
         .on('error', reject);
     });
+
+    return newFilename;
   }
 
   // async upload(user: User, file: Upload) {

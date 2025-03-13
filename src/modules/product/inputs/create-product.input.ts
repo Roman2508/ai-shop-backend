@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsArray } from 'class-validator';
 
 @InputType()
 export class CreateProductInput {
@@ -18,10 +18,10 @@ export class CreateProductInput {
   @IsNotEmpty()
   brand: string;
 
-  @Field(() => [String])
-  @IsString({ message: 'Вкажіть хоча б одне фото', each: true })
-  @IsNotEmpty({ message: 'Це поле не може бути пустим' })
-  images: string[];
+  // @Field(() => [String])
+  // @IsString({ message: 'Вкажіть хоча б одне фото', each: true })
+  // @IsNotEmpty({ message: 'Це поле не може бути пустим' })
+  // images: string[];
 
   @Field(() => Number)
   @IsNumber()
@@ -59,12 +59,12 @@ export class CreateProductInput {
   simCount: number;
 
   @Field(() => [String])
-  @IsString({ message: 'Вкажіть хоча б один формат' })
+  // @IsArray({ message: 'Вкажіть хоча б один формат' })
   @IsNotEmpty({ message: 'Це поле не може бути пустим', each: true })
   simFormat: string[];
 
   @Field(() => String)
-  @IsNumber()
+  @IsString()
   @IsNotEmpty({ message: 'Це поле не може бути пустим' })
   os: string;
 
@@ -89,7 +89,7 @@ export class CreateProductInput {
   materials: string;
 
   @Field(() => String)
-  @IsString()
-  @IsNotEmpty({ message: 'Це поле не може бути пустим' })
+  // @IsString()
+  @IsNotEmpty({ message: 'Це поле не може бути пустим', each: true })
   deliverySet: string;
 }

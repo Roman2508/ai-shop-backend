@@ -26,7 +26,7 @@ let FileResolver = class FileResolver {
 };
 exports.FileResolver = FileResolver;
 __decorate([
-    (0, graphql_1.Mutation)(() => Boolean, { name: 'uploadFile' }),
+    (0, graphql_1.Mutation)(() => String, { name: 'uploadFile' }),
     __param(0, (0, graphql_1.Args)({ name: 'file', type: () => GraphQLUpload })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

@@ -14,9 +14,11 @@ const fs = require("fs");
 const common_1 = require("@nestjs/common");
 const nlp_service_1 = require("./../nlp/nlp.service");
 const prisma_service_1 = require("../../core/prisma/prisma.service");
+const file_service_1 = require("../file/file.service");
 let ProductService = class ProductService {
-    constructor(nlpService, prismaService) {
+    constructor(nlpService, fileService, prismaService) {
         this.nlpService = nlpService;
+        this.fileService = fileService;
         this.prismaService = prismaService;
     }
     async getAll() {
@@ -150,7 +152,20 @@ let ProductService = class ProductService {
         return products;
     }
     async create(input) {
-        await this.prismaService.product.create({ data: input });
+        const newProduct = await this.prismaService.product.create({ data: input });
+        return newProduct;
+    }
+    async addPhoto(id, file) {
+        const filename = await this.fileService.upload(file, 'products');
+        await this.prismaService.product.update({ where: { id }, data: { images: { push: filename } } });
+        return true;
+    }
+    async removePhotos(id, filename) {
+        const product = await this.prismaService.product.findUnique({ where: { id } });
+        if (!product)
+            throw new common_1.NotFoundException('Товар не знайдено');
+        const filteredImages = product.images.filter((el) => el !== filename);
+        await this.prismaService.product.update({ where: { id }, data: { images: filteredImages } });
         return true;
     }
     async createMany() {
@@ -189,6 +204,7 @@ exports.ProductService = ProductService;
 exports.ProductService = ProductService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [nlp_service_1.NlpService,
+        file_service_1.FileService,
         prisma_service_1.PrismaService])
 ], ProductService);
 //# sourceMappingURL=product.service.js.map

@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const path_1 = require("path");
+const express = require("express");
 const core_1 = require("@nestjs/core");
 const session = require("express-session");
 const connect_redis_1 = require("connect-redis");
@@ -17,6 +19,7 @@ async function bootstrap() {
     const redis = app.get(redis_service_1.RedisService);
     app.use(cookieParser(config.getOrThrow('COOKIES_SECRET')));
     app.use(graphqlUploadExpress());
+    app.use('/uploads', express.static((0, path_1.join)(__dirname, '..', 'uploads')));
     app.useGlobalPipes(new common_1.ValidationPipe({ transform: true }));
     app.use(session({
         secret: config.getOrThrow('SESSION_SECRET'),
