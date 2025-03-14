@@ -10,10 +10,13 @@ export declare class ProductService {
     constructor(nlpService: NlpService, fileService: FileService, prismaService: PrismaService);
     getAll(): Promise<{
         products: {
+            price: number;
             id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string | null;
             images: string[];
             title: string;
-            price: number;
             brand: string;
             ram: number;
             builtInMemory: number;
@@ -29,18 +32,18 @@ export declare class ProductService {
             battery: number;
             materials: string;
             deliverySet: string;
-            createdAt: Date;
-            updatedAt: Date;
-            userId: string | null;
         }[];
         total: number;
     }>;
     paginateAndFilter(query: any): Promise<{
         products: {
+            price: number;
             id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string | null;
             images: string[];
             title: string;
-            price: number;
             brand: string;
             ram: number;
             builtInMemory: number;
@@ -56,9 +59,6 @@ export declare class ProductService {
             battery: number;
             materials: string;
             deliverySet: string;
-            createdAt: Date;
-            updatedAt: Date;
-            userId: string | null;
         }[];
         total: number;
     }>;
@@ -69,25 +69,28 @@ export declare class ProductService {
                 createdAt: Date;
                 updatedAt: Date;
                 email: string;
-                password: string;
                 username: string;
+                password: string;
                 displayName: string;
                 avatar: string | null;
             };
         } & {
+            text: string;
+            productId: string | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
             userId: string | null;
-            text: string;
             rating: number;
-            productId: string | null;
         })[];
     } & {
+        price: number;
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string | null;
         images: string[];
         title: string;
-        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -103,15 +106,15 @@ export declare class ProductService {
         battery: number;
         materials: string;
         deliverySet: string;
-        createdAt: Date;
-        updatedAt: Date;
-        userId: string | null;
     }>;
     search(input: string): Promise<{
+        price: number;
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string | null;
         images: string[];
         title: string;
-        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -127,15 +130,15 @@ export declare class ProductService {
         battery: number;
         materials: string;
         deliverySet: string;
-        createdAt: Date;
-        updatedAt: Date;
-        userId: string | null;
     }[]>;
     getMostPopular(): Promise<{
+        price: number;
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string | null;
         images: string[];
         title: string;
-        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -151,15 +154,15 @@ export declare class ProductService {
         battery: number;
         materials: string;
         deliverySet: string;
-        createdAt: Date;
-        updatedAt: Date;
-        userId: string | null;
     }[]>;
     getSimilar(id: string): Promise<{
+        price: number;
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string | null;
         images: string[];
         title: string;
-        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -175,15 +178,15 @@ export declare class ProductService {
         battery: number;
         materials: string;
         deliverySet: string;
-        createdAt: Date;
-        updatedAt: Date;
-        userId: string | null;
     }[]>;
     create(input: CreateProductInput): Promise<{
+        price: number;
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string | null;
         images: string[];
         title: string;
-        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -199,19 +202,19 @@ export declare class ProductService {
         battery: number;
         materials: string;
         deliverySet: string;
-        createdAt: Date;
-        updatedAt: Date;
-        userId: string | null;
     }>;
     addPhoto(id: string, file: any): Promise<boolean>;
     removePhotos(id: string, filename: string): Promise<boolean>;
     createMany(): Promise<boolean>;
     update(input: UpdateProductInput): Promise<boolean>;
     delete(id: string): Promise<{
+        price: number;
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string | null;
         images: string[];
         title: string;
-        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -227,8 +230,5 @@ export declare class ProductService {
         battery: number;
         materials: string;
         deliverySet: string;
-        createdAt: Date;
-        updatedAt: Date;
-        userId: string | null;
     }>;
 }
