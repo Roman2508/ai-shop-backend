@@ -10,12 +10,14 @@ exports.AccountModule = void 0;
 const common_1 = require("@nestjs/common");
 const account_service_1 = require("./account.service");
 const account_resolver_1 = require("./account.resolver");
+const file_module_1 = require("../../file/file.module");
 let AccountModule = class AccountModule {
 };
 exports.AccountModule = AccountModule;
 exports.AccountModule = AccountModule = __decorate([
     (0, common_1.Module)({
         providers: [account_resolver_1.AccountResolver, account_service_1.AccountService],
+        imports: [file_module_1.FileModule],
     })
 ], AccountModule);
 //# sourceMappingURL=account.module.js.map

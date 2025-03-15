@@ -1,33 +1,116 @@
+import { User } from 'prisma/generated';
+import { FileService } from 'src/modules/file/file.service';
 import { CreateUserInput } from './inputs/create-user.input';
+import { UpdateUserInput } from './inputs/update-user.input';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { ChangeEmailInput } from './inputs/change-email.input';
-import { User } from 'prisma/generated';
 import { ChangePasswordInput } from './inputs/change-password.input';
+import { AddToCartInput } from './inputs/add-to-cart.input';
+import { ChangeCartItemCountInput } from './inputs/change-cart-item-count.input';
 export declare class AccountService {
     private readonly prismaService;
-    constructor(prismaService: PrismaService);
+    private readonly fileService;
+    constructor(prismaService: PrismaService, fileService: FileService);
     findAll(): Promise<{
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         email: string;
-        username: string;
         password: string;
+        username: string;
         displayName: string;
         avatar: string | null;
+        city: string | null;
+        street: string | null;
+        postOffice: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }[]>;
     me(id: string): Promise<{
+        cart: ({
+            product: {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                images: string[];
+                title: string;
+                price: number;
+                brand: string;
+                ram: number;
+                builtInMemory: number;
+                color: string;
+                frontCamera: number;
+                mainCamera: number;
+                screenDiagonal: number;
+                simCount: number;
+                simFormat: string[];
+                os: string;
+                processorName: string;
+                processorCores: string;
+                battery: number;
+                materials: string;
+                deliverySet: string;
+            };
+        } & {
+            id: string;
+            userId: string;
+            productId: string;
+            count: number;
+        })[];
+        favorites: ({
+            product: {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                images: string[];
+                title: string;
+                price: number;
+                brand: string;
+                ram: number;
+                builtInMemory: number;
+                color: string;
+                frontCamera: number;
+                mainCamera: number;
+                screenDiagonal: number;
+                simCount: number;
+                simFormat: string[];
+                os: string;
+                processorName: string;
+                processorCores: string;
+                battery: number;
+                materials: string;
+                deliverySet: string;
+            };
+        } & {
+            id: string;
+            userId: string;
+            productId: string;
+        })[];
+        orders: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string | null;
+            status: import("prisma/generated").$Enums.EnumOrderStatus;
+            total: number;
+        }[];
+    } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         email: string;
-        username: string;
         password: string;
+        username: string;
         displayName: string;
         avatar: string | null;
+        city: string | null;
+        street: string | null;
+        postOffice: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     create(input: CreateUserInput): Promise<boolean>;
     changeEmail(user: User, input: ChangeEmailInput): Promise<boolean>;
     changePassword(user: User, input: ChangePasswordInput): Promise<boolean>;
-    toggleFavorite(productId: string, userId: string): Promise<boolean>;
+    toggleCart(userId: string, input: AddToCartInput): Promise<boolean>;
+    toggleFavorite(userId: string, productId: string): Promise<boolean>;
+    updateUserData(id: string, user: UpdateUserInput): Promise<boolean>;
+    uploadAvatar(id: string, file: any): Promise<boolean>;
+    changeCartItemCount(input: ChangeCartItemCountInput): Promise<boolean>;
 }

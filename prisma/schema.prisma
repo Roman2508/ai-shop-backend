@@ -19,7 +19,12 @@ model User {
 
   avatar String?
 
-  favorites Product[]
+  city String?
+  street String?
+  postOffice String? @map("post_office")
+
+  cart      CartItem[]
+  favorites FavoriteItem[]
   reviews   Review[]
   orders    Order[]
 
@@ -30,13 +35,11 @@ model User {
 }
 // npx prisma db push
 
-// processorCores === Int
+
 model Product {
   id String @id @default(uuid())
 
   images String[] @default([])
-  reviews    Review[]
-  orderItems OrderItem[]
 
   title String
   price Int
@@ -59,11 +62,43 @@ model Product {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String? @map("user_id")
+  // user   User?   @relation("user", fields: [userId], references: [id])
+  // userId String? @map("user_id")
+  reviews    Review[]
+  orderItems OrderItem[]
+  cartItems CartItem[]
+  favoriteItems FavoriteItem[]
 
   @@map("products")
 }
+
+model CartItem {
+  id        String   @id @default(uuid())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+
+  count     Int
+  
+  @@unique([userId, productId])
+}
+
+model FavoriteItem {
+  id        String   @id @default(uuid())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+
+  @@unique([userId, productId])
+}
+
+/*  */
 
 model Review {
   id String @id @default(uuid())
@@ -98,7 +133,6 @@ model Order {
 
   @@map("order")
 }
-
 
 model OrderItem {
   id        String   @id @default(cuid())

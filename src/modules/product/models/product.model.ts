@@ -65,13 +65,3 @@ export class ProductModel {
   @Field(() => Date)
   updatedAt: Date;
 }
-
-/* 
-model Product {
-  reviews    Review[]
-  orderItems OrderItem[]
-  
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String? @map("user_id")
-}
-*/

@@ -11,6 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserModel = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const cart_item_model_1 = require("./cart-item.model");
+const favorite_item_model_1 = require("./favorite-item.model");
+const order_model_1 = require("../../../order/models/order.model");
+const review_model_1 = require("../../../review/models/review.model");
 let UserModel = class UserModel {
 };
 exports.UserModel = UserModel;
@@ -38,6 +42,34 @@ __decorate([
     (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], UserModel.prototype, "avatar", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", String)
+], UserModel.prototype, "city", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", String)
+], UserModel.prototype, "street", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", String)
+], UserModel.prototype, "postOffice", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => [favorite_item_model_1.FavoriteItemModel]),
+    __metadata("design:type", Array)
+], UserModel.prototype, "favorites", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => [cart_item_model_1.CartItemModel]),
+    __metadata("design:type", Array)
+], UserModel.prototype, "cart", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => [order_model_1.OrderModel]),
+    __metadata("design:type", Array)
+], UserModel.prototype, "orders", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => [review_model_1.ReviewModel]),
+    __metadata("design:type", Array)
+], UserModel.prototype, "reviews", void 0);
 __decorate([
     (0, graphql_1.Field)(() => Date),
     __metadata("design:type", Date)

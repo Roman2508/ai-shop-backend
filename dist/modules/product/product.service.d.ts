@@ -14,7 +14,6 @@ export declare class ProductService {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            userId: string | null;
             images: string[];
             title: string;
             brand: string;
@@ -41,7 +40,6 @@ export declare class ProductService {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            userId: string | null;
             images: string[];
             title: string;
             brand: string;
@@ -73,6 +71,9 @@ export declare class ProductService {
                 password: string;
                 displayName: string;
                 avatar: string | null;
+                city: string | null;
+                street: string | null;
+                postOffice: string | null;
             };
         } & {
             text: string;
@@ -88,7 +89,6 @@ export declare class ProductService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        userId: string | null;
         images: string[];
         title: string;
         brand: string;
@@ -112,7 +112,6 @@ export declare class ProductService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        userId: string | null;
         images: string[];
         title: string;
         brand: string;
@@ -136,7 +135,6 @@ export declare class ProductService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        userId: string | null;
         images: string[];
         title: string;
         brand: string;
@@ -160,7 +158,6 @@ export declare class ProductService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        userId: string | null;
         images: string[];
         title: string;
         brand: string;
@@ -184,7 +181,6 @@ export declare class ProductService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        userId: string | null;
         images: string[];
         title: string;
         brand: string;
@@ -212,7 +208,6 @@ export declare class ProductService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        userId: string | null;
         images: string[];
         title: string;
         brand: string;

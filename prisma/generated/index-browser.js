@@ -124,6 +124,9 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   displayName: 'displayName',
   avatar: 'avatar',
+  city: 'city',
+  street: 'street',
+  postOffice: 'postOffice',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -149,8 +152,20 @@ exports.Prisma.ProductScalarFieldEnum = {
   materials: 'materials',
   deliverySet: 'deliverySet',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  userId: 'userId'
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CartItemScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  productId: 'productId',
+  count: 'count'
+};
+
+exports.Prisma.FavoriteItemScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  productId: 'productId'
 };
 
 exports.Prisma.ReviewScalarFieldEnum = {
@@ -204,6 +219,8 @@ exports.EnumOrderStatus = exports.$Enums.EnumOrderStatus = {
 exports.Prisma.ModelName = {
   User: 'User',
   Product: 'Product',
+  CartItem: 'CartItem',
+  FavoriteItem: 'FavoriteItem',
   Review: 'Review',
   Order: 'Order',
   OrderItem: 'OrderItem'

@@ -13,14 +13,18 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccountResolver = void 0;
+const GraphQLUpload = require("graphql-upload/GraphQLUpload.js");
 const graphql_1 = require("@nestjs/graphql");
 const user_model_1 = require("./models/user.model");
 const account_service_1 = require("./account.service");
+const update_user_input_1 = require("./inputs/update-user.input");
 const create_user_input_1 = require("./inputs/create-user.input");
-const authorized_decorator_1 = require("../../../shared/decorators/authorized.decorator");
-const auth_decorator_1 = require("../../../shared/decorators/auth.decorator");
 const change_email_input_1 = require("./inputs/change-email.input");
+const auth_decorator_1 = require("../../../shared/decorators/auth.decorator");
 const change_password_input_1 = require("./inputs/change-password.input");
+const authorized_decorator_1 = require("../../../shared/decorators/authorized.decorator");
+const add_to_cart_input_1 = require("./inputs/add-to-cart.input");
+const change_cart_item_count_input_1 = require("./inputs/change-cart-item-count.input");
 let AccountResolver = class AccountResolver {
     constructor(accountService) {
         this.accountService = accountService;
@@ -40,8 +44,20 @@ let AccountResolver = class AccountResolver {
     async changePassword(user, input) {
         return this.accountService.changePassword(user, input);
     }
-    async toggleFavorite(userId, productId) {
-        return this.accountService.toggleFavorite(productId, userId);
+    async toggleCart(id, input) {
+        return this.accountService.toggleCart(id, input);
+    }
+    async toggleFavorite(id, productId) {
+        return this.accountService.toggleFavorite(id, productId);
+    }
+    async updateUserData(id, input) {
+        return this.accountService.updateUserData(id, input);
+    }
+    async uploadAvatar(userId, file) {
+        return this.accountService.uploadAvatar(userId, file);
+    }
+    async changeCartItemCount(input) {
+        return this.accountService.changeCartItemCount(input);
     }
 };
 exports.AccountResolver = AccountResolver;
@@ -86,13 +102,48 @@ __decorate([
 ], AccountResolver.prototype, "changePassword", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'toggleCart' }),
+    __param(0, (0, authorized_decorator_1.Authorized)('id')),
+    __param(1, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, add_to_cart_input_1.AddToCartInput]),
+    __metadata("design:returntype", Promise)
+], AccountResolver.prototype, "toggleCart", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
     (0, graphql_1.Mutation)(() => Boolean, { name: 'toggleFavorite' }),
     __param(0, (0, authorized_decorator_1.Authorized)('id')),
-    __param(1, (0, graphql_1.Args)('data')),
+    __param(1, (0, graphql_1.Args)('productId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], AccountResolver.prototype, "toggleFavorite", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'updateUserData' }),
+    __param(0, (0, authorized_decorator_1.Authorized)('id')),
+    __param(1, (0, graphql_1.Args)('user')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, update_user_input_1.UpdateUserInput]),
+    __metadata("design:returntype", Promise)
+], AccountResolver.prototype, "updateUserData", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'uploadAvatar' }),
+    __param(0, (0, authorized_decorator_1.Authorized)('id')),
+    __param(1, (0, graphql_1.Args)({ name: 'file', type: () => GraphQLUpload })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], AccountResolver.prototype, "uploadAvatar", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'changeCartItemCount' }),
+    __param(0, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [change_cart_item_count_input_1.ChangeCartItemCountInput]),
+    __metadata("design:returntype", Promise)
+], AccountResolver.prototype, "changeCartItemCount", null);
 exports.AccountResolver = AccountResolver = __decorate([
     (0, graphql_1.Resolver)('Account'),
     __metadata("design:paramtypes", [account_service_1.AccountService])

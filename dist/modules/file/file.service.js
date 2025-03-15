@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileService = void 0;
 const path = require('path');
+const fs = require("fs");
 const fs_1 = require("fs");
 const common_1 = require("@nestjs/common");
 let FileService = class FileService {
@@ -30,6 +31,16 @@ let FileService = class FileService {
                 .on('error', reject);
         });
         return newFilename;
+    }
+    async removeFile(filename, folderName) {
+        const filePath = path.join(process.cwd(), `uploads/${folderName}`, filename);
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+        else {
+            throw new common_1.NotFoundException('Файл не знайдено');
+        }
+        return true;
     }
 };
 exports.FileService = FileService;

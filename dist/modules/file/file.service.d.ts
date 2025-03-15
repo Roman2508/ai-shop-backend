@@ -3,4 +3,5 @@ export declare class FileService {
     constructor();
     generateId: () => string;
     upload(file: Upload, folderName?: 'products' | 'users'): Promise<string>;
+    removeFile(filename: string, folderName: string): Promise<boolean>;
 }
