@@ -13,26 +13,26 @@ export declare class AccountService {
     constructor(prismaService: PrismaService, fileService: FileService);
     findAll(): Promise<{
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         email: string;
-        password: string;
         username: string;
+        password: string;
         displayName: string;
         avatar: string | null;
         city: string | null;
         street: string | null;
         postOffice: string | null;
-        createdAt: Date;
-        updatedAt: Date;
     }[]>;
     me(id: string): Promise<{
         cart: ({
             product: {
+                price: number;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
                 images: string[];
                 title: string;
-                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -50,19 +50,19 @@ export declare class AccountService {
                 deliverySet: string;
             };
         } & {
+            productId: string;
             id: string;
             userId: string;
-            productId: string;
             count: number;
         })[];
         favorites: ({
             product: {
+                price: number;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
                 images: string[];
                 title: string;
-                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -80,30 +80,30 @@ export declare class AccountService {
                 deliverySet: string;
             };
         } & {
+            productId: string;
             id: string;
             userId: string;
-            productId: string;
         })[];
         orders: {
+            status: import("prisma/generated").$Enums.EnumOrderStatus;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            userId: string | null;
-            status: import("prisma/generated").$Enums.EnumOrderStatus;
             total: number;
+            userId: string | null;
         }[];
     } & {
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         email: string;
-        password: string;
         username: string;
+        password: string;
         displayName: string;
         avatar: string | null;
         city: string | null;
         street: string | null;
         postOffice: string | null;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     create(input: CreateUserInput): Promise<boolean>;
     changeEmail(user: User, input: ChangeEmailInput): Promise<boolean>;
