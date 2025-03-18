@@ -14,8 +14,8 @@ export declare class AccountResolver {
         createdAt: Date;
         updatedAt: Date;
         email: string;
-        username: string;
         password: string;
+        username: string;
         displayName: string;
         avatar: string | null;
         city: string | null;
@@ -23,14 +23,12 @@ export declare class AccountResolver {
         postOffice: string | null;
     }[]>;
     me(id: string): Promise<{
-        cart: ({
+        reviews: ({
             product: {
-                price: number;
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
                 images: string[];
                 title: string;
+                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -46,21 +44,67 @@ export declare class AccountResolver {
                 battery: number;
                 materials: string;
                 deliverySet: string;
+                createdAt: Date;
+                updatedAt: Date;
+            };
+            user: {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                email: string;
+                password: string;
+                username: string;
+                displayName: string;
+                avatar: string | null;
+                city: string | null;
+                street: string | null;
+                postOffice: string | null;
             };
         } & {
-            productId: string;
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            text: string;
+            rating: number;
+            userId: string | null;
+            productId: string | null;
+        })[];
+        cart: ({
+            product: {
+                id: string;
+                images: string[];
+                title: string;
+                price: number;
+                brand: string;
+                ram: number;
+                builtInMemory: number;
+                color: string;
+                frontCamera: number;
+                mainCamera: number;
+                screenDiagonal: number;
+                simCount: number;
+                simFormat: string[];
+                os: string;
+                processorName: string;
+                processorCores: string;
+                battery: number;
+                materials: string;
+                deliverySet: string;
+                createdAt: Date;
+                updatedAt: Date;
+            };
+        } & {
             id: string;
             userId: string;
+            productId: string;
             count: number;
         })[];
         favorites: ({
             product: {
-                price: number;
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
                 images: string[];
                 title: string;
+                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -76,27 +120,29 @@ export declare class AccountResolver {
                 battery: number;
                 materials: string;
                 deliverySet: string;
+                createdAt: Date;
+                updatedAt: Date;
             };
         } & {
-            productId: string;
             id: string;
             userId: string;
+            productId: string;
         })[];
         orders: {
-            status: import("prisma/generated").$Enums.EnumOrderStatus;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            total: number;
             userId: string | null;
+            total: number;
+            status: import("prisma/generated").$Enums.EnumOrderStatus;
         }[];
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
         email: string;
-        username: string;
         password: string;
+        username: string;
         displayName: string;
         avatar: string | null;
         city: string | null;

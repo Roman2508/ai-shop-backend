@@ -29,6 +29,7 @@ let AccountService = class AccountService {
             include: {
                 cart: { include: { product: true } },
                 favorites: { include: { product: true } },
+                reviews: { include: { product: true, user: true } },
                 orders: true,
             },
         });

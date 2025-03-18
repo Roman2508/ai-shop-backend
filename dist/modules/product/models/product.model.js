@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductModel = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const review_model_1 = require("../../review/models/review.model");
 let ProductModel = class ProductModel {
 };
 exports.ProductModel = ProductModel;
@@ -90,6 +91,10 @@ __decorate([
     (0, graphql_1.Field)(() => String),
     __metadata("design:type", String)
 ], ProductModel.prototype, "deliverySet", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => [review_model_1.ReviewModel]),
+    __metadata("design:type", Array)
+], ProductModel.prototype, "reviews", void 0);
 __decorate([
     (0, graphql_1.Field)(() => Date),
     __metadata("design:type", Date)

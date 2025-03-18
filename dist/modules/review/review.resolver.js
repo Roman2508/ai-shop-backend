@@ -15,12 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReviewResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const review_service_1 = require("./review.service");
+const review_model_1 = require("./models/review.model");
 const create_review_input_1 = require("./inputs/create-review.input");
 const auth_decorator_1 = require("../../shared/decorators/auth.decorator");
 const authorized_decorator_1 = require("../../shared/decorators/authorized.decorator");
 let ReviewResolver = class ReviewResolver {
     constructor(reviewService) {
         this.reviewService = reviewService;
+    }
+    async getByUserId(userId) {
+        return this.reviewService.getByUserId(userId);
     }
     async create(userId, input) {
         return this.reviewService.create(userId, input);
@@ -30,6 +34,14 @@ let ReviewResolver = class ReviewResolver {
     }
 };
 exports.ReviewResolver = ReviewResolver;
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Query)(() => [review_model_1.ReviewModel], { name: 'getReviewByUserId' }),
+    __param(0, (0, authorized_decorator_1.Authorized)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ReviewResolver.prototype, "getByUserId", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
     (0, graphql_1.Mutation)(() => Boolean, { name: 'createReview' }),

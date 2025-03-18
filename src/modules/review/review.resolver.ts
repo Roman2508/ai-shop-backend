@@ -1,6 +1,7 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ReviewService } from './review.service';
+import { ReviewModel } from './models/review.model';
 import { CreateReviewInput } from './inputs/create-review.input';
 import { Authorization } from 'src/shared/decorators/auth.decorator';
 import { Authorized } from 'src/shared/decorators/authorized.decorator';
@@ -8,6 +9,12 @@ import { Authorized } from 'src/shared/decorators/authorized.decorator';
 @Resolver('Review')
 export class ReviewResolver {
   constructor(private readonly reviewService: ReviewService) {}
+
+  @Authorization()
+  @Query(() => [ReviewModel], { name: 'getReviewByUserId' })
+  async getByUserId(@Authorized('id') userId: string) {
+    return this.reviewService.getByUserId(userId);
+  }
 
   @Authorization()
   @Mutation(() => Boolean, { name: 'createReview' })

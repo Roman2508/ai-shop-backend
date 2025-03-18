@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { ReviewModel } from 'src/modules/review/models/review.model';
 
 @ObjectType()
 export class ProductModel {
@@ -58,6 +59,9 @@ export class ProductModel {
 
   @Field(() => String)
   deliverySet: string;
+
+  @Field(() => [ReviewModel])
+  reviews: ReviewModel[];
 
   @Field(() => Date)
   createdAt: Date;

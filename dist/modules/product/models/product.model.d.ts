@@ -1,3 +1,4 @@
+import { ReviewModel } from 'src/modules/review/models/review.model';
 export declare class ProductModel {
     id: number;
     title: string;
@@ -18,6 +19,7 @@ export declare class ProductModel {
     battery: number;
     materials: string;
     deliverySet: string;
+    reviews: ReviewModel[];
     createdAt: Date;
     updatedAt: Date;
 }

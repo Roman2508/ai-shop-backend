@@ -135,6 +135,7 @@ export class ProductService {
         reviews: {
           include: {
             user: true,
+            product: true,
           },
         },
       },
@@ -214,6 +215,9 @@ export class ProductService {
     return true;
   }
 
+  /* DELETE THIS */
+  /* DELETE THIS */
+  /* DELETE THIS */
   async createMany() {
     const data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
     const dataWithCorrectTypes = data.map((el) => ({

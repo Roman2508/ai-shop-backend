@@ -11,17 +11,27 @@ export class ReviewService {
     private readonly productService: ProductService,
   ) {}
 
+  async getByUserId(userId: string) {
+    const reviews = await this.prismaService.review.findMany({
+      where: { userId },
+      include: { product: true, user: true },
+    });
+    return reviews;
+  }
+
   async create(userId: string, input: CreateReviewInput) {
     const { productId, ...data } = input;
     await this.productService.getById(productId);
 
-    return this.prismaService.review.create({
+    await this.prismaService.review.create({
       data: {
         ...data,
         product: { connect: { id: productId } },
         user: { connect: { id: userId } },
       },
     });
+
+    return true;
   }
 
   async delete(userId: string, id: string) {
@@ -31,6 +41,8 @@ export class ReviewService {
     });
 
     if (!review) throw new NotFoundException('Відгук не знайдено або ви не є його автором');
-    return this.prismaService.review.delete({ where: { id } });
+    await this.prismaService.review.delete({ where: { id } });
+
+    return true;
   }
 }

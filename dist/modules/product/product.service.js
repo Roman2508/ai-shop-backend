@@ -105,6 +105,7 @@ let ProductService = class ProductService {
                 reviews: {
                     include: {
                         user: true,
+                        product: true,
                     },
                 },
             },

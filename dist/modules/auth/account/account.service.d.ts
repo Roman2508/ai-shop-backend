@@ -13,26 +13,26 @@ export declare class AccountService {
     constructor(prismaService: PrismaService, fileService: FileService);
     findAll(): Promise<{
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         email: string;
-        username: string;
         password: string;
+        username: string;
         displayName: string;
         avatar: string | null;
         city: string | null;
         street: string | null;
         postOffice: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }[]>;
     me(id: string): Promise<{
         cart: ({
             product: {
-                price: number;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
                 images: string[];
                 title: string;
+                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -50,19 +50,19 @@ export declare class AccountService {
                 deliverySet: string;
             };
         } & {
-            productId: string;
             id: string;
             userId: string;
+            productId: string;
             count: number;
         })[];
         favorites: ({
             product: {
-                price: number;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
                 images: string[];
                 title: string;
+                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -80,30 +80,76 @@ export declare class AccountService {
                 deliverySet: string;
             };
         } & {
-            productId: string;
             id: string;
             userId: string;
+            productId: string;
         })[];
-        orders: {
-            status: import("prisma/generated").$Enums.EnumOrderStatus;
+        reviews: ({
+            user: {
+                id: string;
+                email: string;
+                password: string;
+                username: string;
+                displayName: string;
+                avatar: string | null;
+                city: string | null;
+                street: string | null;
+                postOffice: string | null;
+                createdAt: Date;
+                updatedAt: Date;
+            };
+            product: {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                images: string[];
+                title: string;
+                price: number;
+                brand: string;
+                ram: number;
+                builtInMemory: number;
+                color: string;
+                frontCamera: number;
+                mainCamera: number;
+                screenDiagonal: number;
+                simCount: number;
+                simFormat: string[];
+                os: string;
+                processorName: string;
+                processorCores: string;
+                battery: number;
+                materials: string;
+                deliverySet: string;
+            };
+        } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            total: number;
             userId: string | null;
+            productId: string | null;
+            text: string;
+            rating: number;
+        })[];
+        orders: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string | null;
+            status: import("prisma/generated").$Enums.EnumOrderStatus;
+            total: number;
         }[];
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         email: string;
-        username: string;
         password: string;
+        username: string;
         displayName: string;
         avatar: string | null;
         city: string | null;
         street: string | null;
         postOffice: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     create(input: CreateUserInput): Promise<boolean>;
     changeEmail(user: User, input: ChangeEmailInput): Promise<boolean>;

@@ -6,3 +6,5 @@ import { SessionResolver } from './session.resolver';
   providers: [SessionResolver, SessionService],
 })
 export class SessionModule {}
+
+//  "request.credentials": "include" ===> GQL Settings
