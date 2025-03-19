@@ -13,6 +13,7 @@ import { ReviewModule } from 'src/modules/review/review.module';
 import { ProductModule } from 'src/modules/product/product.module';
 import { AccountModule } from 'src/modules/auth/account/account.module';
 import { SessionModule } from 'src/modules/auth/session/session.module';
+import { PaymentModule } from 'src/modules/payment/payment.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { SessionModule } from 'src/modules/auth/session/session.module';
     ReviewModule,
     OrderModule,
     FileModule,
+    PaymentModule,
   ],
 })
 export class CoreModule {}
