@@ -225,8 +225,7 @@ export declare class ProductService {
     addPhoto(id: string, file: any): Promise<boolean>;
     removePhotos(id: string, filename: string): Promise<boolean>;
     createMany(): Promise<boolean>;
-    update(input: UpdateProductInput): Promise<boolean>;
-    delete(id: string): Promise<{
+    update(input: UpdateProductInput): Promise<{
         id: string;
         images: string[];
         title: string;
@@ -249,4 +248,5 @@ export declare class ProductService {
         createdAt: Date;
         updatedAt: Date;
     }>;
+    delete(id: string): Promise<boolean>;
 }

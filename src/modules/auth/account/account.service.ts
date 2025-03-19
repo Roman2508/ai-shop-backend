@@ -3,12 +3,12 @@ import { User } from 'prisma/generated';
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 import { FileService } from 'src/modules/file/file.service';
+import { AddToCartInput } from './inputs/add-to-cart.input';
 import { CreateUserInput } from './inputs/create-user.input';
 import { UpdateUserInput } from './inputs/update-user.input';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { ChangeEmailInput } from './inputs/change-email.input';
 import { ChangePasswordInput } from './inputs/change-password.input';
-import { AddToCartInput } from './inputs/add-to-cart.input';
 import { ChangeCartItemCountInput } from './inputs/change-cart-item-count.input';
 
 @Injectable()

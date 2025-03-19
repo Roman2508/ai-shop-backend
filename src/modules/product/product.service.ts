@@ -129,6 +129,7 @@ export class ProductService {
   }
 
   async getById(id: string) {
+    console.log(id);
     const product = await this.prismaService.product.findUnique({
       where: { id },
       include: {
@@ -210,6 +211,7 @@ export class ProductService {
   async removePhotos(id: string, filename: string) {
     const product = await this.prismaService.product.findUnique({ where: { id } });
     if (!product) throw new NotFoundException('Товар не знайдено');
+    await this.fileService.removeFile(filename, 'products');
     const filteredImages = product.images.filter((el) => el !== filename);
     await this.prismaService.product.update({ where: { id }, data: { images: filteredImages } });
     return true;
@@ -245,11 +247,13 @@ export class ProductService {
       where: { id: productId },
       data,
     });
-    return true;
+
+    return this.prismaService.product.findUnique({ where: { id: productId } });
   }
 
   async delete(id: string) {
     this.getById(id);
-    return this.prismaService.product.delete({ where: { id } });
+    await this.prismaService.product.delete({ where: { id } });
+    return true;
   }
 }

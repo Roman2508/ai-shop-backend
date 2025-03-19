@@ -222,8 +222,7 @@ export declare class ProductResolver {
     addPhoto(productId: string, file: any): Promise<boolean>;
     removePhotos(productId: string, filename: string): Promise<boolean>;
     createMany(): Promise<boolean>;
-    update(input: UpdateProductInput): Promise<boolean>;
-    delete(productId: string): Promise<{
+    update(input: UpdateProductInput): Promise<{
         id: string;
         images: string[];
         title: string;
@@ -246,4 +245,5 @@ export declare class ProductResolver {
         createdAt: Date;
         updatedAt: Date;
     }>;
+    delete(productId: string): Promise<boolean>;
 }

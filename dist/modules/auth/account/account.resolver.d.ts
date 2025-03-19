@@ -11,8 +11,6 @@ export declare class AccountResolver {
     constructor(accountService: AccountService);
     findAll(): Promise<{
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         email: string;
         password: string;
         username: string;
@@ -21,57 +19,15 @@ export declare class AccountResolver {
         city: string | null;
         street: string | null;
         postOffice: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }[]>;
     me(id: string): Promise<{
-        reviews: ({
-            product: {
-                id: string;
-                images: string[];
-                title: string;
-                price: number;
-                brand: string;
-                ram: number;
-                builtInMemory: number;
-                color: string;
-                frontCamera: number;
-                mainCamera: number;
-                screenDiagonal: number;
-                simCount: number;
-                simFormat: string[];
-                os: string;
-                processorName: string;
-                processorCores: string;
-                battery: number;
-                materials: string;
-                deliverySet: string;
-                createdAt: Date;
-                updatedAt: Date;
-            };
-            user: {
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                email: string;
-                password: string;
-                username: string;
-                displayName: string;
-                avatar: string | null;
-                city: string | null;
-                street: string | null;
-                postOffice: string | null;
-            };
-        } & {
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            text: string;
-            rating: number;
-            userId: string | null;
-            productId: string | null;
-        })[];
         cart: ({
             product: {
                 id: string;
+                createdAt: Date;
+                updatedAt: Date;
                 images: string[];
                 title: string;
                 price: number;
@@ -90,8 +46,6 @@ export declare class AccountResolver {
                 battery: number;
                 materials: string;
                 deliverySet: string;
-                createdAt: Date;
-                updatedAt: Date;
             };
         } & {
             id: string;
@@ -102,6 +56,8 @@ export declare class AccountResolver {
         favorites: ({
             product: {
                 id: string;
+                createdAt: Date;
+                updatedAt: Date;
                 images: string[];
                 title: string;
                 price: number;
@@ -120,26 +76,68 @@ export declare class AccountResolver {
                 battery: number;
                 materials: string;
                 deliverySet: string;
-                createdAt: Date;
-                updatedAt: Date;
             };
         } & {
             id: string;
             userId: string;
             productId: string;
         })[];
+        reviews: ({
+            user: {
+                id: string;
+                email: string;
+                password: string;
+                username: string;
+                displayName: string;
+                avatar: string | null;
+                city: string | null;
+                street: string | null;
+                postOffice: string | null;
+                createdAt: Date;
+                updatedAt: Date;
+            };
+            product: {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                images: string[];
+                title: string;
+                price: number;
+                brand: string;
+                ram: number;
+                builtInMemory: number;
+                color: string;
+                frontCamera: number;
+                mainCamera: number;
+                screenDiagonal: number;
+                simCount: number;
+                simFormat: string[];
+                os: string;
+                processorName: string;
+                processorCores: string;
+                battery: number;
+                materials: string;
+                deliverySet: string;
+            };
+        } & {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string | null;
+            productId: string | null;
+            text: string;
+            rating: number;
+        })[];
         orders: {
             id: string;
             createdAt: Date;
             updatedAt: Date;
             userId: string | null;
-            total: number;
             status: import("prisma/generated").$Enums.EnumOrderStatus;
+            total: number;
         }[];
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         email: string;
         password: string;
         username: string;
@@ -148,6 +146,8 @@ export declare class AccountResolver {
         city: string | null;
         street: string | null;
         postOffice: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     create(input: CreateUserInput): Promise<boolean>;
     changeEmail(user: User, input: ChangeEmailInput): Promise<boolean>;
