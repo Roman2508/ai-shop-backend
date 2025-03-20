@@ -1,11 +1,19 @@
 import * as crypto from 'crypto';
+import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PaymentService {
+  constructor(private readonly configService: ConfigService) {}
+
   async createPayment() {
-    const fondyMerchantId = process.env.FONDY_MERCHANT_ID;
-    const fondyPassword = process.env.FONDY_MERCHANT_PASSWORD;
+    const FONDY_MERCHANT_ID = this.configService.getOrThrow<string>('FONDY_MERCHANT_ID');
+    const FONDY_MARCHANT_PASSWORD = this.configService.getOrThrow<string>('FONDY_MERCHANT_PASSWORD');
+    const FRONTEND_URL = this.configService.getOrThrow<string>('FRONTEND_URL');
+    const NGROCK_FORWARDING_URL = 'https://9e68-109-251-250-156.ngrok-free.app';
+    const ENVIRONMENT = this.configService.getOrThrow<string>('NODE_ENV');
+
+    const BASE_URL = ENVIRONMENT === 'development' ? NGROCK_FORWARDING_URL : FRONTEND_URL;
 
     const dto = {
       name: 'testname',
@@ -14,16 +22,14 @@ export class PaymentService {
     };
 
     const order_id = `name=${dto.name}//duration=${dto.duration}//price=${dto.price}//createdAt=${Date.now()}`;
-
     // const order_id = `name=${dto.name}//duration=${dto.duration}//price=${dto.price}//startAt=${dto.startAt}//student=${dto.student}//tutor=${dto.tutor}//createdAt=${Date.now()}`;
 
-    // process.env.ALLOWED_ORIGIN
     const orderBody = {
-      response_url: 'http://localhost:3000/', // маэ бути thank you page
-      // server_callback_url: `${'process.env.NRGOK_FORWARDING'}/reserved-lessons/payment/confirmation`,
+      response_url: `${BASE_URL}/catalog`, // маэ бути thank you page
+      // server_callback_url: `${BASE_URL}/graphql`,
       // server_callback_url: `http://localhost:3000`,
       order_id: order_id,
-      merchant_id: fondyMerchantId,
+      merchant_id: FONDY_MERCHANT_ID,
       order_desc: dto.name,
       amount: dto.price * 100,
       currency: 'UAH',
@@ -38,7 +44,7 @@ export class PaymentService {
     const signatureRaw = orderKeys.map((v) => orderBody[v]).join('|');
     const signature = crypto.createHash('sha1');
 
-    signature.update(`${fondyPassword}|${signatureRaw}`);
+    signature.update(`${FONDY_MARCHANT_PASSWORD}|${signatureRaw}`);
 
     const json = JSON.stringify({
       request: {
@@ -56,6 +62,7 @@ export class PaymentService {
     });
     // window.location.href = response.checkout_url
     const data = await response.json();
+    console.log(data);
     return data;
   }
 

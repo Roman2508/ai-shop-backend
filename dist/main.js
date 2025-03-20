@@ -39,7 +39,7 @@ async function bootstrap() {
         }),
     }));
     app.enableCors({
-        origin: config.getOrThrow('ALLOWED_ORIGIN'),
+        origin: config.getOrThrow('ALLOWED_ORIGIN').split(','),
         credentials: true,
         exposedHeaders: ['set-cookie'],
     });

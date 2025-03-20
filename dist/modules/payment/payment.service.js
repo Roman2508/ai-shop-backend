@@ -5,14 +5,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaymentService = void 0;
 const crypto = require("crypto");
+const config_1 = require("@nestjs/config");
 const common_1 = require("@nestjs/common");
 let PaymentService = class PaymentService {
+    constructor(configService) {
+        this.configService = configService;
+    }
     async createPayment() {
-        const fondyMerchantId = process.env.FONDY_MERCHANT_ID;
-        const fondyPassword = process.env.FONDY_MERCHANT_PASSWORD;
+        const FONDY_MERCHANT_ID = this.configService.getOrThrow('FONDY_MERCHANT_ID');
+        const FONDY_MARCHANT_PASSWORD = this.configService.getOrThrow('FONDY_MERCHANT_PASSWORD');
+        const FRONTEND_URL = this.configService.getOrThrow('FRONTEND_URL');
+        const NGROCK_FORWARDING_URL = 'https://9e68-109-251-250-156.ngrok-free.app';
+        const ENVIRONMENT = this.configService.getOrThrow('NODE_ENV');
+        const BASE_URL = ENVIRONMENT === 'development' ? NGROCK_FORWARDING_URL : FRONTEND_URL;
         const dto = {
             name: 'testname',
             duration: 'duration',
@@ -20,9 +31,9 @@ let PaymentService = class PaymentService {
         };
         const order_id = `name=${dto.name}//duration=${dto.duration}//price=${dto.price}//createdAt=${Date.now()}`;
         const orderBody = {
-            response_url: 'http://localhost:3000/',
+            response_url: `${BASE_URL}/catalog`,
             order_id: order_id,
-            merchant_id: fondyMerchantId,
+            merchant_id: FONDY_MERCHANT_ID,
             order_desc: dto.name,
             amount: dto.price * 100,
             currency: 'UAH',
@@ -36,7 +47,7 @@ let PaymentService = class PaymentService {
         });
         const signatureRaw = orderKeys.map((v) => orderBody[v]).join('|');
         const signature = crypto.createHash('sha1');
-        signature.update(`${fondyPassword}|${signatureRaw}`);
+        signature.update(`${FONDY_MARCHANT_PASSWORD}|${signatureRaw}`);
         const json = JSON.stringify({
             request: {
                 ...orderBody,
@@ -51,6 +62,7 @@ let PaymentService = class PaymentService {
             method: 'POST',
         });
         const data = await response.json();
+        console.log(data);
         return data;
     }
     async confirmPayment(dto) {
@@ -78,6 +90,7 @@ let PaymentService = class PaymentService {
 };
 exports.PaymentService = PaymentService;
 exports.PaymentService = PaymentService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [config_1.ConfigService])
 ], PaymentService);
 //# sourceMappingURL=payment.service.js.map
