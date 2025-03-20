@@ -55,7 +55,8 @@ export type OrderItem = $Result.DefaultSelection<Prisma.$OrderItemPayload>
 export namespace $Enums {
   export const EnumOrderStatus: {
   PENDING: 'PENDING',
-  PAYED: 'PAYED'
+  PAYED: 'PAYED',
+  DELIVERED: 'DELIVERED'
 };
 
 export type EnumOrderStatus = (typeof EnumOrderStatus)[keyof typeof EnumOrderStatus]

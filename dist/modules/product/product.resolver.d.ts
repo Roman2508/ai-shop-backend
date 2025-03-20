@@ -97,11 +97,11 @@ export declare class ProductResolver {
             };
         } & {
             text: string;
+            userId: string | null;
             productId: string | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            userId: string | null;
             rating: number;
         })[];
     } & {

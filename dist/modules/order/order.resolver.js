@@ -15,15 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const order_service_1 = require("./order.service");
+const order_model_1 = require("./models/order.model");
 const create_order_input_1 = require("./inputs/create-order.input");
 const auth_decorator_1 = require("../../shared/decorators/auth.decorator");
-const authorized_decorator_1 = require("../../shared/decorators/authorized.decorator");
 let OrderResolver = class OrderResolver {
     constructor(orderService) {
         this.orderService = orderService;
     }
-    async createPayment(userId, input) {
-        return this.orderService.createPayment(input, userId);
+    async createPayment(input) {
+        return this.orderService.create(input);
     }
     async updateStatus() {
         return this.orderService.updateStatus();
@@ -31,12 +31,10 @@ let OrderResolver = class OrderResolver {
 };
 exports.OrderResolver = OrderResolver;
 __decorate([
-    (0, auth_decorator_1.Authorization)(),
-    (0, graphql_1.Mutation)(() => Boolean, { name: 'createPayment' }),
-    __param(0, (0, authorized_decorator_1.Authorized)('id')),
-    __param(1, (0, graphql_1.Args)('data')),
+    (0, graphql_1.Mutation)(() => order_model_1.OrderModel, { name: 'createOrder' }),
+    __param(0, (0, graphql_1.Args)('data')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, create_order_input_1.CreateOrderInput]),
+    __metadata("design:paramtypes", [create_order_input_1.CreateOrderInput]),
     __metadata("design:returntype", Promise)
 ], OrderResolver.prototype, "createPayment", null);
 __decorate([

@@ -1,6 +1,5 @@
-import { EnumOrderStatus } from 'prisma/generated';
 export declare class CreateOrderInput {
-    status: EnumOrderStatus;
+    userId: string;
     items: OrderItemDto[];
 }
 export declare class OrderItemDto {

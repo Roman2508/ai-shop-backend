@@ -3,6 +3,13 @@ import { CreateOrderInput } from './inputs/create-order.input';
 export declare class OrderService {
     private prismaService;
     constructor(prismaService: PrismaService);
-    createPayment(input: CreateOrderInput, userId: string): Promise<boolean>;
+    create(input: CreateOrderInput): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        status: import("prisma/generated").$Enums.EnumOrderStatus;
+        total: number;
+        userId: string | null;
+    }>;
     updateStatus(): Promise<boolean>;
 }

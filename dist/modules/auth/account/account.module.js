@@ -18,6 +18,7 @@ exports.AccountModule = AccountModule = __decorate([
     (0, common_1.Module)({
         providers: [account_resolver_1.AccountResolver, account_service_1.AccountService],
         imports: [file_module_1.FileModule],
+        exports: [account_service_1.AccountService],
     })
 ], AccountModule);
 //# sourceMappingURL=account.module.js.map

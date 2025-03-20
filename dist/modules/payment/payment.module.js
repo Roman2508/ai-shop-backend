@@ -9,13 +9,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaymentModule = void 0;
 const common_1 = require("@nestjs/common");
 const payment_service_1 = require("./payment.service");
-const payment_resolver_1 = require("./payment.resolver");
+const order_module_1 = require("../order/order.module");
+const payment_controller_1 = require("./payment.controller");
+const account_module_1 = require("../auth/account/account.module");
 let PaymentModule = class PaymentModule {
 };
 exports.PaymentModule = PaymentModule;
 exports.PaymentModule = PaymentModule = __decorate([
     (0, common_1.Module)({
-        providers: [payment_resolver_1.PaymentResolver, payment_service_1.PaymentService],
+        controllers: [payment_controller_1.PaymentController],
+        providers: [payment_service_1.PaymentService],
+        imports: [order_module_1.OrderModule, account_module_1.AccountModule],
     })
 ], PaymentModule);
 //# sourceMappingURL=payment.module.js.map

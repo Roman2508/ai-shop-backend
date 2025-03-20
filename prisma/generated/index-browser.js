@@ -213,7 +213,8 @@ exports.Prisma.NullsOrder = {
 };
 exports.EnumOrderStatus = exports.$Enums.EnumOrderStatus = {
   PENDING: 'PENDING',
-  PAYED: 'PAYED'
+  PAYED: 'PAYED',
+  DELIVERED: 'DELIVERED'
 };
 
 exports.Prisma.ModelName = {

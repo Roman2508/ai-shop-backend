@@ -11,27 +11,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderService = void 0;
 const common_1 = require("@nestjs/common");
+const generated_1 = require("../../../prisma/generated/index.js");
 const prisma_service_1 = require("../../core/prisma/prisma.service");
 let OrderService = class OrderService {
     constructor(prismaService) {
         this.prismaService = prismaService;
     }
-    async createPayment(input, userId) {
-        const orderItems = input.items.map((item) => ({
+    async create(input) {
+        const { userId, items } = input;
+        const orderItems = items.map((item) => ({
             quantity: item.quantity,
             price: item.price,
             product: { connect: { id: item.productId } },
         }));
-        const total = input.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        const total = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
         const order = await this.prismaService.order.create({
             data: {
                 total,
-                status: input.status,
+                status: generated_1.EnumOrderStatus.PAYED,
                 items: { create: orderItems },
                 user: { connect: { id: userId } },
             },
         });
-        return true;
+        return order;
     }
     async updateStatus() {
         return true;

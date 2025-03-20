@@ -1,14 +1,18 @@
-import { Field, InputType } from '@nestjs/graphql';
 import { Type } from 'class-transformer';
+import { Field, InputType } from '@nestjs/graphql';
 import { EnumOrderStatus } from 'prisma/generated';
 import { IsArray, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 @InputType()
 export class CreateOrderInput {
+  // @Field(() => String)
+  // @IsOptional()
+  // @IsEnum(EnumOrderStatus, { message: 'Статус замовлення оновлено' })
+  // status: EnumOrderStatus;
+
   @Field(() => String)
   @IsOptional()
-  @IsEnum(EnumOrderStatus, { message: 'Статус замовлення оновлено' })
-  status: EnumOrderStatus;
+  userId: string;
 
   @Field(() => [OrderItemDto])
   @IsArray({ message: 'В замовленні немає ні одного товара' })

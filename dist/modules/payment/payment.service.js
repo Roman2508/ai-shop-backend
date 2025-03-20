@@ -11,27 +11,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaymentService = void 0;
 const crypto = require("crypto");
-const config_1 = require("@nestjs/config");
 const common_1 = require("@nestjs/common");
+const config_1 = require("@nestjs/config");
+const order_service_1 = require("../order/order.service");
+const account_service_1 = require("../auth/account/account.service");
 let PaymentService = class PaymentService {
-    constructor(configService) {
+    constructor(orderService, configService, accountService) {
+        this.orderService = orderService;
         this.configService = configService;
+        this.accountService = accountService;
     }
-    async createPayment() {
+    async createPayment(dto) {
         const FONDY_MERCHANT_ID = this.configService.getOrThrow('FONDY_MERCHANT_ID');
         const FONDY_MARCHANT_PASSWORD = this.configService.getOrThrow('FONDY_MERCHANT_PASSWORD');
         const FRONTEND_URL = this.configService.getOrThrow('FRONTEND_URL');
-        const NGROCK_FORWARDING_URL = 'https://9e68-109-251-250-156.ngrok-free.app';
+        const NGROCK_FORWARDING_URL = this.configService.getOrThrow('NGROCK_FORWARDING_URL');
         const ENVIRONMENT = this.configService.getOrThrow('NODE_ENV');
         const BASE_URL = ENVIRONMENT === 'development' ? NGROCK_FORWARDING_URL : FRONTEND_URL;
-        const dto = {
-            name: 'testname',
-            duration: 'duration',
-            price: 1200,
-        };
-        const order_id = `name=${dto.name}//duration=${dto.duration}//price=${dto.price}//createdAt=${Date.now()}`;
+        const orderedItemsString = JSON.stringify(dto.items);
+        const order_id = `name=${dto.name}//price=${dto.price}//userId=${dto.userId}//items=${orderedItemsString}//createdAt=${Date.now()}`;
         const orderBody = {
-            response_url: `${BASE_URL}/catalog`,
+            response_url: `${FRONTEND_URL}/checkout/thank-you`,
+            server_callback_url: `${BASE_URL}/payment/confirmation`,
             order_id: order_id,
             merchant_id: FONDY_MERCHANT_ID,
             order_desc: dto.name,
@@ -62,35 +63,50 @@ let PaymentService = class PaymentService {
             method: 'POST',
         });
         const data = await response.json();
-        console.log(data);
         return data;
     }
     async confirmPayment(dto) {
-        if (dto.order_status === 'approved') {
-            const orderDataString = dto.order_id;
-            const ordersFieldsArray = orderDataString.split('//').map((el) => {
-                const substr = el.split('=');
-                if (substr[0] === 'tutor' || substr[0] === 'student' || substr[0] === 'duration' || substr[0] === 'price') {
-                    return { [substr[0]]: Number(substr[1]) };
-                }
-                else {
-                    return { [substr[0]]: substr[1] };
-                }
-            });
-            const orderData = ordersFieldsArray.reduce((obj, item) => {
-                const key = Object.keys(item)[0];
-                if (key && typeof item[key] !== 'undefined') {
-                    obj[key] = item[key];
-                }
-                return obj;
-            }, {});
+        try {
+            if (dto.order_status === 'approved') {
+                const orderDataString = dto.order_id;
+                const ordersFieldsArray = orderDataString.split('//').map((el) => {
+                    const substr = el.split('=');
+                    if (substr[0] === 'price') {
+                        return { [substr[0]]: Number(substr[1]) };
+                    }
+                    else if (substr[0] === 'items') {
+                        return { [substr[0]]: JSON.parse(substr[1]) };
+                    }
+                    else {
+                        return { [substr[0]]: substr[1] };
+                    }
+                });
+                const orderData = ordersFieldsArray.reduce((obj, item) => {
+                    const key = Object.keys(item)[0];
+                    if (key && typeof item[key] !== 'undefined') {
+                        obj[key] = item[key];
+                    }
+                    return obj;
+                }, {});
+                const { userId, items } = orderData;
+                const order = await this.orderService.create({ userId, items });
+                await Promise.all(items.map(async (el) => {
+                    await this.accountService.toggleCart(userId, { productId: el.productId, count: el.quantity });
+                }));
+                return order;
+            }
+            throw new Error('Сталась помилка з платіжним сервісом. Спробуйте пізніше');
         }
-        return dto;
+        catch (error) {
+            throw new Error('Сталась помилка з платіжним сервісом. Спробуйте пізніше');
+        }
     }
 };
 exports.PaymentService = PaymentService;
 exports.PaymentService = PaymentService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [config_1.ConfigService])
+    __metadata("design:paramtypes", [order_service_1.OrderService,
+        config_1.ConfigService,
+        account_service_1.AccountService])
 ], PaymentService);
 //# sourceMappingURL=payment.service.js.map

@@ -6,5 +6,6 @@ import { FileModule } from 'src/modules/file/file.module';
 @Module({
   providers: [AccountResolver, AccountService],
   imports: [FileModule],
+  exports: [AccountService],
 })
 export class AccountModule {}

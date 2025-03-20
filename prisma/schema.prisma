@@ -154,4 +154,5 @@ model OrderItem {
 enum EnumOrderStatus {
   PENDING
   PAYED
+  DELIVERED
 }

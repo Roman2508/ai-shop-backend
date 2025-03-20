@@ -16,6 +16,7 @@ exports.OrderModule = OrderModule;
 exports.OrderModule = OrderModule = __decorate([
     (0, common_1.Module)({
         providers: [order_resolver_1.OrderResolver, order_service_1.OrderService],
+        exports: [order_service_1.OrderService],
     })
 ], OrderModule);
 //# sourceMappingURL=order.module.js.map

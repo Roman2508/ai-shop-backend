@@ -1,33 +1,34 @@
 import * as crypto from 'crypto';
-import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+
+import { OrderService } from '../order/order.service';
+import { CreatePaymentDto } from './dto/create-payment.dto';
+import { AccountService } from '../auth/account/account.service';
 
 @Injectable()
 export class PaymentService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly orderService: OrderService,
+    private readonly configService: ConfigService,
+    private readonly accountService: AccountService,
+  ) {}
 
-  async createPayment() {
+  async createPayment(dto: CreatePaymentDto) {
     const FONDY_MERCHANT_ID = this.configService.getOrThrow<string>('FONDY_MERCHANT_ID');
     const FONDY_MARCHANT_PASSWORD = this.configService.getOrThrow<string>('FONDY_MERCHANT_PASSWORD');
     const FRONTEND_URL = this.configService.getOrThrow<string>('FRONTEND_URL');
-    const NGROCK_FORWARDING_URL = 'https://9e68-109-251-250-156.ngrok-free.app';
+    const NGROCK_FORWARDING_URL = this.configService.getOrThrow<string>('NGROCK_FORWARDING_URL');
     const ENVIRONMENT = this.configService.getOrThrow<string>('NODE_ENV');
 
     const BASE_URL = ENVIRONMENT === 'development' ? NGROCK_FORWARDING_URL : FRONTEND_URL;
 
-    const dto = {
-      name: 'testname',
-      duration: 'duration',
-      price: 1200,
-    };
-
-    const order_id = `name=${dto.name}//duration=${dto.duration}//price=${dto.price}//createdAt=${Date.now()}`;
-    // const order_id = `name=${dto.name}//duration=${dto.duration}//price=${dto.price}//startAt=${dto.startAt}//student=${dto.student}//tutor=${dto.tutor}//createdAt=${Date.now()}`;
+    const orderedItemsString = JSON.stringify(dto.items);
+    const order_id = `name=${dto.name}//price=${dto.price}//userId=${dto.userId}//items=${orderedItemsString}//createdAt=${Date.now()}`;
 
     const orderBody = {
-      response_url: `${BASE_URL}/catalog`, // маэ бути thank you page
-      // server_callback_url: `${BASE_URL}/graphql`,
-      // server_callback_url: `http://localhost:3000`,
+      response_url: `${FRONTEND_URL}/checkout/thank-you`,
+      server_callback_url: `${BASE_URL}/payment/confirmation`,
       order_id: order_id,
       merchant_id: FONDY_MERCHANT_ID,
       order_desc: dto.name,
@@ -60,43 +61,52 @@ export class PaymentService {
       },
       method: 'POST',
     });
-    // window.location.href = response.checkout_url
+
     const data = await response.json();
-    console.log(data);
+
     return data;
   }
 
   async confirmPayment(dto: any) {
-    if (dto.order_status === 'approved') {
-      const orderDataString = dto.order_id;
+    try {
+      if (dto.order_status === 'approved') {
+        const orderDataString = dto.order_id;
 
-      const ordersFieldsArray = orderDataString.split('//').map((el) => {
-        const substr = el.split('=');
-        if (substr[0] === 'tutor' || substr[0] === 'student' || substr[0] === 'duration' || substr[0] === 'price') {
-          return { [substr[0]]: Number(substr[1]) };
-        } else {
-          return { [substr[0]]: substr[1] };
-        }
-      });
+        const ordersFieldsArray = orderDataString.split('//').map((el) => {
+          const substr = el.split('=');
+          if (substr[0] === 'price') {
+            return { [substr[0]]: Number(substr[1]) };
+          } else if (substr[0] === 'items') {
+            return { [substr[0]]: JSON.parse(substr[1]) };
+          } else {
+            return { [substr[0]]: substr[1] };
+          }
+        });
 
-      const orderData = ordersFieldsArray.reduce((obj, item) => {
-        const key = Object.keys(item)[0];
-        if (key && typeof item[key] !== 'undefined') {
-          obj[key] = item[key];
-        }
-        return obj;
-      }, {});
+        const orderData: CreatePaymentDto = ordersFieldsArray.reduce((obj, item) => {
+          const key = Object.keys(item)[0];
+          if (key && typeof item[key] !== 'undefined') {
+            obj[key] = item[key];
+          }
+          return obj;
+        }, {});
 
-      // const sameLessonExist = await this.reservedLessonsService.findByStartDate(orderData.tutor, orderData.startAt);
+        const { userId, items } = orderData;
 
-      // if (sameLessonExist) return dto;
+        const order = await this.orderService.create({ userId, items });
 
-      // return this.reservedLessonsService.create({
-      //   ...orderData,
-      //   theme: '',
-      //   status: 'planned',
-      // });
+        await Promise.all(
+          items.map(async (el) => {
+            await this.accountService.toggleCart(userId, { productId: el.productId, count: el.quantity });
+          }),
+        );
+
+        return order;
+      }
+
+      throw new Error('Сталась помилка з платіжним сервісом. Спробуйте пізніше');
+    } catch (error) {
+      throw new Error('Сталась помилка з платіжним сервісом. Спробуйте пізніше');
     }
-    return dto;
   }
 }

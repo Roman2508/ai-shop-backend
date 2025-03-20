@@ -100,11 +100,11 @@ export declare class ProductService {
             };
         } & {
             text: string;
+            userId: string | null;
             productId: string | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            userId: string | null;
             rating: number;
         })[];
     } & {

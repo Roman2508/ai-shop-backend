@@ -1,6 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
 import { OrderService } from './order.service';
+import { OrderModel } from './models/order.model';
 import { CreateOrderInput } from './inputs/create-order.input';
 import { Authorization } from 'src/shared/decorators/auth.decorator';
 import { Authorized } from 'src/shared/decorators/authorized.decorator';
@@ -9,10 +10,9 @@ import { Authorized } from 'src/shared/decorators/authorized.decorator';
 export class OrderResolver {
   constructor(private readonly orderService: OrderService) {}
 
-  @Authorization()
-  @Mutation(() => Boolean, { name: 'createPayment' })
-  async createPayment(@Authorized('id') userId: string, @Args('data') input: CreateOrderInput) {
-    return this.orderService.createPayment(input, userId);
+  @Mutation(() => OrderModel, { name: 'createOrder' })
+  async createPayment(@Args('data') input: CreateOrderInput) {
+    return this.orderService.create(input);
   }
 
   @Authorization()
