@@ -1,4 +1,5 @@
 export declare class CreateOrderInput {
+    orderId: string;
     userId: string;
     items: OrderItemDto[];
 }

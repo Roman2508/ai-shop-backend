@@ -20,6 +20,11 @@ __decorate([
     (0, graphql_1.Field)(() => String),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
+], CreateOrderInput.prototype, "orderId", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
 ], CreateOrderInput.prototype, "userId", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [OrderItemDto]),

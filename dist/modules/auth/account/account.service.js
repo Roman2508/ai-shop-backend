@@ -30,7 +30,7 @@ let AccountService = class AccountService {
                 cart: { include: { product: true } },
                 favorites: { include: { product: true } },
                 reviews: { include: { product: true, user: true } },
-                orders: true,
+                orders: { include: { items: { include: { product: true } } } },
             },
         });
         return user;

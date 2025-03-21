@@ -65,9 +65,29 @@ let PaymentService = class PaymentService {
         const data = await response.json();
         return data;
     }
+    checkSignature(dto) {
+        const FONDY_MARCHANT_PASSWORD = this.configService.getOrThrow('FONDY_MERCHANT_PASSWORD');
+        const orderedKeys = Object.keys(dto).sort((a, b) => {
+            if (a < b)
+                return -1;
+            if (a > b)
+                return 1;
+            return 0;
+        });
+        const signatureValues = orderedKeys.filter((key) => dto[key] !== '' && dto[key] !== dto.response_signature_string && dto[key] !== dto.signature);
+        const signatureRaw = signatureValues.map((v) => dto[v]).join('|');
+        const signature = crypto.createHash('sha1');
+        signature.update(`${FONDY_MARCHANT_PASSWORD}|${signatureRaw}`);
+        const signatureHex = signature.digest('hex');
+        if (signatureHex === dto.signature) {
+            return true;
+        }
+        return false;
+    }
     async confirmPayment(dto) {
         try {
-            if (dto.order_status === 'approved') {
+            const isCurrentPayment = this.checkSignature(dto);
+            if (dto.order_status === 'approved' && isCurrentPayment) {
                 const orderDataString = dto.order_id;
                 const ordersFieldsArray = orderDataString.split('//').map((el) => {
                     const substr = el.split('=');
@@ -87,15 +107,18 @@ let PaymentService = class PaymentService {
                         obj[key] = item[key];
                     }
                     return obj;
-                }, {});
+                }, { name: '', userId: '', price: 0, items: [] });
                 const { userId, items } = orderData;
-                const order = await this.orderService.create({ userId, items });
-                await Promise.all(items.map(async (el) => {
-                    await this.accountService.toggleCart(userId, { productId: el.productId, count: el.quantity });
-                }));
-                return order;
+                const isOrderExist = await this.orderService.checkIsExist(dto.order_id);
+                console.log('isOrderExist:', isOrderExist);
+                if (!isOrderExist) {
+                    const order = await this.orderService.create({ userId, orderId: dto.order_id, items });
+                    await Promise.all(items.map(async (el) => {
+                        await this.accountService.toggleCart(userId, { productId: el.productId, count: el.quantity });
+                    }));
+                    return order;
+                }
             }
-            throw new Error('Сталась помилка з платіжним сервісом. Спробуйте пізніше');
         }
         catch (error) {
             throw new Error('Сталась помилка з платіжним сервісом. Спробуйте пізніше');

@@ -1,8 +1,10 @@
+import os 
 import sys
 import json
 import spacy
 
-MODEL_PATH = 'C:\\PAPKA\\projects\\ai-shop\\backend\\model'
+MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'model'))
+# MODEL_PATH = 'C:\\PAPKA\\projects\\ai-shop\\MAIN\\backend\\model'
 KEY_MAP = {
     "TITLE": "title",
     "PRICE": "price",

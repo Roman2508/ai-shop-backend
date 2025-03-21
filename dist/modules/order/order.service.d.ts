@@ -4,12 +4,14 @@ export declare class OrderService {
     private prismaService;
     constructor(prismaService: PrismaService);
     create(input: CreateOrderInput): Promise<{
+        orderId: string;
+        userId: string | null;
         id: string;
         createdAt: Date;
         updatedAt: Date;
         status: import("prisma/generated").$Enums.EnumOrderStatus;
         total: number;
-        userId: string | null;
     }>;
+    checkIsExist(orderId: string): Promise<boolean>;
     updateStatus(): Promise<boolean>;
 }

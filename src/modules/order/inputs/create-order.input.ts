@@ -5,10 +5,9 @@ import { IsArray, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 
 
 @InputType()
 export class CreateOrderInput {
-  // @Field(() => String)
-  // @IsOptional()
-  // @IsEnum(EnumOrderStatus, { message: 'Статус замовлення оновлено' })
-  // status: EnumOrderStatus;
+  @Field(() => String)
+  @IsOptional()
+  orderId: string;
 
   @Field(() => String)
   @IsOptional()

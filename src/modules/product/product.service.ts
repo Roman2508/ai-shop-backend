@@ -2,10 +2,11 @@ import * as fs from 'fs';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 
 import { NlpService } from './../nlp/nlp.service';
+import { FileService } from '../file/file.service';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { CreateProductInput } from './inputs/create-product.input';
 import { UpdateProductInput } from './inputs/update-product.input';
-import { FileService } from '../file/file.service';
+import { convertKeysToCamel } from 'src/shared/utils/convert-keys-to-camel.util';
 
 @Injectable()
 export class ProductService {
@@ -154,8 +155,11 @@ export class ProductService {
       throw new BadRequestException('Помилка');
     }
     const queryObject = JSON.parse(response.text);
-    console.log(queryObject);
-    const products = await this.prismaService.product.findMany({ where: queryObject });
+
+    const products = await this.prismaService.product.findMany({
+      where: { title: { contains: 'iphone', mode: 'insensitive' } },
+    });
+    // const products = await this.prismaService.product.findMany({ where: convertKeysToCamel(queryObject) });
 
     if (!products.length) {
       throw new NotFoundException('Нічого не знайдено');

@@ -5,6 +5,7 @@ export declare class OrderModel implements Order {
     id: string;
     createdAt: Date;
     updatedAt: Date;
+    orderId: string;
     status: EnumOrderStatus;
     items: OrderItemModel[];
     total: number;

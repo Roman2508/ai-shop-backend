@@ -13,8 +13,8 @@ exports.ProductService = void 0;
 const fs = require("fs");
 const common_1 = require("@nestjs/common");
 const nlp_service_1 = require("./../nlp/nlp.service");
-const prisma_service_1 = require("../../core/prisma/prisma.service");
 const file_service_1 = require("../file/file.service");
+const prisma_service_1 = require("../../core/prisma/prisma.service");
 let ProductService = class ProductService {
     constructor(nlpService, fileService, prismaService) {
         this.nlpService = nlpService;
@@ -121,8 +121,9 @@ let ProductService = class ProductService {
             throw new common_1.BadRequestException('Помилка');
         }
         const queryObject = JSON.parse(response.text);
-        console.log(queryObject);
-        const products = await this.prismaService.product.findMany({ where: queryObject });
+        const products = await this.prismaService.product.findMany({
+            where: { title: { contains: 'iphone', mode: 'insensitive' } },
+        });
         if (!products.length) {
             throw new common_1.NotFoundException('Нічого не знайдено');
         }

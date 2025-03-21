@@ -33,6 +33,10 @@ __decorate([
     __metadata("design:type", Date)
 ], OrderModel.prototype, "updatedAt", void 0);
 __decorate([
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], OrderModel.prototype, "orderId", void 0);
+__decorate([
     (0, graphql_1.Field)(() => generated_1.EnumOrderStatus),
     __metadata("design:type", String)
 ], OrderModel.prototype, "status", void 0);

@@ -18,7 +18,7 @@ let OrderService = class OrderService {
         this.prismaService = prismaService;
     }
     async create(input) {
-        const { userId, items } = input;
+        const { userId, orderId, items } = input;
         const orderItems = items.map((item) => ({
             quantity: item.quantity,
             price: item.price,
@@ -28,12 +28,20 @@ let OrderService = class OrderService {
         const order = await this.prismaService.order.create({
             data: {
                 total,
+                orderId,
                 status: generated_1.EnumOrderStatus.PAYED,
                 items: { create: orderItems },
                 user: { connect: { id: userId } },
             },
         });
         return order;
+    }
+    async checkIsExist(orderId) {
+        const order = await this.prismaService.order.findFirst({ where: { orderId } });
+        if (order) {
+            return true;
+        }
+        return false;
     }
     async updateStatus() {
         return true;

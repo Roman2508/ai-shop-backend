@@ -19,6 +19,9 @@ export class OrderModel implements Order {
   @Field(() => Date)
   updatedAt: Date;
 
+  @Field(() => String)
+  orderId: string;
+
   @Field(() => EnumOrderStatus)
   status: EnumOrderStatus;
 

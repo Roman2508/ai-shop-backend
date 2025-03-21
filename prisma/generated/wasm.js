@@ -182,6 +182,7 @@ exports.Prisma.OrderScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  orderId: 'orderId',
   status: 'status',
   total: 'total',
   userId: 'userId'

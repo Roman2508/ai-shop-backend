@@ -9,7 +9,7 @@ export class OrderService {
   constructor(private prismaService: PrismaService) {}
 
   async create(input: CreateOrderInput) {
-    const { userId, items } = input;
+    const { userId, orderId, items } = input;
 
     const orderItems = items.map((item) => ({
       quantity: item.quantity,
@@ -22,6 +22,7 @@ export class OrderService {
     const order = await this.prismaService.order.create({
       data: {
         total,
+        orderId,
         status: EnumOrderStatus.PAYED,
         items: { create: orderItems },
         user: { connect: { id: userId } },
@@ -29,6 +30,14 @@ export class OrderService {
     });
 
     return order;
+  }
+
+  async checkIsExist(orderId: string): Promise<boolean> {
+    const order = await this.prismaService.order.findFirst({ where: { orderId } });
+    if (order) {
+      return true;
+    }
+    return false;
   }
 
   async updateStatus() {
