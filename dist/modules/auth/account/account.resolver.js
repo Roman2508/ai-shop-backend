@@ -25,6 +25,7 @@ const change_password_input_1 = require("./inputs/change-password.input");
 const authorized_decorator_1 = require("../../../shared/decorators/authorized.decorator");
 const add_to_cart_input_1 = require("./inputs/add-to-cart.input");
 const change_cart_item_count_input_1 = require("./inputs/change-cart-item-count.input");
+const update_role_input_1 = require("./inputs/update-role-input");
 let AccountResolver = class AccountResolver {
     constructor(accountService) {
         this.accountService = accountService;
@@ -52,6 +53,9 @@ let AccountResolver = class AccountResolver {
     }
     async updateUserData(id, input) {
         return this.accountService.updateUserData(id, input);
+    }
+    async updateRole(id, input) {
+        return this.accountService.updateRole(id, input);
     }
     async uploadAvatar(userId, file) {
         return this.accountService.uploadAvatar(userId, file);
@@ -127,6 +131,15 @@ __decorate([
     __metadata("design:paramtypes", [String, update_user_input_1.UpdateUserInput]),
     __metadata("design:returntype", Promise)
 ], AccountResolver.prototype, "updateUserData", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'updateUserRole' }),
+    __param(0, (0, authorized_decorator_1.Authorized)('id')),
+    __param(1, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, update_role_input_1.UpdateRoleInput]),
+    __metadata("design:returntype", Promise)
+], AccountResolver.prototype, "updateRole", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
     (0, graphql_1.Mutation)(() => Boolean, { name: 'uploadAvatar' }),

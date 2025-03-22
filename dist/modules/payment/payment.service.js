@@ -85,6 +85,7 @@ let PaymentService = class PaymentService {
         return false;
     }
     async confirmPayment(dto) {
+        console.log('CONFIRM PAYMENT', dto.order_id);
         try {
             const isCurrentPayment = this.checkSignature(dto);
             if (dto.order_status === 'approved' && isCurrentPayment) {

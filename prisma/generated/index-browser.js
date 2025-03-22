@@ -127,6 +127,7 @@ exports.Prisma.UserScalarFieldEnum = {
   city: 'city',
   street: 'street',
   postOffice: 'postOffice',
+  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -212,6 +213,11 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.EnumUserRoles = exports.$Enums.EnumUserRoles = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+};
+
 exports.EnumOrderStatus = exports.$Enums.EnumOrderStatus = {
   PENDING: 'PENDING',
   PAYED: 'PAYED',

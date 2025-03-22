@@ -12,9 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserModel = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const cart_item_model_1 = require("./cart-item.model");
+const generated_1 = require("../../../../../prisma/generated/index.js");
 const favorite_item_model_1 = require("./favorite-item.model");
 const order_model_1 = require("../../../order/models/order.model");
 const review_model_1 = require("../../../review/models/review.model");
+(0, graphql_1.registerEnumType)(generated_1.EnumUserRoles, {
+    name: 'EnumUserRoles',
+});
 let UserModel = class UserModel {
 };
 exports.UserModel = UserModel;
@@ -54,6 +58,10 @@ __decorate([
     (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], UserModel.prototype, "postOffice", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => generated_1.EnumUserRoles),
+    __metadata("design:type", String)
+], UserModel.prototype, "role", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [favorite_item_model_1.FavoriteItemModel]),
     __metadata("design:type", Array)

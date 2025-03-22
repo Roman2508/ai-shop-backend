@@ -138,6 +138,17 @@ let AccountService = class AccountService {
         });
         return true;
     }
+    async updateRole(id, input) {
+        const adminUser = await this.prismaService.user.findUnique({ where: { id } });
+        if (!adminUser || adminUser.role !== 'ADMIN') {
+            throw new common_1.ForbiddenException('Доступ заборонено');
+        }
+        await this.prismaService.user.update({
+            where: { id: input.id },
+            data: { role: input.role },
+        });
+        return true;
+    }
     async uploadAvatar(id, file) {
         const user = await this.prismaService.user.findUnique({ where: { id } });
         if (!user) {

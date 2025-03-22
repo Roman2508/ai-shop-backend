@@ -8,14 +8,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NlpProcessor = void 0;
 const path = require('path');
+const { spawn } = require('child_process');
 const child_process_1 = require("child_process");
 const common_1 = require("@nestjs/common");
-const pythonFilePath = path.join(process.cwd(), 'src/modules/nlp/python/venv/Scripts/python.exe');
-const pythonScriptPath = path.join(process.cwd(), 'src/modules/nlp/python/analyze.py');
+const VENV_ACTIVATE = path.join(process.cwd(), 'src/modules/nlp/python/venv/Scripts/activate');
+const SCRIPT_PATH = path.join(process.cwd(), 'src/modules/nlp/python/analyze.py');
 let NlpProcessor = class NlpProcessor {
     async analyzeText(text) {
         return new Promise((resolve, reject) => {
-            const pythonProcess = (0, child_process_1.exec)(`${pythonFilePath} ${pythonScriptPath} "${text}"`, (error, stdout, stderr) => {
+            const command = `cmd /c "call ${VENV_ACTIVATE} && python ${SCRIPT_PATH} "${text}""`;
+            (0, child_process_1.exec)(command, (error, stdout, stderr) => {
                 if (error) {
                     reject(`Error executing Python script: ${error.message}`);
                     return;
@@ -33,7 +35,6 @@ let NlpProcessor = class NlpProcessor {
                     reject(`Error parsing JSON from Python output: ${parseError.message}`);
                 }
             });
-            return pythonProcess;
         });
     }
 };

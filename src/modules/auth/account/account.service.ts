@@ -1,6 +1,12 @@
 import { hash, verify } from 'argon2';
 import { User } from 'prisma/generated';
-import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 
 import { FileService } from 'src/modules/file/file.service';
 import { AddToCartInput } from './inputs/add-to-cart.input';
@@ -10,6 +16,7 @@ import { PrismaService } from 'src/core/prisma/prisma.service';
 import { ChangeEmailInput } from './inputs/change-email.input';
 import { ChangePasswordInput } from './inputs/change-password.input';
 import { ChangeCartItemCountInput } from './inputs/change-cart-item-count.input';
+import { UpdateRoleInput } from './inputs/update-role-input';
 
 @Injectable()
 export class AccountService {
@@ -161,6 +168,21 @@ export class AccountService {
     await this.prismaService.user.update({
       where: { id },
       data: { ...data, ...passObj },
+    });
+
+    return true;
+  }
+
+  async updateRole(id: string, input: UpdateRoleInput) {
+    const adminUser = await this.prismaService.user.findUnique({ where: { id } });
+
+    if (!adminUser || adminUser.role !== 'ADMIN') {
+      throw new ForbiddenException('Доступ заборонено');
+    }
+
+    await this.prismaService.user.update({
+      where: { id: input.id },
+      data: { role: input.role },
     });
 
     return true;

@@ -1,10 +1,14 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
 
-import { User } from 'prisma/generated';
 import { CartItemModel } from './cart-item.model';
+import { EnumUserRoles, User } from 'prisma/generated';
 import { FavoriteItemModel } from './favorite-item.model';
 import { OrderModel } from 'src/modules/order/models/order.model';
 import { ReviewModel } from 'src/modules/review/models/review.model';
+
+registerEnumType(EnumUserRoles, {
+  name: 'EnumUserRoles',
+});
 
 @ObjectType()
 export class UserModel implements User {
@@ -34,6 +38,9 @@ export class UserModel implements User {
 
   @Field(() => String, { nullable: true })
   postOffice: string;
+
+  @Field(() => EnumUserRoles)
+  role: EnumUserRoles;
 
   @Field(() => [FavoriteItemModel])
   favorites: FavoriteItemModel[];

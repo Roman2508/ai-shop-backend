@@ -14,6 +14,7 @@ import { ProductModule } from 'src/modules/product/product.module';
 import { AccountModule } from 'src/modules/auth/account/account.module';
 import { SessionModule } from 'src/modules/auth/session/session.module';
 import { PaymentModule } from 'src/modules/payment/payment.module';
+import { CronModule } from 'src/modules/cron/cron.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { PaymentModule } from 'src/modules/payment/payment.module';
     OrderModule,
     FileModule,
     PaymentModule,
+    CronModule,
   ],
 })
 export class CoreModule {}

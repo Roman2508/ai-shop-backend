@@ -12,6 +12,7 @@ import { ChangePasswordInput } from './inputs/change-password.input';
 import { Authorized } from 'src/shared/decorators/authorized.decorator';
 import { AddToCartInput } from './inputs/add-to-cart.input';
 import { ChangeCartItemCountInput } from './inputs/change-cart-item-count.input';
+import { UpdateRoleInput } from './inputs/update-role-input';
 
 @Resolver('Account')
 export class AccountResolver {
@@ -62,6 +63,12 @@ export class AccountResolver {
   @Mutation(() => Boolean, { name: 'updateUserData' })
   async updateUserData(@Authorized('id') id: string, @Args('user') input: UpdateUserInput) {
     return this.accountService.updateUserData(id, input);
+  }
+
+  @Authorization()
+  @Mutation(() => Boolean, { name: 'updateUserRole' })
+  async updateRole(@Authorized('id') id: string, @Args('input') input: UpdateRoleInput) {
+    return this.accountService.updateRole(id, input);
   }
 
   @Authorization()

@@ -23,6 +23,8 @@ model User {
   street     String?
   postOffice String? @map("post_office")
 
+  role EnumUserRoles @default(USER)
+
   cart      CartItem[]
   favorites FavoriteItem[]
   reviews   Review[]
@@ -32,6 +34,11 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+enum EnumUserRoles {
+  USER
+  ADMIN
 }
 
 // npx prisma db push
@@ -62,8 +69,6 @@ model Product {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  // user   User?   @relation("user", fields: [userId], references: [id])
-  // userId String? @map("user_id")
   reviews       Review[]
   orderItems    OrderItem[]
   cartItems     CartItem[]

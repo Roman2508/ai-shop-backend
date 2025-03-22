@@ -22,6 +22,7 @@ const product_module_1 = require("../modules/product/product.module");
 const account_module_1 = require("../modules/auth/account/account.module");
 const session_module_1 = require("../modules/auth/session/session.module");
 const payment_module_1 = require("../modules/payment/payment.module");
+const cron_module_1 = require("../modules/cron/cron.module");
 let CoreModule = class CoreModule {
 };
 exports.CoreModule = CoreModule;
@@ -52,6 +53,7 @@ exports.CoreModule = CoreModule = __decorate([
             order_module_1.OrderModule,
             file_module_1.FileModule,
             payment_module_1.PaymentModule,
+            cron_module_1.CronModule,
         ],
     })
 ], CoreModule);

@@ -6,6 +6,7 @@ import { ChangeEmailInput } from './inputs/change-email.input';
 import { ChangePasswordInput } from './inputs/change-password.input';
 import { AddToCartInput } from './inputs/add-to-cart.input';
 import { ChangeCartItemCountInput } from './inputs/change-cart-item-count.input';
+import { UpdateRoleInput } from './inputs/update-role-input';
 export declare class AccountResolver {
     private readonly accountService;
     constructor(accountService: AccountService);
@@ -21,6 +22,7 @@ export declare class AccountResolver {
         city: string | null;
         street: string | null;
         postOffice: string | null;
+        role: import("prisma/generated").$Enums.EnumUserRoles;
     }[]>;
     me(id: string): Promise<{
         cart: ({
@@ -95,6 +97,7 @@ export declare class AccountResolver {
                 city: string | null;
                 street: string | null;
                 postOffice: string | null;
+                role: import("prisma/generated").$Enums.EnumUserRoles;
             };
             product: {
                 price: number;
@@ -183,6 +186,7 @@ export declare class AccountResolver {
         city: string | null;
         street: string | null;
         postOffice: string | null;
+        role: import("prisma/generated").$Enums.EnumUserRoles;
     }>;
     create(input: CreateUserInput): Promise<boolean>;
     changeEmail(user: User, input: ChangeEmailInput): Promise<boolean>;
@@ -190,6 +194,7 @@ export declare class AccountResolver {
     toggleCart(id: string, input: AddToCartInput): Promise<boolean>;
     toggleFavorite(id: string, productId: string): Promise<boolean>;
     updateUserData(id: string, input: UpdateUserInput): Promise<boolean>;
+    updateRole(id: string, input: UpdateRoleInput): Promise<boolean>;
     uploadAvatar(userId: string, file: any): Promise<boolean>;
     changeCartItemCount(input: ChangeCartItemCountInput): Promise<boolean>;
 }

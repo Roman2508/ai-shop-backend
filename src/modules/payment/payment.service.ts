@@ -94,9 +94,7 @@ export class PaymentService {
   }
 
   async confirmPayment(dto: FondyCallbackResponseDto) {
-    // console.log('CONFIRM PAYMENT', this.checkSignature(dto));
-    // console.log(`=======${dto.order_id}=======`, dto.order_status);
-    // console.log('================================================');
+    console.log('CONFIRM PAYMENT', dto.order_id);
 
     try {
       const isCurrentPayment = this.checkSignature(dto);
