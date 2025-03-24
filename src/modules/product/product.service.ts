@@ -156,10 +156,10 @@ export class ProductService {
     }
     const queryObject = JSON.parse(response.text);
 
-    const products = await this.prismaService.product.findMany({
-      where: { title: { contains: 'iphone', mode: 'insensitive' } },
-    });
-    // const products = await this.prismaService.product.findMany({ where: convertKeysToCamel(queryObject) });
+    // const products = await this.prismaService.product.findMany({
+    //   where: { title: { contains: 'iphone', mode: 'insensitive' } },
+    // });
+    const products = await this.prismaService.product.findMany({ where: convertKeysToCamel(queryObject) });
 
     if (!products.length) {
       throw new NotFoundException('Нічого не знайдено');

@@ -4,11 +4,11 @@ export declare class OrderService {
     private prismaService;
     constructor(prismaService: PrismaService);
     create(input: CreateOrderInput): Promise<{
-        orderId: string;
-        userId: string | null;
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string | null;
+        orderId: string;
         status: import("prisma/generated").$Enums.EnumOrderStatus;
         total: number;
     }>;

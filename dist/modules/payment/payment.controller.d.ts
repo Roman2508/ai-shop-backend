@@ -6,11 +6,11 @@ export declare class PaymentController {
     constructor(paymentService: PaymentService);
     paymentHandler(dto: CreatePaymentDto): Promise<any>;
     paymentConfirmation(dto: FondyCallbackResponseDto): Promise<{
-        orderId: string;
-        userId: string | null;
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string | null;
+        orderId: string;
         status: import("prisma/generated").$Enums.EnumOrderStatus;
         total: number;
     }>;

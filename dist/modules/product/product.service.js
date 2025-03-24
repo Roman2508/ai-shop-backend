@@ -15,6 +15,7 @@ const common_1 = require("@nestjs/common");
 const nlp_service_1 = require("./../nlp/nlp.service");
 const file_service_1 = require("../file/file.service");
 const prisma_service_1 = require("../../core/prisma/prisma.service");
+const convert_keys_to_camel_util_1 = require("../../shared/utils/convert-keys-to-camel.util");
 let ProductService = class ProductService {
     constructor(nlpService, fileService, prismaService) {
         this.nlpService = nlpService;
@@ -121,9 +122,7 @@ let ProductService = class ProductService {
             throw new common_1.BadRequestException('Помилка');
         }
         const queryObject = JSON.parse(response.text);
-        const products = await this.prismaService.product.findMany({
-            where: { title: { contains: 'iphone', mode: 'insensitive' } },
-        });
+        const products = await this.prismaService.product.findMany({ where: (0, convert_keys_to_camel_util_1.convertKeysToCamel)(queryObject) });
         if (!products.length) {
             throw new common_1.NotFoundException('Нічого не знайдено');
         }

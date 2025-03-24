@@ -11,11 +11,11 @@ export declare class PaymentService {
     createPayment(dto: CreatePaymentDto): Promise<any>;
     checkSignature(dto: FondyCallbackResponseDto): boolean;
     confirmPayment(dto: FondyCallbackResponseDto): Promise<{
-        orderId: string;
-        userId: string | null;
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string | null;
+        orderId: string;
         status: import("prisma/generated").$Enums.EnumOrderStatus;
         total: number;
     }>;

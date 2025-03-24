@@ -6,7 +6,7 @@ import spacy
 MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'model'))
 # MODEL_PATH = 'C:\\PAPKA\\projects\\ai-shop\\MAIN\\backend\\model'
 KEY_MAP = {
-    "TITLE": "brand",
+    "TITLE": "title",
     "PRICE": "price",
     "PRICE_GT": "price_gt",
     "PRICE_LT": "price_lt",
@@ -43,7 +43,7 @@ def rename_keys(original_dict, key_map):
     keys_has = ["sim_format"]
     keys_contains = ["brand", "color", "os", "processor_name", "processor_cores", "materials", "delivery_set"]
     # keys_contains = ["title", "ram", "color", "front_camera", "main_camera", "os", "processor_name", "processor_cores", "battery", "materials", "delivery_set"]
-    keys_amount = ["ram", "front_camera", "main_camera", "battery"]
+    keys_equals = ["ram", "front_camera", "main_camera", "battery"]
     keys_gt = ["price_gt", "built_in_memory_gt", "main_camera_gt", "screen_diagonal_gt", "processor_cores_gt"]
     keys_lt = ["price_lt", "built_in_memory_lt", "screen_diagonal_lt", "processor_cores_lt"]
     # keys_gt = ["price_gt", "built_in_memory_gt", "main_camera_gt", "screen_diagonal_gt", "processor_cores_gt", "battery_gt"]
@@ -55,7 +55,7 @@ def rename_keys(original_dict, key_map):
         new_key = key_map.get(old_key, old_key)
 
         if new_key in nested_keys:
-            new_dict[new_key] = value
+            new_dict[new_key] = int(value)
 
         elif new_key in keys_has:
             new_dict[new_key] = {"has": value}
@@ -63,11 +63,11 @@ def rename_keys(original_dict, key_map):
         elif new_key in keys_contains:
             new_dict[new_key] = {"contains": value, 'mode': 'insensitive'}
 
-        elif new_key in keys_amount:
+        elif new_key in keys_equals:
             try:
-                new_dict[new_key] = {"amount": int(value.strip())}
+                new_dict[new_key] = {"equals": int(value.strip())}
             except ValueError:
-                new_dict[new_key] = {"amount": value}
+                new_dict[new_key] = {"equals": value}
 
         elif new_key in keys_gt:
             new_current_key = new_key.split("_")

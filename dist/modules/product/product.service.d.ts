@@ -10,12 +10,12 @@ export declare class ProductService {
     constructor(nlpService: NlpService, fileService: FileService, prismaService: PrismaService);
     getAll(): Promise<{
         products: {
-            price: number;
             id: string;
             createdAt: Date;
             updatedAt: Date;
             images: string[];
             title: string;
+            price: number;
             brand: string;
             ram: number;
             builtInMemory: number;
@@ -36,12 +36,12 @@ export declare class ProductService {
     }>;
     paginateAndFilter(query: any): Promise<{
         products: {
-            price: number;
             id: string;
             createdAt: Date;
             updatedAt: Date;
             images: string[];
             title: string;
+            price: number;
             brand: string;
             ram: number;
             builtInMemory: number;
@@ -64,25 +64,25 @@ export declare class ProductService {
         reviews: ({
             user: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
                 email: string;
-                username: string;
                 password: string;
+                username: string;
                 displayName: string;
                 avatar: string | null;
                 city: string | null;
                 street: string | null;
                 postOffice: string | null;
                 role: import("prisma/generated").$Enums.EnumUserRoles;
+                createdAt: Date;
+                updatedAt: Date;
             };
             product: {
-                price: number;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
                 images: string[];
                 title: string;
+                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -100,21 +100,21 @@ export declare class ProductService {
                 deliverySet: string;
             };
         } & {
-            text: string;
-            userId: string | null;
-            productId: string | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            userId: string | null;
+            productId: string | null;
+            text: string;
             rating: number;
         })[];
     } & {
-        price: number;
         id: string;
         createdAt: Date;
         updatedAt: Date;
         images: string[];
         title: string;
+        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -132,12 +132,12 @@ export declare class ProductService {
         deliverySet: string;
     }>;
     search(input: string): Promise<{
-        price: number;
         id: string;
         createdAt: Date;
         updatedAt: Date;
         images: string[];
         title: string;
+        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -155,12 +155,12 @@ export declare class ProductService {
         deliverySet: string;
     }[]>;
     getMostPopular(): Promise<{
-        price: number;
         id: string;
         createdAt: Date;
         updatedAt: Date;
         images: string[];
         title: string;
+        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -178,12 +178,12 @@ export declare class ProductService {
         deliverySet: string;
     }[]>;
     getSimilar(id: string): Promise<{
-        price: number;
         id: string;
         createdAt: Date;
         updatedAt: Date;
         images: string[];
         title: string;
+        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -201,12 +201,12 @@ export declare class ProductService {
         deliverySet: string;
     }[]>;
     create(input: CreateProductInput): Promise<{
-        price: number;
         id: string;
         createdAt: Date;
         updatedAt: Date;
         images: string[];
         title: string;
+        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -227,12 +227,12 @@ export declare class ProductService {
     removePhotos(id: string, filename: string): Promise<boolean>;
     createMany(): Promise<boolean>;
     update(input: UpdateProductInput): Promise<{
-        price: number;
         id: string;
         createdAt: Date;
         updatedAt: Date;
         images: string[];
         title: string;
+        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
