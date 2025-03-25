@@ -14,27 +14,27 @@ export declare class AccountService {
     constructor(prismaService: PrismaService, fileService: FileService);
     findAll(): Promise<{
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         email: string;
-        password: string;
         username: string;
+        password: string;
         displayName: string;
         avatar: string | null;
         city: string | null;
         street: string | null;
         postOffice: string | null;
         role: import("prisma/generated").$Enums.EnumUserRoles;
-        createdAt: Date;
-        updatedAt: Date;
     }[]>;
     me(id: string): Promise<{
         cart: ({
             product: {
+                price: number;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
                 images: string[];
                 title: string;
-                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -52,19 +52,19 @@ export declare class AccountService {
                 deliverySet: string;
             };
         } & {
-            id: string;
             userId: string;
             productId: string;
+            id: string;
             count: number;
         })[];
         favorites: ({
             product: {
+                price: number;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
                 images: string[];
                 title: string;
-                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -82,32 +82,32 @@ export declare class AccountService {
                 deliverySet: string;
             };
         } & {
-            id: string;
             userId: string;
             productId: string;
+            id: string;
         })[];
         reviews: ({
             user: {
                 id: string;
+                createdAt: Date;
+                updatedAt: Date;
                 email: string;
-                password: string;
                 username: string;
+                password: string;
                 displayName: string;
                 avatar: string | null;
                 city: string | null;
                 street: string | null;
                 postOffice: string | null;
                 role: import("prisma/generated").$Enums.EnumUserRoles;
-                createdAt: Date;
-                updatedAt: Date;
             };
             product: {
+                price: number;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
                 images: string[];
                 title: string;
-                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -125,23 +125,23 @@ export declare class AccountService {
                 deliverySet: string;
             };
         } & {
+            text: string;
+            userId: string | null;
+            productId: string | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            userId: string | null;
-            productId: string | null;
-            text: string;
             rating: number;
         })[];
         orders: ({
             items: ({
                 product: {
+                    price: number;
                     id: string;
                     createdAt: Date;
                     updatedAt: Date;
                     images: string[];
                     title: string;
-                    price: number;
                     brand: string;
                     ram: number;
                     builtInMemory: number;
@@ -159,36 +159,36 @@ export declare class AccountService {
                     deliverySet: string;
                 };
             } & {
+                orderId: string | null;
+                quantity: number;
+                price: number;
+                productId: string | null;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
-                productId: string | null;
-                price: number;
-                orderId: string | null;
-                quantity: number;
             })[];
         } & {
+            orderId: string;
+            userId: string | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            userId: string | null;
-            orderId: string;
             status: import("prisma/generated").$Enums.EnumOrderStatus;
             total: number;
         })[];
     } & {
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         email: string;
-        password: string;
         username: string;
+        password: string;
         displayName: string;
         avatar: string | null;
         city: string | null;
         street: string | null;
         postOffice: string | null;
         role: import("prisma/generated").$Enums.EnumUserRoles;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     create(input: CreateUserInput): Promise<boolean>;
     changeEmail(user: User, input: ChangeEmailInput): Promise<boolean>;

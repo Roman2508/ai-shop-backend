@@ -8,25 +8,25 @@ export declare class ReviewService {
     getByUserId(userId: string): Promise<({
         user: {
             id: string;
+            createdAt: Date;
+            updatedAt: Date;
             email: string;
-            password: string;
             username: string;
+            password: string;
             displayName: string;
             avatar: string | null;
             city: string | null;
             street: string | null;
             postOffice: string | null;
             role: import("prisma/generated").$Enums.EnumUserRoles;
-            createdAt: Date;
-            updatedAt: Date;
         };
         product: {
+            price: number;
             id: string;
             createdAt: Date;
             updatedAt: Date;
             images: string[];
             title: string;
-            price: number;
             brand: string;
             ram: number;
             builtInMemory: number;
@@ -44,12 +44,12 @@ export declare class ReviewService {
             deliverySet: string;
         };
     } & {
+        text: string;
+        userId: string | null;
+        productId: string | null;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        userId: string | null;
-        productId: string | null;
-        text: string;
         rating: number;
     })[]>;
     create(userId: string, input: CreateReviewInput): Promise<boolean>;
