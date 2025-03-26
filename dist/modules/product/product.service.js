@@ -118,11 +118,18 @@ let ProductService = class ProductService {
     }
     async search(input) {
         const response = await this.nlpService.analyze(input);
-        if (response.message !== 'success') {
+        if (!response) {
             throw new common_1.BadRequestException('Помилка');
         }
-        const queryObject = JSON.parse(response.text);
-        const products = await this.prismaService.product.findMany({ where: (0, convert_keys_to_camel_util_1.convertKeysToCamel)(queryObject) });
+        const queryObject = JSON.parse(response);
+        let prismaQueryObject;
+        if (typeof (0, convert_keys_to_camel_util_1.convertKeysToCamel)(queryObject) === 'string') {
+            prismaQueryObject = JSON.parse((0, convert_keys_to_camel_util_1.convertKeysToCamel)(queryObject));
+        }
+        else {
+            prismaQueryObject = (0, convert_keys_to_camel_util_1.convertKeysToCamel)(queryObject);
+        }
+        const products = await this.prismaService.product.findMany({ where: prismaQueryObject });
         if (!products.length) {
             throw new common_1.NotFoundException('Нічого не знайдено');
         }

@@ -3,10 +3,14 @@ import sys
 import json
 import spacy
 
-MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'model'))
+MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'models', 'trained_model_new'))
+
+# MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'model'))
 # MODEL_PATH = 'C:\\PAPKA\\projects\\ai-shop\\MAIN\\backend\\model'
+
 KEY_MAP = {
     "TITLE": "title",
+    "BRAND": "brand",
     "PRICE": "price",
     "PRICE_GT": "price_gt",
     "PRICE_LT": "price_lt",
@@ -41,7 +45,7 @@ nlp = spacy.load(MODEL_PATH)
 def rename_keys(original_dict, key_map):
     nested_keys = ["price", "built_in_memory", "screen_diagonal", "sim_count"]
     keys_has = ["sim_format"]
-    keys_contains = ["brand", "color", "os", "processor_name", "processor_cores", "materials", "delivery_set"]
+    keys_contains = ["brand", "title", "color", "os", "processor_name", "processor_cores", "materials", "delivery_set"]
     # keys_contains = ["title", "ram", "color", "front_camera", "main_camera", "os", "processor_name", "processor_cores", "battery", "materials", "delivery_set"]
     keys_equals = ["ram", "front_camera", "main_camera", "battery"]
     keys_gt = ["price_gt", "built_in_memory_gt", "main_camera_gt", "screen_diagonal_gt", "processor_cores_gt"]
@@ -91,14 +95,9 @@ def rename_keys(original_dict, key_map):
 
 def analyze(text):
     doc = nlp(text)
-
     entities_dict = {ent.label_: ent.text for ent in doc.ents}
-
     result = rename_keys(entities_dict, KEY_MAP)
-    # return result
     return json.dumps(result, ensure_ascii=False)
-    # entities = {ent.label_: ent.text for ent in doc.ents}
-    # return json.dumps(entities, ensure_ascii=False)
 
 
 if __name__ == "__main__":
@@ -106,11 +105,11 @@ if __name__ == "__main__":
         if len(sys.argv) < 2:
             json.dumps({"error": "No text argument provided"})
             print(json.dumps({"error": "No text argument provided"}))
-            # sys.exit(1)
         
         # text = "iphone камера 20 мп память 256 гб ціна від 30000"
         text = sys.argv[1]
-        result = {"message": "success", "text": analyze(text)}
+        # result = {"message": "success", "text": analyze(text)}
+        result = analyze(text)
         json.dumps(result)
         print(json.dumps(result))
     

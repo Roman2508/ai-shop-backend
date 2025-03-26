@@ -54,6 +54,9 @@ export class UserModel implements User {
   @Field(() => [ReviewModel])
   reviews: ReviewModel[];
 
+  @Field(() => [String])
+  viewedProducts: string[];
+
   @Field(() => Date)
   createdAt: Date;
 

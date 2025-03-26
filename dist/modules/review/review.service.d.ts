@@ -19,6 +19,7 @@ export declare class ReviewService {
             street: string | null;
             postOffice: string | null;
             role: import("prisma/generated").$Enums.EnumUserRoles;
+            viewedProducts: string[];
         };
         product: {
             price: number;

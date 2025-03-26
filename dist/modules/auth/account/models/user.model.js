@@ -79,6 +79,10 @@ __decorate([
     __metadata("design:type", Array)
 ], UserModel.prototype, "reviews", void 0);
 __decorate([
+    (0, graphql_1.Field)(() => [String]),
+    __metadata("design:type", Array)
+], UserModel.prototype, "viewedProducts", void 0);
+__decorate([
     (0, graphql_1.Field)(() => Date),
     __metadata("design:type", Date)
 ], UserModel.prototype, "createdAt", void 0);

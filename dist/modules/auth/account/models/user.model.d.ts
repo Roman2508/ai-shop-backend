@@ -18,6 +18,7 @@ export declare class UserModel implements User {
     cart: CartItemModel[];
     orders: OrderModel[];
     reviews: ReviewModel[];
+    viewedProducts: string[];
     createdAt: Date;
     updatedAt: Date;
 }

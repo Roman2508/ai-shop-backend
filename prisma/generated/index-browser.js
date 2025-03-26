@@ -128,6 +128,7 @@ exports.Prisma.UserScalarFieldEnum = {
   street: 'street',
   postOffice: 'postOffice',
   role: 'role',
+  viewedProducts: 'viewedProducts',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -154,6 +155,12 @@ exports.Prisma.ProductScalarFieldEnum = {
   deliverySet: 'deliverySet',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProductEmpedingScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  vector: 'vector'
 };
 
 exports.Prisma.CartItemScalarFieldEnum = {
@@ -204,6 +211,10 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -212,6 +223,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.EnumUserRoles = exports.$Enums.EnumUserRoles = {
   USER: 'USER',
@@ -227,6 +244,7 @@ exports.EnumOrderStatus = exports.$Enums.EnumOrderStatus = {
 exports.Prisma.ModelName = {
   User: 'User',
   Product: 'Product',
+  ProductEmpeding: 'ProductEmpeding',
   CartItem: 'CartItem',
   FavoriteItem: 'FavoriteItem',
   Review: 'Review',

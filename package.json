@@ -46,6 +46,7 @@
     "device-detector-js": "^3.0.3",
     "dotenv": "^16.4.7",
     "express-session": "^1.18.1",
+    "faiss-node": "^0.5.1",
     "geoip-lite": "^1.4.10",
     "graphql": "^16.10.0",
     "graphql-upload": "^14.0.0",

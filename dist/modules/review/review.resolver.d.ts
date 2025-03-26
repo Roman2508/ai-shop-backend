@@ -5,26 +5,27 @@ export declare class ReviewResolver {
     constructor(reviewService: ReviewService);
     getByUserId(userId: string): Promise<({
         user: {
-            id: string;
             createdAt: Date;
-            updatedAt: Date;
+            id: string;
             email: string;
-            username: string;
             password: string;
+            username: string;
             displayName: string;
             avatar: string | null;
             city: string | null;
             street: string | null;
             postOffice: string | null;
             role: import("prisma/generated").$Enums.EnumUserRoles;
+            viewedProducts: string[];
+            updatedAt: Date;
         };
         product: {
-            price: number;
-            id: string;
             createdAt: Date;
+            id: string;
             updatedAt: Date;
             images: string[];
             title: string;
+            price: number;
             brand: string;
             ram: number;
             builtInMemory: number;
@@ -42,12 +43,12 @@ export declare class ReviewResolver {
             deliverySet: string;
         };
     } & {
-        text: string;
         userId: string | null;
-        productId: string | null;
-        id: string;
         createdAt: Date;
+        id: string;
         updatedAt: Date;
+        productId: string | null;
+        text: string;
         rating: number;
     })[]>;
     create(userId: string, input: CreateReviewInput): Promise<boolean>;

@@ -30,6 +30,8 @@ model User {
   reviews   Review[]
   orders    Order[]
 
+  viewedProducts  String[] @map("viewed_products")
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -74,7 +76,21 @@ model Product {
   cartItems CartItem[]
   favoriteItems FavoriteItem[]
 
+  embedding  ProductEmpeding?
+
   @@map("products")
+}
+
+
+model ProductEmpeding {
+  id        Int      @id @default(autoincrement())
+  
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String @unique
+  
+  vector    Json     // Хранение эмбеддинга как JSON
+
+  @@map("products_embeding")
 }
 
 model CartItem {

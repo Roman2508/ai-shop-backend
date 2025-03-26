@@ -151,15 +151,26 @@ export class ProductService {
   async search(input: string) {
     const response = await this.nlpService.analyze(input);
 
-    if (response.message !== 'success') {
+    if (!response) {
       throw new BadRequestException('Помилка');
     }
-    const queryObject = JSON.parse(response.text);
+    // const queryObject = JSON.parse(response.text);
 
     // const products = await this.prismaService.product.findMany({
     //   where: { title: { contains: 'iphone', mode: 'insensitive' } },
     // });
-    const products = await this.prismaService.product.findMany({ where: convertKeysToCamel(queryObject) });
+
+    const queryObject = JSON.parse(response);
+
+    let prismaQueryObject;
+
+    if (typeof convertKeysToCamel(queryObject) === 'string') {
+      prismaQueryObject = JSON.parse(convertKeysToCamel(queryObject));
+    } else {
+      prismaQueryObject = convertKeysToCamel(queryObject);
+    }
+
+    const products = await this.prismaService.product.findMany({ where: prismaQueryObject });
 
     if (!products.length) {
       throw new NotFoundException('Нічого не знайдено');

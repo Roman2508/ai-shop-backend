@@ -25,6 +25,7 @@ export declare class AccountService {
         street: string | null;
         postOffice: string | null;
         role: import("prisma/generated").$Enums.EnumUserRoles;
+        viewedProducts: string[];
     }[]>;
     me(id: string): Promise<{
         cart: ({
@@ -100,6 +101,7 @@ export declare class AccountService {
                 street: string | null;
                 postOffice: string | null;
                 role: import("prisma/generated").$Enums.EnumUserRoles;
+                viewedProducts: string[];
             };
             product: {
                 price: number;
@@ -189,6 +191,7 @@ export declare class AccountService {
         street: string | null;
         postOffice: string | null;
         role: import("prisma/generated").$Enums.EnumUserRoles;
+        viewedProducts: string[];
     }>;
     create(input: CreateUserInput): Promise<boolean>;
     changeEmail(user: User, input: ChangeEmailInput): Promise<boolean>;

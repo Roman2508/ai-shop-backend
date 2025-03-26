@@ -1,4 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
+
 import { NlpService } from './nlp.service';
 
 @Controller('nlp')

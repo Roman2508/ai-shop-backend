@@ -75,6 +75,7 @@ export declare class ProductService {
                 street: string | null;
                 postOffice: string | null;
                 role: import("prisma/generated").$Enums.EnumUserRoles;
+                viewedProducts: string[];
             };
             product: {
                 price: number;

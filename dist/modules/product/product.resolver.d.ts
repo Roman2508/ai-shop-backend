@@ -7,12 +7,12 @@ export declare class ProductResolver {
     constructor(productService: ProductService);
     getAll(): Promise<{
         products: {
-            price: number;
-            id: string;
             createdAt: Date;
+            id: string;
             updatedAt: Date;
             images: string[];
             title: string;
+            price: number;
             brand: string;
             ram: number;
             builtInMemory: number;
@@ -33,12 +33,12 @@ export declare class ProductResolver {
     }>;
     paginateAndFilter(query: PaginateAndFilterInput): Promise<{
         products: {
-            price: number;
-            id: string;
             createdAt: Date;
+            id: string;
             updatedAt: Date;
             images: string[];
             title: string;
+            price: number;
             brand: string;
             ram: number;
             builtInMemory: number;
@@ -60,26 +60,27 @@ export declare class ProductResolver {
     getById(productId: string): Promise<{
         reviews: ({
             user: {
-                id: string;
                 createdAt: Date;
-                updatedAt: Date;
+                id: string;
                 email: string;
-                username: string;
                 password: string;
+                username: string;
                 displayName: string;
                 avatar: string | null;
                 city: string | null;
                 street: string | null;
                 postOffice: string | null;
                 role: import("prisma/generated").$Enums.EnumUserRoles;
+                viewedProducts: string[];
+                updatedAt: Date;
             };
             product: {
-                price: number;
-                id: string;
                 createdAt: Date;
+                id: string;
                 updatedAt: Date;
                 images: string[];
                 title: string;
+                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -97,21 +98,21 @@ export declare class ProductResolver {
                 deliverySet: string;
             };
         } & {
-            text: string;
             userId: string | null;
-            productId: string | null;
-            id: string;
             createdAt: Date;
+            id: string;
             updatedAt: Date;
+            productId: string | null;
+            text: string;
             rating: number;
         })[];
     } & {
-        price: number;
-        id: string;
         createdAt: Date;
+        id: string;
         updatedAt: Date;
         images: string[];
         title: string;
+        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -129,12 +130,12 @@ export declare class ProductResolver {
         deliverySet: string;
     }>;
     search(input: string): Promise<{
-        price: number;
-        id: string;
         createdAt: Date;
+        id: string;
         updatedAt: Date;
         images: string[];
         title: string;
+        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -152,12 +153,12 @@ export declare class ProductResolver {
         deliverySet: string;
     }[]>;
     getMostPopular(): Promise<{
-        price: number;
-        id: string;
         createdAt: Date;
+        id: string;
         updatedAt: Date;
         images: string[];
         title: string;
+        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -175,12 +176,12 @@ export declare class ProductResolver {
         deliverySet: string;
     }[]>;
     getSimilar(productId: string): Promise<{
-        price: number;
-        id: string;
         createdAt: Date;
+        id: string;
         updatedAt: Date;
         images: string[];
         title: string;
+        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -198,12 +199,12 @@ export declare class ProductResolver {
         deliverySet: string;
     }[]>;
     create(input: CreateProductInput): Promise<{
-        price: number;
-        id: string;
         createdAt: Date;
+        id: string;
         updatedAt: Date;
         images: string[];
         title: string;
+        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;
@@ -224,12 +225,12 @@ export declare class ProductResolver {
     removePhotos(productId: string, filename: string): Promise<boolean>;
     createMany(): Promise<boolean>;
     update(input: UpdateProductInput): Promise<{
-        price: number;
-        id: string;
         createdAt: Date;
+        id: string;
         updatedAt: Date;
         images: string[];
         title: string;
+        price: number;
         brand: string;
         ram: number;
         builtInMemory: number;

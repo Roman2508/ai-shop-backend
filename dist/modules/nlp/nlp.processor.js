@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NlpProcessor = void 0;
 const path = require('path');
-const { spawn } = require('child_process');
 const child_process_1 = require("child_process");
 const common_1 = require("@nestjs/common");
 const VENV_ACTIVATE = path.join(process.cwd(), 'src/modules/nlp/python/venv/Scripts/activate');
@@ -26,9 +25,9 @@ let NlpProcessor = class NlpProcessor {
                     reject(`stderr: ${stderr}`);
                     return;
                 }
-                console.log(stdout);
+                console.log('stdout', `===${stdout}===`);
                 try {
-                    const result = JSON.parse(stdout);
+                    const result = JSON.parse(JSON.stringify(stdout));
                     resolve(result);
                 }
                 catch (parseError) {
