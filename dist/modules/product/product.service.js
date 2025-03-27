@@ -16,11 +16,13 @@ const nlp_service_1 = require("./../nlp/nlp.service");
 const file_service_1 = require("../file/file.service");
 const prisma_service_1 = require("../../core/prisma/prisma.service");
 const convert_keys_to_camel_util_1 = require("../../shared/utils/convert-keys-to-camel.util");
+const recommendation_service_1 = require("../recommendation/recommendation.service");
 let ProductService = class ProductService {
-    constructor(nlpService, fileService, prismaService) {
+    constructor(nlpService, fileService, prismaService, recommendationService) {
         this.nlpService = nlpService;
         this.fileService = fileService;
         this.prismaService = prismaService;
+        this.recommendationService = recommendationService;
     }
     async getAll() {
         const total = await this.prismaService.product.count();
@@ -100,7 +102,6 @@ let ProductService = class ProductService {
         return { products, total: totalProductsCount };
     }
     async getById(id) {
-        console.log(id);
         const product = await this.prismaService.product.findUnique({
             where: { id },
             include: {
@@ -162,6 +163,7 @@ let ProductService = class ProductService {
     }
     async create(input) {
         const newProduct = await this.prismaService.product.create({ data: input });
+        await this.recommendationService.createProduct(newProduct);
         return newProduct;
     }
     async addPhoto(id, file) {
@@ -194,6 +196,10 @@ let ProductService = class ProductService {
             processorCores: String(el.processorCores),
         }));
         await this.prismaService.product.createMany({ data: dataWithCorrectTypes });
+        const products = await this.prismaService.product.findMany();
+        await Promise.all(products.map(async (el) => {
+            await this.recommendationService.createProduct(el);
+        }));
         console.log('Дані успішно імпортовано');
         return true;
     }
@@ -216,6 +222,7 @@ exports.ProductService = ProductService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [nlp_service_1.NlpService,
         file_service_1.FileService,
-        prisma_service_1.PrismaService])
+        prisma_service_1.PrismaService,
+        recommendation_service_1.RecommendationService])
 ], ProductService);
 //# sourceMappingURL=product.service.js.map

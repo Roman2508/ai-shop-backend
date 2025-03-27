@@ -1,92 +1,129 @@
-import { Injectable } from '@nestjs/common';
+const path = require('path');
 import { spawn } from 'child_process';
-import * as faiss from 'faiss-node';
+import { PythonShell } from 'python-shell';
+import { Injectable } from '@nestjs/common';
+
 import { PrismaService } from 'src/core/prisma/prisma.service';
+import { CreateVectorInput } from './inputs/create.vector.input';
+
+const SCRIPT_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/main.py');
+const PYTHON_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/venv/Scripts/python.exe');
 
 @Injectable()
 export class RecommendationService {
   constructor(private prisma: PrismaService) {}
 
-  // Вызов Python-скрипта для генерации эмбеддинга
-  private async generateEmbedding(text: string): Promise<number[]> {
-    return new Promise((resolve, reject) => {
-      const python = spawn('python3', ['scripts/generate_embedding.py', text]);
+  async createProduct(dto: CreateVectorInput) {
+    const textRepresentation = this.createTextRepresentation(dto);
+    const embedding = await this.generateEmbedding(textRepresentation);
 
-      let output = '';
-      python.stdout.on('data', (data) => (output += data.toString()));
-
-      python.stderr.on('data', (data) => console.error(data.toString()));
-
-      python.on('close', (code) => {
-        if (code === 0) {
-          resolve(JSON.parse(output));
-        } else {
-          reject(new Error('Failed to generate embedding'));
-        }
-      });
+    return this.prisma.productEmpeding.create({
+      data: {
+        product: { connect: { id: String(dto.id) } },
+        vector: embedding,
+      },
     });
   }
 
-  // Создание товара с эмбеддингом
-  async createProduct(data: {
-    name: string;
-    description: string;
-    price: number;
-    os: string;
-    ram: number;
-    storage: number;
-    color: string;
-  }) {
-    const textRepresentation = `
-      Назва: ${data.name},
-      Ціна: ${data.price},
-      Опис: ${data.description},
-      Операційна система: ${data.os},
-      Оперативна пам'ять: ${data.ram} ГБ,
-      Вбудована пам'ять: ${data.storage} ГБ,
-      Колір: ${data.color}
-    `;
+  private createTextRepresentation(product: any): string {
+    return `
+        title: ${product.title},
+        price: ${product.price},
+        brand: ${product.brand},
+        ram: ${product.ram},
+        builtInMemory: ${product.builtInMemory},
+        color: ${product.color},
+        frontCamera: ${product.frontCamera},
+        mainCamera: ${product.mainCamera},
+        screenDiagonal: ${product.screenDiagonal},
+        simCount: ${product.simCount},
+        simFormat: ${product.simFormat},
+        os: ${product.os},
+        processorName: ${product.processorName},
+        processorCores: ${product.processorCores},
+        battery: ${product.battery},
+        materials: ${product.materials},
+        deliverySet: ${product.deliverySet}
+      `;
+  }
 
-    const embedding = await this.generateEmbedding(textRepresentation);
+  private async generateEmbedding(text: string): Promise<number[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await PythonShell.run(SCRIPT_PATH, { args: [text], pythonPath: PYTHON_PATH });
+        if (!result) return reject('No result from Python script');
+        const embedding = JSON.parse(result[0]);
+        resolve(embedding);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
 
-    // const product = await this.prisma.product.create({
-    //   data: {
-    //     ...data,
-    //     embedding: {
-    //       create: { vector: embedding },
-    //     },
+  /*  */
+
+  async findSimilarProducts(viewedProductIds: string[]) {
+    if (viewedProductIds.length === 0) return [];
+
+    // Получаем векторы просмотренных товаров
+    // const viewedProductsVectors = await this.prisma.productEmpeding.findMany({
+    //   where: { product: { id: { in: viewedProductIds } } },
+    // });
+
+    const allVectors = await this.prisma.productEmpeding.findMany();
+
+    const viewedProductsVectors = allVectors.filter((el) => viewedProductIds.includes(el.productId));
+
+    // Проверяем, есть ли векторы
+    if (!viewedProductsVectors.length) return [];
+
+    const vectorsArray = viewedProductsVectors.map((p) => p.vector);
+    const allVectorsArray = allVectors.map((p) => p.vector);
+
+    // Усредняем векторы (создаем общий вектор интересов пользователя)
+    // const userVector = this.averageVectors(vectorsArray);
+
+    // Запускаем Python-скрипт для поиска ближайших соседей
+    const similarProductIds = await this.findNearestNeighbors(vectorsArray, allVectorsArray);
+
+    return similarProductIds;
+
+    // Возвращаем найденные товары, отсортированные по схожести
+    // return this.prisma.product.findMany({
+    //   where: { id: { in: similarProductIds } },
+    //   orderBy: {
+    //     id: { in: similarProductIds }, // сохраняем порядок
     //   },
     // });
-
-    // return product;
   }
 
-  // Загрузка эмбеддингов в FAISS
-  private async loadFaissIndex() {
-    // const embeddings = await this.prisma.productEmbedding.findMany();
-    // const dim = 3072;
-    // const index = new faiss.IndexFlatL2(dim);
-    // const vectors = embeddings.map((e) => Float32Array.from(e.vector));
-    // vectors.forEach((v) => index.add(v));
-    // return index;
+  private averageVectors(vectors: any): number[] {
+    // private averageVectors(vectors: number[][]): number[] {
+    const length = vectors[0].length;
+    const avgVector = new Array(length).fill(0);
+
+    vectors.forEach((vector) => {
+      for (let i = 0; i < length; i++) {
+        avgVector[i] += vector[i];
+      }
+    });
+
+    return avgVector.map((value) => value / vectors.length);
   }
 
-  // Получение рекомендаций по пользователю
-  async getRecommendations(userId: number) {
-    // const views = await this.prisma.userView.findMany({
-    //   where: { userId },
-    //   include: { product: { include: { embedding: true } } },
-    //   orderBy: { viewedAt: 'desc' },
-    //   take: 10,
-    // });
-
-    // const index = await this.loadFaissIndex();
-    // const userVectors = views.map((v) => Float32Array.from(v.product.embedding.vector));
-
-    // const k = 5; // Количество рекомендаций
-    // const results = userVectors.flatMap((vector) => index.search(vector, k).labels);
-
-    // const uniqueIds = Array.from(new Set(results));
-    // return this.prisma.product.findMany({ where: { id: { in: uniqueIds } } });
+  private async findNearestNeighbors(queryVector: any[], allVectors: any[]): Promise<string[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await PythonShell.run(SCRIPT_PATH, {
+          args: [JSON.stringify(queryVector), JSON.stringify(allVectors)],
+          pythonPath: PYTHON_PATH,
+        });
+        if (!result) return reject('No result from Python script');
+        const embedding = JSON.parse(result[0]);
+        resolve(embedding);
+      } catch (e) {
+        reject(e);
+      }
+    });
   }
 }

@@ -4,11 +4,11 @@ export declare class OrderResolver {
     private readonly orderService;
     constructor(orderService: OrderService);
     createPayment(input: CreateOrderInput): Promise<{
-        userId: string | null;
-        createdAt: Date;
-        id: string;
-        updatedAt: Date;
         orderId: string;
+        userId: string | null;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
         status: import("prisma/generated").$Enums.EnumOrderStatus;
         total: number;
     }>;

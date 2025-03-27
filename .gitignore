@@ -56,4 +56,5 @@ pnpm-lock.yaml
 # other
 .env
 models/bge-small-en-v1.5
+src/modules/recommendation/python/venv
 dist

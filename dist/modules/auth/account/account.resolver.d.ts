@@ -11,11 +11,12 @@ export declare class AccountResolver {
     private readonly accountService;
     constructor(accountService: AccountService);
     findAll(): Promise<{
-        createdAt: Date;
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         email: string;
-        password: string;
         username: string;
+        password: string;
         displayName: string;
         avatar: string | null;
         city: string | null;
@@ -23,17 +24,16 @@ export declare class AccountResolver {
         postOffice: string | null;
         role: import("prisma/generated").$Enums.EnumUserRoles;
         viewedProducts: string[];
-        updatedAt: Date;
     }[]>;
     me(id: string): Promise<{
         cart: ({
             product: {
-                createdAt: Date;
+                price: number;
                 id: string;
+                createdAt: Date;
                 updatedAt: Date;
                 images: string[];
                 title: string;
-                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -52,18 +52,18 @@ export declare class AccountResolver {
             };
         } & {
             userId: string;
-            id: string;
             productId: string;
+            id: string;
             count: number;
         })[];
         favorites: ({
             product: {
-                createdAt: Date;
+                price: number;
                 id: string;
+                createdAt: Date;
                 updatedAt: Date;
                 images: string[];
                 title: string;
-                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -82,16 +82,17 @@ export declare class AccountResolver {
             };
         } & {
             userId: string;
-            id: string;
             productId: string;
+            id: string;
         })[];
         reviews: ({
             user: {
-                createdAt: Date;
                 id: string;
+                createdAt: Date;
+                updatedAt: Date;
                 email: string;
-                password: string;
                 username: string;
+                password: string;
                 displayName: string;
                 avatar: string | null;
                 city: string | null;
@@ -99,15 +100,14 @@ export declare class AccountResolver {
                 postOffice: string | null;
                 role: import("prisma/generated").$Enums.EnumUserRoles;
                 viewedProducts: string[];
-                updatedAt: Date;
             };
             product: {
-                createdAt: Date;
+                price: number;
                 id: string;
+                createdAt: Date;
                 updatedAt: Date;
                 images: string[];
                 title: string;
-                price: number;
                 brand: string;
                 ram: number;
                 builtInMemory: number;
@@ -125,23 +125,23 @@ export declare class AccountResolver {
                 deliverySet: string;
             };
         } & {
-            userId: string | null;
-            createdAt: Date;
-            id: string;
-            updatedAt: Date;
-            productId: string | null;
             text: string;
+            userId: string | null;
+            productId: string | null;
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
             rating: number;
         })[];
         orders: ({
             items: ({
                 product: {
-                    createdAt: Date;
+                    price: number;
                     id: string;
+                    createdAt: Date;
                     updatedAt: Date;
                     images: string[];
                     title: string;
-                    price: number;
                     brand: string;
                     ram: number;
                     builtInMemory: number;
@@ -159,29 +159,30 @@ export declare class AccountResolver {
                     deliverySet: string;
                 };
             } & {
-                createdAt: Date;
-                id: string;
-                updatedAt: Date;
-                productId: string | null;
-                price: number;
                 orderId: string | null;
                 quantity: number;
+                price: number;
+                productId: string | null;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
             })[];
         } & {
-            userId: string | null;
-            createdAt: Date;
-            id: string;
-            updatedAt: Date;
             orderId: string;
+            userId: string | null;
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
             status: import("prisma/generated").$Enums.EnumOrderStatus;
             total: number;
         })[];
     } & {
-        createdAt: Date;
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         email: string;
-        password: string;
         username: string;
+        password: string;
         displayName: string;
         avatar: string | null;
         city: string | null;
@@ -189,7 +190,6 @@ export declare class AccountResolver {
         postOffice: string | null;
         role: import("prisma/generated").$Enums.EnumUserRoles;
         viewedProducts: string[];
-        updatedAt: Date;
     }>;
     create(input: CreateUserInput): Promise<boolean>;
     changeEmail(user: User, input: ChangeEmailInput): Promise<boolean>;

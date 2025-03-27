@@ -4,25 +4,8 @@ export declare class ReviewResolver {
     private readonly reviewService;
     constructor(reviewService: ReviewService);
     getByUserId(userId: string): Promise<({
-        user: {
-            createdAt: Date;
-            id: string;
-            email: string;
-            password: string;
-            username: string;
-            displayName: string;
-            avatar: string | null;
-            city: string | null;
-            street: string | null;
-            postOffice: string | null;
-            role: import("prisma/generated").$Enums.EnumUserRoles;
-            viewedProducts: string[];
-            updatedAt: Date;
-        };
         product: {
-            createdAt: Date;
             id: string;
-            updatedAt: Date;
             images: string[];
             title: string;
             price: number;
@@ -41,15 +24,32 @@ export declare class ReviewResolver {
             battery: number;
             materials: string;
             deliverySet: string;
+            createdAt: Date;
+            updatedAt: Date;
+        };
+        user: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            email: string;
+            password: string;
+            username: string;
+            displayName: string;
+            avatar: string | null;
+            city: string | null;
+            street: string | null;
+            postOffice: string | null;
+            role: import("prisma/generated").$Enums.EnumUserRoles;
+            viewedProducts: string[];
         };
     } & {
-        userId: string | null;
-        createdAt: Date;
         id: string;
+        createdAt: Date;
         updatedAt: Date;
-        productId: string | null;
         text: string;
         rating: number;
+        userId: string | null;
+        productId: string | null;
     })[]>;
     create(userId: string, input: CreateReviewInput): Promise<boolean>;
     delete(userId: string, id: string): Promise<boolean>;

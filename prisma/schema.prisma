@@ -8,6 +8,7 @@ datasource db {
   url      = env("POSTGRES_URI")
 }
 
+
 model User {
   id String @id @default(uuid())
 
@@ -37,6 +38,7 @@ model User {
 
   @@map("users")
 }
+
 
 enum EnumUserRoles {
   USER
@@ -93,6 +95,7 @@ model ProductEmpeding {
   @@map("products_embeding")
 }
 
+
 model CartItem {
   id        String   @id @default(uuid())
   
@@ -106,6 +109,7 @@ model CartItem {
   
   @@unique([userId, productId])
 }
+
 
 model FavoriteItem {
   id        String   @id @default(uuid())
@@ -139,6 +143,7 @@ model Review {
   @@map("reviews")
 }
 
+
 model Order {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map("created_at")
@@ -157,6 +162,7 @@ model Order {
   @@map("order")
 }
 
+
 model OrderItem {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map("created_at")
@@ -173,6 +179,7 @@ model OrderItem {
 
   @@map("order_item")
 }
+
 
 enum EnumOrderStatus {
   PENDING

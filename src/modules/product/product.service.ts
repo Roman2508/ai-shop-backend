@@ -7,6 +7,7 @@ import { PrismaService } from 'src/core/prisma/prisma.service';
 import { CreateProductInput } from './inputs/create-product.input';
 import { UpdateProductInput } from './inputs/update-product.input';
 import { convertKeysToCamel } from 'src/shared/utils/convert-keys-to-camel.util';
+import { RecommendationService } from '../recommendation/recommendation.service';
 
 @Injectable()
 export class ProductService {
@@ -14,6 +15,7 @@ export class ProductService {
     private readonly nlpService: NlpService,
     private readonly fileService: FileService,
     private readonly prismaService: PrismaService,
+    private readonly recommendationService: RecommendationService,
   ) {}
 
   async getAll() {
@@ -130,7 +132,6 @@ export class ProductService {
   }
 
   async getById(id: string) {
-    console.log(id);
     const product = await this.prismaService.product.findUnique({
       where: { id },
       include: {
@@ -214,6 +215,7 @@ export class ProductService {
 
   async create(input: CreateProductInput) {
     const newProduct = await this.prismaService.product.create({ data: input });
+    await this.recommendationService.createProduct(newProduct);
     return newProduct;
   }
 
@@ -252,6 +254,15 @@ export class ProductService {
     }));
 
     await this.prismaService.product.createMany({ data: dataWithCorrectTypes });
+
+    const products = await this.prismaService.product.findMany();
+
+    await Promise.all(
+      products.map(async (el) => {
+        await this.recommendationService.createProduct(el);
+      }),
+    );
+
     console.log('Дані успішно імпортовано');
     return true;
   }
