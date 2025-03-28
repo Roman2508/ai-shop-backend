@@ -104,12 +104,12 @@ export declare class ProductService {
             };
         } & {
             id: string;
+            productId: string | null;
             createdAt: Date;
             updatedAt: Date;
             text: string;
             rating: number;
             userId: string | null;
-            productId: string | null;
         })[];
     } & {
         id: string;

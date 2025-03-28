@@ -195,9 +195,18 @@ let ProductService = class ProductService {
             simFormat: JSON.parse(el.simFormat.replace(/'/g, '"')),
             processorCores: String(el.processorCores),
         }));
-        await this.prismaService.product.createMany({ data: dataWithCorrectTypes });
-        const products = await this.prismaService.product.findMany();
+        await this.prismaService.product.createMany({ data: dataWithCorrectTypes.slice(0, 10) });
+        let products = await this.prismaService.product.findMany();
+        products = products.slice(0, 109);
         await Promise.all(products.map(async (el) => {
+            const exited = await this.prismaService.product.findUnique({
+                where: { id: el.id },
+                include: { embedding: true },
+            });
+            if (exited.embedding) {
+                console.log(`Product with ID ${el.id} already have embedding`);
+                return;
+            }
             await this.recommendationService.createProduct(el);
         }));
         console.log('Дані успішно імпортовано');

@@ -24,10 +24,10 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Product = $Result.DefaultSelection<Prisma.$ProductPayload>
 /**
- * Model ProductEmpeding
+ * Model ProductEmbeding
  * 
  */
-export type ProductEmpeding = $Result.DefaultSelection<Prisma.$ProductEmpedingPayload>
+export type ProductEmbeding = $Result.DefaultSelection<Prisma.$ProductEmbedingPayload>
 /**
  * Model CartItem
  * 
@@ -230,14 +230,14 @@ export class PrismaClient<
   get product(): Prisma.ProductDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.productEmpeding`: Exposes CRUD operations for the **ProductEmpeding** model.
+   * `prisma.productEmbeding`: Exposes CRUD operations for the **ProductEmbeding** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more ProductEmpedings
-    * const productEmpedings = await prisma.productEmpeding.findMany()
+    * // Fetch zero or more ProductEmbedings
+    * const productEmbedings = await prisma.productEmbeding.findMany()
     * ```
     */
-  get productEmpeding(): Prisma.ProductEmpedingDelegate<ExtArgs, ClientOptions>;
+  get productEmbeding(): Prisma.ProductEmbedingDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.cartItem`: Exposes CRUD operations for the **CartItem** model.
@@ -730,7 +730,7 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Product: 'Product',
-    ProductEmpeding: 'ProductEmpeding',
+    ProductEmbeding: 'ProductEmbeding',
     CartItem: 'CartItem',
     FavoriteItem: 'FavoriteItem',
     Review: 'Review',
@@ -751,7 +751,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "product" | "productEmpeding" | "cartItem" | "favoriteItem" | "review" | "order" | "orderItem"
+      modelProps: "user" | "product" | "productEmbeding" | "cartItem" | "favoriteItem" | "review" | "order" | "orderItem"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -903,77 +903,77 @@ export namespace Prisma {
           }
         }
       }
-      ProductEmpeding: {
-        payload: Prisma.$ProductEmpedingPayload<ExtArgs>
-        fields: Prisma.ProductEmpedingFieldRefs
+      ProductEmbeding: {
+        payload: Prisma.$ProductEmbedingPayload<ExtArgs>
+        fields: Prisma.ProductEmbedingFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ProductEmpedingFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductEmpedingPayload> | null
+            args: Prisma.ProductEmbedingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductEmbedingPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ProductEmpedingFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductEmpedingPayload>
+            args: Prisma.ProductEmbedingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductEmbedingPayload>
           }
           findFirst: {
-            args: Prisma.ProductEmpedingFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductEmpedingPayload> | null
+            args: Prisma.ProductEmbedingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductEmbedingPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ProductEmpedingFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductEmpedingPayload>
+            args: Prisma.ProductEmbedingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductEmbedingPayload>
           }
           findMany: {
-            args: Prisma.ProductEmpedingFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductEmpedingPayload>[]
+            args: Prisma.ProductEmbedingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductEmbedingPayload>[]
           }
           create: {
-            args: Prisma.ProductEmpedingCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductEmpedingPayload>
+            args: Prisma.ProductEmbedingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductEmbedingPayload>
           }
           createMany: {
-            args: Prisma.ProductEmpedingCreateManyArgs<ExtArgs>
+            args: Prisma.ProductEmbedingCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ProductEmpedingCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductEmpedingPayload>[]
+            args: Prisma.ProductEmbedingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductEmbedingPayload>[]
           }
           delete: {
-            args: Prisma.ProductEmpedingDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductEmpedingPayload>
+            args: Prisma.ProductEmbedingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductEmbedingPayload>
           }
           update: {
-            args: Prisma.ProductEmpedingUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductEmpedingPayload>
+            args: Prisma.ProductEmbedingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductEmbedingPayload>
           }
           deleteMany: {
-            args: Prisma.ProductEmpedingDeleteManyArgs<ExtArgs>
+            args: Prisma.ProductEmbedingDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ProductEmpedingUpdateManyArgs<ExtArgs>
+            args: Prisma.ProductEmbedingUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ProductEmpedingUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductEmpedingPayload>[]
+            args: Prisma.ProductEmbedingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductEmbedingPayload>[]
           }
           upsert: {
-            args: Prisma.ProductEmpedingUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductEmpedingPayload>
+            args: Prisma.ProductEmbedingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductEmbedingPayload>
           }
           aggregate: {
-            args: Prisma.ProductEmpedingAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateProductEmpeding>
+            args: Prisma.ProductEmbedingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProductEmbeding>
           }
           groupBy: {
-            args: Prisma.ProductEmpedingGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ProductEmpedingGroupByOutputType>[]
+            args: Prisma.ProductEmbedingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProductEmbedingGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ProductEmpedingCountArgs<ExtArgs>
-            result: $Utils.Optional<ProductEmpedingCountAggregateOutputType> | number
+            args: Prisma.ProductEmbedingCountArgs<ExtArgs>
+            result: $Utils.Optional<ProductEmbedingCountAggregateOutputType> | number
           }
         }
       }
@@ -1433,7 +1433,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     product?: ProductOmit
-    productEmpeding?: ProductEmpedingOmit
+    productEmbeding?: ProductEmbedingOmit
     cartItem?: CartItemOmit
     favoriteItem?: FavoriteItemOmit
     review?: ReviewOmit
@@ -3378,7 +3378,7 @@ export namespace Prisma {
       orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
       cartItems: Prisma.$CartItemPayload<ExtArgs>[]
       favoriteItems: Prisma.$FavoriteItemPayload<ExtArgs>[]
-      embedding: Prisma.$ProductEmpedingPayload<ExtArgs> | null
+      embedding: Prisma.$ProductEmbedingPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3800,7 +3800,7 @@ export namespace Prisma {
     orderItems<T extends Product$orderItemsArgs<ExtArgs> = {}>(args?: Subset<T, Product$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     cartItems<T extends Product$cartItemsArgs<ExtArgs> = {}>(args?: Subset<T, Product$cartItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CartItemPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     favoriteItems<T extends Product$favoriteItemsArgs<ExtArgs> = {}>(args?: Subset<T, Product$favoriteItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoriteItemPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    embedding<T extends Product$embeddingArgs<ExtArgs> = {}>(args?: Subset<T, Product$embeddingArgs<ExtArgs>>): Prisma__ProductEmpedingClient<$Result.GetResult<Prisma.$ProductEmpedingPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    embedding<T extends Product$embeddingArgs<ExtArgs> = {}>(args?: Subset<T, Product$embeddingArgs<ExtArgs>>): Prisma__ProductEmbedingClient<$Result.GetResult<Prisma.$ProductEmbedingPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4339,18 +4339,18 @@ export namespace Prisma {
    */
   export type Product$embeddingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelect<ExtArgs> | null
+    select?: ProductEmbedingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingInclude<ExtArgs> | null
-    where?: ProductEmpedingWhereInput
+    include?: ProductEmbedingInclude<ExtArgs> | null
+    where?: ProductEmbedingWhereInput
   }
 
   /**
@@ -4373,36 +4373,36 @@ export namespace Prisma {
 
 
   /**
-   * Model ProductEmpeding
+   * Model ProductEmbeding
    */
 
-  export type AggregateProductEmpeding = {
-    _count: ProductEmpedingCountAggregateOutputType | null
-    _avg: ProductEmpedingAvgAggregateOutputType | null
-    _sum: ProductEmpedingSumAggregateOutputType | null
-    _min: ProductEmpedingMinAggregateOutputType | null
-    _max: ProductEmpedingMaxAggregateOutputType | null
+  export type AggregateProductEmbeding = {
+    _count: ProductEmbedingCountAggregateOutputType | null
+    _avg: ProductEmbedingAvgAggregateOutputType | null
+    _sum: ProductEmbedingSumAggregateOutputType | null
+    _min: ProductEmbedingMinAggregateOutputType | null
+    _max: ProductEmbedingMaxAggregateOutputType | null
   }
 
-  export type ProductEmpedingAvgAggregateOutputType = {
+  export type ProductEmbedingAvgAggregateOutputType = {
     id: number | null
   }
 
-  export type ProductEmpedingSumAggregateOutputType = {
+  export type ProductEmbedingSumAggregateOutputType = {
     id: number | null
   }
 
-  export type ProductEmpedingMinAggregateOutputType = {
-    id: number | null
-    productId: string | null
-  }
-
-  export type ProductEmpedingMaxAggregateOutputType = {
+  export type ProductEmbedingMinAggregateOutputType = {
     id: number | null
     productId: string | null
   }
 
-  export type ProductEmpedingCountAggregateOutputType = {
+  export type ProductEmbedingMaxAggregateOutputType = {
+    id: number | null
+    productId: string | null
+  }
+
+  export type ProductEmbedingCountAggregateOutputType = {
     id: number
     productId: number
     vector: number
@@ -4410,182 +4410,182 @@ export namespace Prisma {
   }
 
 
-  export type ProductEmpedingAvgAggregateInputType = {
+  export type ProductEmbedingAvgAggregateInputType = {
     id?: true
   }
 
-  export type ProductEmpedingSumAggregateInputType = {
+  export type ProductEmbedingSumAggregateInputType = {
     id?: true
   }
 
-  export type ProductEmpedingMinAggregateInputType = {
-    id?: true
-    productId?: true
-  }
-
-  export type ProductEmpedingMaxAggregateInputType = {
+  export type ProductEmbedingMinAggregateInputType = {
     id?: true
     productId?: true
   }
 
-  export type ProductEmpedingCountAggregateInputType = {
+  export type ProductEmbedingMaxAggregateInputType = {
+    id?: true
+    productId?: true
+  }
+
+  export type ProductEmbedingCountAggregateInputType = {
     id?: true
     productId?: true
     vector?: true
     _all?: true
   }
 
-  export type ProductEmpedingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which ProductEmpeding to aggregate.
+     * Filter which ProductEmbeding to aggregate.
      */
-    where?: ProductEmpedingWhereInput
+    where?: ProductEmbedingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ProductEmpedings to fetch.
+     * Determine the order of ProductEmbedings to fetch.
      */
-    orderBy?: ProductEmpedingOrderByWithRelationInput | ProductEmpedingOrderByWithRelationInput[]
+    orderBy?: ProductEmbedingOrderByWithRelationInput | ProductEmbedingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ProductEmpedingWhereUniqueInput
+    cursor?: ProductEmbedingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ProductEmpedings from the position of the cursor.
+     * Take `±n` ProductEmbedings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ProductEmpedings.
+     * Skip the first `n` ProductEmbedings.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned ProductEmpedings
+     * Count returned ProductEmbedings
     **/
-    _count?: true | ProductEmpedingCountAggregateInputType
+    _count?: true | ProductEmbedingCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: ProductEmpedingAvgAggregateInputType
+    _avg?: ProductEmbedingAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: ProductEmpedingSumAggregateInputType
+    _sum?: ProductEmbedingSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ProductEmpedingMinAggregateInputType
+    _min?: ProductEmbedingMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ProductEmpedingMaxAggregateInputType
+    _max?: ProductEmbedingMaxAggregateInputType
   }
 
-  export type GetProductEmpedingAggregateType<T extends ProductEmpedingAggregateArgs> = {
-        [P in keyof T & keyof AggregateProductEmpeding]: P extends '_count' | 'count'
+  export type GetProductEmbedingAggregateType<T extends ProductEmbedingAggregateArgs> = {
+        [P in keyof T & keyof AggregateProductEmbeding]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateProductEmpeding[P]>
-      : GetScalarType<T[P], AggregateProductEmpeding[P]>
+        : GetScalarType<T[P], AggregateProductEmbeding[P]>
+      : GetScalarType<T[P], AggregateProductEmbeding[P]>
   }
 
 
 
 
-  export type ProductEmpedingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProductEmpedingWhereInput
-    orderBy?: ProductEmpedingOrderByWithAggregationInput | ProductEmpedingOrderByWithAggregationInput[]
-    by: ProductEmpedingScalarFieldEnum[] | ProductEmpedingScalarFieldEnum
-    having?: ProductEmpedingScalarWhereWithAggregatesInput
+  export type ProductEmbedingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductEmbedingWhereInput
+    orderBy?: ProductEmbedingOrderByWithAggregationInput | ProductEmbedingOrderByWithAggregationInput[]
+    by: ProductEmbedingScalarFieldEnum[] | ProductEmbedingScalarFieldEnum
+    having?: ProductEmbedingScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ProductEmpedingCountAggregateInputType | true
-    _avg?: ProductEmpedingAvgAggregateInputType
-    _sum?: ProductEmpedingSumAggregateInputType
-    _min?: ProductEmpedingMinAggregateInputType
-    _max?: ProductEmpedingMaxAggregateInputType
+    _count?: ProductEmbedingCountAggregateInputType | true
+    _avg?: ProductEmbedingAvgAggregateInputType
+    _sum?: ProductEmbedingSumAggregateInputType
+    _min?: ProductEmbedingMinAggregateInputType
+    _max?: ProductEmbedingMaxAggregateInputType
   }
 
-  export type ProductEmpedingGroupByOutputType = {
+  export type ProductEmbedingGroupByOutputType = {
     id: number
     productId: string
     vector: JsonValue
-    _count: ProductEmpedingCountAggregateOutputType | null
-    _avg: ProductEmpedingAvgAggregateOutputType | null
-    _sum: ProductEmpedingSumAggregateOutputType | null
-    _min: ProductEmpedingMinAggregateOutputType | null
-    _max: ProductEmpedingMaxAggregateOutputType | null
+    _count: ProductEmbedingCountAggregateOutputType | null
+    _avg: ProductEmbedingAvgAggregateOutputType | null
+    _sum: ProductEmbedingSumAggregateOutputType | null
+    _min: ProductEmbedingMinAggregateOutputType | null
+    _max: ProductEmbedingMaxAggregateOutputType | null
   }
 
-  type GetProductEmpedingGroupByPayload<T extends ProductEmpedingGroupByArgs> = Prisma.PrismaPromise<
+  type GetProductEmbedingGroupByPayload<T extends ProductEmbedingGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ProductEmpedingGroupByOutputType, T['by']> &
+      PickEnumerable<ProductEmbedingGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ProductEmpedingGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ProductEmbedingGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ProductEmpedingGroupByOutputType[P]>
-            : GetScalarType<T[P], ProductEmpedingGroupByOutputType[P]>
+              : GetScalarType<T[P], ProductEmbedingGroupByOutputType[P]>
+            : GetScalarType<T[P], ProductEmbedingGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ProductEmpedingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ProductEmbedingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     productId?: boolean
     vector?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["productEmpeding"]>
+  }, ExtArgs["result"]["productEmbeding"]>
 
-  export type ProductEmpedingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ProductEmbedingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     productId?: boolean
     vector?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["productEmpeding"]>
+  }, ExtArgs["result"]["productEmbeding"]>
 
-  export type ProductEmpedingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ProductEmbedingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     productId?: boolean
     vector?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["productEmpeding"]>
+  }, ExtArgs["result"]["productEmbeding"]>
 
-  export type ProductEmpedingSelectScalar = {
+  export type ProductEmbedingSelectScalar = {
     id?: boolean
     productId?: boolean
     vector?: boolean
   }
 
-  export type ProductEmpedingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "vector", ExtArgs["result"]["productEmpeding"]>
-  export type ProductEmpedingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "vector", ExtArgs["result"]["productEmbeding"]>
+  export type ProductEmbedingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }
-  export type ProductEmpedingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }
-  export type ProductEmpedingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }
 
-  export type $ProductEmpedingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "ProductEmpeding"
+  export type $ProductEmbedingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProductEmbeding"
     objects: {
       product: Prisma.$ProductPayload<ExtArgs>
     }
@@ -4593,136 +4593,136 @@ export namespace Prisma {
       id: number
       productId: string
       vector: Prisma.JsonValue
-    }, ExtArgs["result"]["productEmpeding"]>
+    }, ExtArgs["result"]["productEmbeding"]>
     composites: {}
   }
 
-  type ProductEmpedingGetPayload<S extends boolean | null | undefined | ProductEmpedingDefaultArgs> = $Result.GetResult<Prisma.$ProductEmpedingPayload, S>
+  type ProductEmbedingGetPayload<S extends boolean | null | undefined | ProductEmbedingDefaultArgs> = $Result.GetResult<Prisma.$ProductEmbedingPayload, S>
 
-  type ProductEmpedingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ProductEmpedingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ProductEmpedingCountAggregateInputType | true
+  type ProductEmbedingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProductEmbedingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProductEmbedingCountAggregateInputType | true
     }
 
-  export interface ProductEmpedingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProductEmpeding'], meta: { name: 'ProductEmpeding' } }
+  export interface ProductEmbedingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProductEmbeding'], meta: { name: 'ProductEmbeding' } }
     /**
-     * Find zero or one ProductEmpeding that matches the filter.
-     * @param {ProductEmpedingFindUniqueArgs} args - Arguments to find a ProductEmpeding
+     * Find zero or one ProductEmbeding that matches the filter.
+     * @param {ProductEmbedingFindUniqueArgs} args - Arguments to find a ProductEmbeding
      * @example
-     * // Get one ProductEmpeding
-     * const productEmpeding = await prisma.productEmpeding.findUnique({
+     * // Get one ProductEmbeding
+     * const productEmbeding = await prisma.productEmbeding.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ProductEmpedingFindUniqueArgs>(args: SelectSubset<T, ProductEmpedingFindUniqueArgs<ExtArgs>>): Prisma__ProductEmpedingClient<$Result.GetResult<Prisma.$ProductEmpedingPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    findUnique<T extends ProductEmbedingFindUniqueArgs>(args: SelectSubset<T, ProductEmbedingFindUniqueArgs<ExtArgs>>): Prisma__ProductEmbedingClient<$Result.GetResult<Prisma.$ProductEmbedingPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ProductEmpeding that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ProductEmbeding that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ProductEmpedingFindUniqueOrThrowArgs} args - Arguments to find a ProductEmpeding
+     * @param {ProductEmbedingFindUniqueOrThrowArgs} args - Arguments to find a ProductEmbeding
      * @example
-     * // Get one ProductEmpeding
-     * const productEmpeding = await prisma.productEmpeding.findUniqueOrThrow({
+     * // Get one ProductEmbeding
+     * const productEmbeding = await prisma.productEmbeding.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ProductEmpedingFindUniqueOrThrowArgs>(args: SelectSubset<T, ProductEmpedingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProductEmpedingClient<$Result.GetResult<Prisma.$ProductEmpedingPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+    findUniqueOrThrow<T extends ProductEmbedingFindUniqueOrThrowArgs>(args: SelectSubset<T, ProductEmbedingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProductEmbedingClient<$Result.GetResult<Prisma.$ProductEmbedingPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Find the first ProductEmpeding that matches the filter.
+     * Find the first ProductEmbeding that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductEmpedingFindFirstArgs} args - Arguments to find a ProductEmpeding
+     * @param {ProductEmbedingFindFirstArgs} args - Arguments to find a ProductEmbeding
      * @example
-     * // Get one ProductEmpeding
-     * const productEmpeding = await prisma.productEmpeding.findFirst({
+     * // Get one ProductEmbeding
+     * const productEmbeding = await prisma.productEmbeding.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ProductEmpedingFindFirstArgs>(args?: SelectSubset<T, ProductEmpedingFindFirstArgs<ExtArgs>>): Prisma__ProductEmpedingClient<$Result.GetResult<Prisma.$ProductEmpedingPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    findFirst<T extends ProductEmbedingFindFirstArgs>(args?: SelectSubset<T, ProductEmbedingFindFirstArgs<ExtArgs>>): Prisma__ProductEmbedingClient<$Result.GetResult<Prisma.$ProductEmbedingPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find the first ProductEmpeding that matches the filter or
+     * Find the first ProductEmbeding that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductEmpedingFindFirstOrThrowArgs} args - Arguments to find a ProductEmpeding
+     * @param {ProductEmbedingFindFirstOrThrowArgs} args - Arguments to find a ProductEmbeding
      * @example
-     * // Get one ProductEmpeding
-     * const productEmpeding = await prisma.productEmpeding.findFirstOrThrow({
+     * // Get one ProductEmbeding
+     * const productEmbeding = await prisma.productEmbeding.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ProductEmpedingFindFirstOrThrowArgs>(args?: SelectSubset<T, ProductEmpedingFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProductEmpedingClient<$Result.GetResult<Prisma.$ProductEmpedingPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+    findFirstOrThrow<T extends ProductEmbedingFindFirstOrThrowArgs>(args?: SelectSubset<T, ProductEmbedingFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProductEmbedingClient<$Result.GetResult<Prisma.$ProductEmbedingPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Find zero or more ProductEmpedings that matches the filter.
+     * Find zero or more ProductEmbedings that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductEmpedingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ProductEmbedingFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all ProductEmpedings
-     * const productEmpedings = await prisma.productEmpeding.findMany()
+     * // Get all ProductEmbedings
+     * const productEmbedings = await prisma.productEmbeding.findMany()
      * 
-     * // Get first 10 ProductEmpedings
-     * const productEmpedings = await prisma.productEmpeding.findMany({ take: 10 })
+     * // Get first 10 ProductEmbedings
+     * const productEmbedings = await prisma.productEmbeding.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const productEmpedingWithIdOnly = await prisma.productEmpeding.findMany({ select: { id: true } })
+     * const productEmbedingWithIdOnly = await prisma.productEmbeding.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ProductEmpedingFindManyArgs>(args?: SelectSubset<T, ProductEmpedingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductEmpedingPayload<ExtArgs>, T, "findMany", ClientOptions>>
+    findMany<T extends ProductEmbedingFindManyArgs>(args?: SelectSubset<T, ProductEmbedingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductEmbedingPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
     /**
-     * Create a ProductEmpeding.
-     * @param {ProductEmpedingCreateArgs} args - Arguments to create a ProductEmpeding.
+     * Create a ProductEmbeding.
+     * @param {ProductEmbedingCreateArgs} args - Arguments to create a ProductEmbeding.
      * @example
-     * // Create one ProductEmpeding
-     * const ProductEmpeding = await prisma.productEmpeding.create({
+     * // Create one ProductEmbeding
+     * const ProductEmbeding = await prisma.productEmbeding.create({
      *   data: {
-     *     // ... data to create a ProductEmpeding
+     *     // ... data to create a ProductEmbeding
      *   }
      * })
      * 
      */
-    create<T extends ProductEmpedingCreateArgs>(args: SelectSubset<T, ProductEmpedingCreateArgs<ExtArgs>>): Prisma__ProductEmpedingClient<$Result.GetResult<Prisma.$ProductEmpedingPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+    create<T extends ProductEmbedingCreateArgs>(args: SelectSubset<T, ProductEmbedingCreateArgs<ExtArgs>>): Prisma__ProductEmbedingClient<$Result.GetResult<Prisma.$ProductEmbedingPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Create many ProductEmpedings.
-     * @param {ProductEmpedingCreateManyArgs} args - Arguments to create many ProductEmpedings.
+     * Create many ProductEmbedings.
+     * @param {ProductEmbedingCreateManyArgs} args - Arguments to create many ProductEmbedings.
      * @example
-     * // Create many ProductEmpedings
-     * const productEmpeding = await prisma.productEmpeding.createMany({
+     * // Create many ProductEmbedings
+     * const productEmbeding = await prisma.productEmbeding.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ProductEmpedingCreateManyArgs>(args?: SelectSubset<T, ProductEmpedingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ProductEmbedingCreateManyArgs>(args?: SelectSubset<T, ProductEmbedingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many ProductEmpedings and returns the data saved in the database.
-     * @param {ProductEmpedingCreateManyAndReturnArgs} args - Arguments to create many ProductEmpedings.
+     * Create many ProductEmbedings and returns the data saved in the database.
+     * @param {ProductEmbedingCreateManyAndReturnArgs} args - Arguments to create many ProductEmbedings.
      * @example
-     * // Create many ProductEmpedings
-     * const productEmpeding = await prisma.productEmpeding.createManyAndReturn({
+     * // Create many ProductEmbedings
+     * const productEmbeding = await prisma.productEmbeding.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many ProductEmpedings and only return the `id`
-     * const productEmpedingWithIdOnly = await prisma.productEmpeding.createManyAndReturn({
+     * // Create many ProductEmbedings and only return the `id`
+     * const productEmbedingWithIdOnly = await prisma.productEmbeding.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -4732,28 +4732,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ProductEmpedingCreateManyAndReturnArgs>(args?: SelectSubset<T, ProductEmpedingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductEmpedingPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+    createManyAndReturn<T extends ProductEmbedingCreateManyAndReturnArgs>(args?: SelectSubset<T, ProductEmbedingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductEmbedingPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
     /**
-     * Delete a ProductEmpeding.
-     * @param {ProductEmpedingDeleteArgs} args - Arguments to delete one ProductEmpeding.
+     * Delete a ProductEmbeding.
+     * @param {ProductEmbedingDeleteArgs} args - Arguments to delete one ProductEmbeding.
      * @example
-     * // Delete one ProductEmpeding
-     * const ProductEmpeding = await prisma.productEmpeding.delete({
+     * // Delete one ProductEmbeding
+     * const ProductEmbeding = await prisma.productEmbeding.delete({
      *   where: {
-     *     // ... filter to delete one ProductEmpeding
+     *     // ... filter to delete one ProductEmbeding
      *   }
      * })
      * 
      */
-    delete<T extends ProductEmpedingDeleteArgs>(args: SelectSubset<T, ProductEmpedingDeleteArgs<ExtArgs>>): Prisma__ProductEmpedingClient<$Result.GetResult<Prisma.$ProductEmpedingPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+    delete<T extends ProductEmbedingDeleteArgs>(args: SelectSubset<T, ProductEmbedingDeleteArgs<ExtArgs>>): Prisma__ProductEmbedingClient<$Result.GetResult<Prisma.$ProductEmbedingPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Update one ProductEmpeding.
-     * @param {ProductEmpedingUpdateArgs} args - Arguments to update one ProductEmpeding.
+     * Update one ProductEmbeding.
+     * @param {ProductEmbedingUpdateArgs} args - Arguments to update one ProductEmbeding.
      * @example
-     * // Update one ProductEmpeding
-     * const productEmpeding = await prisma.productEmpeding.update({
+     * // Update one ProductEmbeding
+     * const productEmbeding = await prisma.productEmbeding.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4763,30 +4763,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ProductEmpedingUpdateArgs>(args: SelectSubset<T, ProductEmpedingUpdateArgs<ExtArgs>>): Prisma__ProductEmpedingClient<$Result.GetResult<Prisma.$ProductEmpedingPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+    update<T extends ProductEmbedingUpdateArgs>(args: SelectSubset<T, ProductEmbedingUpdateArgs<ExtArgs>>): Prisma__ProductEmbedingClient<$Result.GetResult<Prisma.$ProductEmbedingPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Delete zero or more ProductEmpedings.
-     * @param {ProductEmpedingDeleteManyArgs} args - Arguments to filter ProductEmpedings to delete.
+     * Delete zero or more ProductEmbedings.
+     * @param {ProductEmbedingDeleteManyArgs} args - Arguments to filter ProductEmbedings to delete.
      * @example
-     * // Delete a few ProductEmpedings
-     * const { count } = await prisma.productEmpeding.deleteMany({
+     * // Delete a few ProductEmbedings
+     * const { count } = await prisma.productEmbeding.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ProductEmpedingDeleteManyArgs>(args?: SelectSubset<T, ProductEmpedingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ProductEmbedingDeleteManyArgs>(args?: SelectSubset<T, ProductEmbedingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more ProductEmpedings.
+     * Update zero or more ProductEmbedings.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductEmpedingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ProductEmbedingUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many ProductEmpedings
-     * const productEmpeding = await prisma.productEmpeding.updateMany({
+     * // Update many ProductEmbedings
+     * const productEmbeding = await prisma.productEmbeding.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4796,14 +4796,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ProductEmpedingUpdateManyArgs>(args: SelectSubset<T, ProductEmpedingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ProductEmbedingUpdateManyArgs>(args: SelectSubset<T, ProductEmbedingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more ProductEmpedings and returns the data updated in the database.
-     * @param {ProductEmpedingUpdateManyAndReturnArgs} args - Arguments to update many ProductEmpedings.
+     * Update zero or more ProductEmbedings and returns the data updated in the database.
+     * @param {ProductEmbedingUpdateManyAndReturnArgs} args - Arguments to update many ProductEmbedings.
      * @example
-     * // Update many ProductEmpedings
-     * const productEmpeding = await prisma.productEmpeding.updateManyAndReturn({
+     * // Update many ProductEmbedings
+     * const productEmbeding = await prisma.productEmbeding.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4812,8 +4812,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more ProductEmpedings and only return the `id`
-     * const productEmpedingWithIdOnly = await prisma.productEmpeding.updateManyAndReturn({
+     * // Update zero or more ProductEmbedings and only return the `id`
+     * const productEmbedingWithIdOnly = await prisma.productEmbeding.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -4826,56 +4826,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ProductEmpedingUpdateManyAndReturnArgs>(args: SelectSubset<T, ProductEmpedingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductEmpedingPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+    updateManyAndReturn<T extends ProductEmbedingUpdateManyAndReturnArgs>(args: SelectSubset<T, ProductEmbedingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductEmbedingPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
 
     /**
-     * Create or update one ProductEmpeding.
-     * @param {ProductEmpedingUpsertArgs} args - Arguments to update or create a ProductEmpeding.
+     * Create or update one ProductEmbeding.
+     * @param {ProductEmbedingUpsertArgs} args - Arguments to update or create a ProductEmbeding.
      * @example
-     * // Update or create a ProductEmpeding
-     * const productEmpeding = await prisma.productEmpeding.upsert({
+     * // Update or create a ProductEmbeding
+     * const productEmbeding = await prisma.productEmbeding.upsert({
      *   create: {
-     *     // ... data to create a ProductEmpeding
+     *     // ... data to create a ProductEmbeding
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the ProductEmpeding we want to update
+     *     // ... the filter for the ProductEmbeding we want to update
      *   }
      * })
      */
-    upsert<T extends ProductEmpedingUpsertArgs>(args: SelectSubset<T, ProductEmpedingUpsertArgs<ExtArgs>>): Prisma__ProductEmpedingClient<$Result.GetResult<Prisma.$ProductEmpedingPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+    upsert<T extends ProductEmbedingUpsertArgs>(args: SelectSubset<T, ProductEmbedingUpsertArgs<ExtArgs>>): Prisma__ProductEmbedingClient<$Result.GetResult<Prisma.$ProductEmbedingPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
 
 
     /**
-     * Count the number of ProductEmpedings.
+     * Count the number of ProductEmbedings.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductEmpedingCountArgs} args - Arguments to filter ProductEmpedings to count.
+     * @param {ProductEmbedingCountArgs} args - Arguments to filter ProductEmbedings to count.
      * @example
-     * // Count the number of ProductEmpedings
-     * const count = await prisma.productEmpeding.count({
+     * // Count the number of ProductEmbedings
+     * const count = await prisma.productEmbeding.count({
      *   where: {
-     *     // ... the filter for the ProductEmpedings we want to count
+     *     // ... the filter for the ProductEmbedings we want to count
      *   }
      * })
     **/
-    count<T extends ProductEmpedingCountArgs>(
-      args?: Subset<T, ProductEmpedingCountArgs>,
+    count<T extends ProductEmbedingCountArgs>(
+      args?: Subset<T, ProductEmbedingCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ProductEmpedingCountAggregateOutputType>
+          : GetScalarType<T['select'], ProductEmbedingCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a ProductEmpeding.
+     * Allows you to perform aggregations operations on a ProductEmbeding.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductEmpedingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ProductEmbedingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -4895,13 +4895,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ProductEmpedingAggregateArgs>(args: Subset<T, ProductEmpedingAggregateArgs>): Prisma.PrismaPromise<GetProductEmpedingAggregateType<T>>
+    aggregate<T extends ProductEmbedingAggregateArgs>(args: Subset<T, ProductEmbedingAggregateArgs>): Prisma.PrismaPromise<GetProductEmbedingAggregateType<T>>
 
     /**
-     * Group by ProductEmpeding.
+     * Group by ProductEmbeding.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductEmpedingGroupByArgs} args - Group by arguments.
+     * @param {ProductEmbedingGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -4916,14 +4916,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ProductEmpedingGroupByArgs,
+      T extends ProductEmbedingGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ProductEmpedingGroupByArgs['orderBy'] }
-        : { orderBy?: ProductEmpedingGroupByArgs['orderBy'] },
+        ? { orderBy: ProductEmbedingGroupByArgs['orderBy'] }
+        : { orderBy?: ProductEmbedingGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -4972,20 +4972,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ProductEmpedingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProductEmpedingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ProductEmbedingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProductEmbedingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the ProductEmpeding model
+   * Fields of the ProductEmbeding model
    */
-  readonly fields: ProductEmpedingFieldRefs;
+  readonly fields: ProductEmbedingFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for ProductEmpeding.
+   * The delegate class that acts as a "Promise-like" for ProductEmbeding.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ProductEmpedingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ProductEmbedingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     /**
@@ -5014,423 +5014,423 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the ProductEmpeding model
+   * Fields of the ProductEmbeding model
    */ 
-  interface ProductEmpedingFieldRefs {
-    readonly id: FieldRef<"ProductEmpeding", 'Int'>
-    readonly productId: FieldRef<"ProductEmpeding", 'String'>
-    readonly vector: FieldRef<"ProductEmpeding", 'Json'>
+  interface ProductEmbedingFieldRefs {
+    readonly id: FieldRef<"ProductEmbeding", 'Int'>
+    readonly productId: FieldRef<"ProductEmbeding", 'String'>
+    readonly vector: FieldRef<"ProductEmbeding", 'Json'>
   }
     
 
   // Custom InputTypes
   /**
-   * ProductEmpeding findUnique
+   * ProductEmbeding findUnique
    */
-  export type ProductEmpedingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelect<ExtArgs> | null
+    select?: ProductEmbedingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingInclude<ExtArgs> | null
+    include?: ProductEmbedingInclude<ExtArgs> | null
     /**
-     * Filter, which ProductEmpeding to fetch.
+     * Filter, which ProductEmbeding to fetch.
      */
-    where: ProductEmpedingWhereUniqueInput
+    where: ProductEmbedingWhereUniqueInput
   }
 
   /**
-   * ProductEmpeding findUniqueOrThrow
+   * ProductEmbeding findUniqueOrThrow
    */
-  export type ProductEmpedingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelect<ExtArgs> | null
+    select?: ProductEmbedingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingInclude<ExtArgs> | null
+    include?: ProductEmbedingInclude<ExtArgs> | null
     /**
-     * Filter, which ProductEmpeding to fetch.
+     * Filter, which ProductEmbeding to fetch.
      */
-    where: ProductEmpedingWhereUniqueInput
+    where: ProductEmbedingWhereUniqueInput
   }
 
   /**
-   * ProductEmpeding findFirst
+   * ProductEmbeding findFirst
    */
-  export type ProductEmpedingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelect<ExtArgs> | null
+    select?: ProductEmbedingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingInclude<ExtArgs> | null
+    include?: ProductEmbedingInclude<ExtArgs> | null
     /**
-     * Filter, which ProductEmpeding to fetch.
+     * Filter, which ProductEmbeding to fetch.
      */
-    where?: ProductEmpedingWhereInput
+    where?: ProductEmbedingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ProductEmpedings to fetch.
+     * Determine the order of ProductEmbedings to fetch.
      */
-    orderBy?: ProductEmpedingOrderByWithRelationInput | ProductEmpedingOrderByWithRelationInput[]
+    orderBy?: ProductEmbedingOrderByWithRelationInput | ProductEmbedingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for ProductEmpedings.
+     * Sets the position for searching for ProductEmbedings.
      */
-    cursor?: ProductEmpedingWhereUniqueInput
+    cursor?: ProductEmbedingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ProductEmpedings from the position of the cursor.
+     * Take `±n` ProductEmbedings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ProductEmpedings.
+     * Skip the first `n` ProductEmbedings.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of ProductEmpedings.
+     * Filter by unique combinations of ProductEmbedings.
      */
-    distinct?: ProductEmpedingScalarFieldEnum | ProductEmpedingScalarFieldEnum[]
+    distinct?: ProductEmbedingScalarFieldEnum | ProductEmbedingScalarFieldEnum[]
   }
 
   /**
-   * ProductEmpeding findFirstOrThrow
+   * ProductEmbeding findFirstOrThrow
    */
-  export type ProductEmpedingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelect<ExtArgs> | null
+    select?: ProductEmbedingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingInclude<ExtArgs> | null
+    include?: ProductEmbedingInclude<ExtArgs> | null
     /**
-     * Filter, which ProductEmpeding to fetch.
+     * Filter, which ProductEmbeding to fetch.
      */
-    where?: ProductEmpedingWhereInput
+    where?: ProductEmbedingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ProductEmpedings to fetch.
+     * Determine the order of ProductEmbedings to fetch.
      */
-    orderBy?: ProductEmpedingOrderByWithRelationInput | ProductEmpedingOrderByWithRelationInput[]
+    orderBy?: ProductEmbedingOrderByWithRelationInput | ProductEmbedingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for ProductEmpedings.
+     * Sets the position for searching for ProductEmbedings.
      */
-    cursor?: ProductEmpedingWhereUniqueInput
+    cursor?: ProductEmbedingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ProductEmpedings from the position of the cursor.
+     * Take `±n` ProductEmbedings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ProductEmpedings.
+     * Skip the first `n` ProductEmbedings.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of ProductEmpedings.
+     * Filter by unique combinations of ProductEmbedings.
      */
-    distinct?: ProductEmpedingScalarFieldEnum | ProductEmpedingScalarFieldEnum[]
+    distinct?: ProductEmbedingScalarFieldEnum | ProductEmbedingScalarFieldEnum[]
   }
 
   /**
-   * ProductEmpeding findMany
+   * ProductEmbeding findMany
    */
-  export type ProductEmpedingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelect<ExtArgs> | null
+    select?: ProductEmbedingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingInclude<ExtArgs> | null
+    include?: ProductEmbedingInclude<ExtArgs> | null
     /**
-     * Filter, which ProductEmpedings to fetch.
+     * Filter, which ProductEmbedings to fetch.
      */
-    where?: ProductEmpedingWhereInput
+    where?: ProductEmbedingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ProductEmpedings to fetch.
+     * Determine the order of ProductEmbedings to fetch.
      */
-    orderBy?: ProductEmpedingOrderByWithRelationInput | ProductEmpedingOrderByWithRelationInput[]
+    orderBy?: ProductEmbedingOrderByWithRelationInput | ProductEmbedingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing ProductEmpedings.
+     * Sets the position for listing ProductEmbedings.
      */
-    cursor?: ProductEmpedingWhereUniqueInput
+    cursor?: ProductEmbedingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ProductEmpedings from the position of the cursor.
+     * Take `±n` ProductEmbedings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ProductEmpedings.
+     * Skip the first `n` ProductEmbedings.
      */
     skip?: number
-    distinct?: ProductEmpedingScalarFieldEnum | ProductEmpedingScalarFieldEnum[]
+    distinct?: ProductEmbedingScalarFieldEnum | ProductEmbedingScalarFieldEnum[]
   }
 
   /**
-   * ProductEmpeding create
+   * ProductEmbeding create
    */
-  export type ProductEmpedingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelect<ExtArgs> | null
+    select?: ProductEmbedingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingInclude<ExtArgs> | null
+    include?: ProductEmbedingInclude<ExtArgs> | null
     /**
-     * The data needed to create a ProductEmpeding.
+     * The data needed to create a ProductEmbeding.
      */
-    data: XOR<ProductEmpedingCreateInput, ProductEmpedingUncheckedCreateInput>
+    data: XOR<ProductEmbedingCreateInput, ProductEmbedingUncheckedCreateInput>
   }
 
   /**
-   * ProductEmpeding createMany
+   * ProductEmbeding createMany
    */
-  export type ProductEmpedingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many ProductEmpedings.
+     * The data used to create many ProductEmbedings.
      */
-    data: ProductEmpedingCreateManyInput | ProductEmpedingCreateManyInput[]
+    data: ProductEmbedingCreateManyInput | ProductEmbedingCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * ProductEmpeding createManyAndReturn
+   * ProductEmbeding createManyAndReturn
    */
-  export type ProductEmpedingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ProductEmbedingSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
-     * The data used to create many ProductEmpedings.
+     * The data used to create many ProductEmbedings.
      */
-    data: ProductEmpedingCreateManyInput | ProductEmpedingCreateManyInput[]
+    data: ProductEmbedingCreateManyInput | ProductEmbedingCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: ProductEmbedingIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * ProductEmpeding update
+   * ProductEmbeding update
    */
-  export type ProductEmpedingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelect<ExtArgs> | null
+    select?: ProductEmbedingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingInclude<ExtArgs> | null
+    include?: ProductEmbedingInclude<ExtArgs> | null
     /**
-     * The data needed to update a ProductEmpeding.
+     * The data needed to update a ProductEmbeding.
      */
-    data: XOR<ProductEmpedingUpdateInput, ProductEmpedingUncheckedUpdateInput>
+    data: XOR<ProductEmbedingUpdateInput, ProductEmbedingUncheckedUpdateInput>
     /**
-     * Choose, which ProductEmpeding to update.
+     * Choose, which ProductEmbeding to update.
      */
-    where: ProductEmpedingWhereUniqueInput
+    where: ProductEmbedingWhereUniqueInput
   }
 
   /**
-   * ProductEmpeding updateMany
+   * ProductEmbeding updateMany
    */
-  export type ProductEmpedingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update ProductEmpedings.
+     * The data used to update ProductEmbedings.
      */
-    data: XOR<ProductEmpedingUpdateManyMutationInput, ProductEmpedingUncheckedUpdateManyInput>
+    data: XOR<ProductEmbedingUpdateManyMutationInput, ProductEmbedingUncheckedUpdateManyInput>
     /**
-     * Filter which ProductEmpedings to update
+     * Filter which ProductEmbedings to update
      */
-    where?: ProductEmpedingWhereInput
+    where?: ProductEmbedingWhereInput
     /**
-     * Limit how many ProductEmpedings to update.
+     * Limit how many ProductEmbedings to update.
      */
     limit?: number
   }
 
   /**
-   * ProductEmpeding updateManyAndReturn
+   * ProductEmbeding updateManyAndReturn
    */
-  export type ProductEmpedingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ProductEmbedingSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
-     * The data used to update ProductEmpedings.
+     * The data used to update ProductEmbedings.
      */
-    data: XOR<ProductEmpedingUpdateManyMutationInput, ProductEmpedingUncheckedUpdateManyInput>
+    data: XOR<ProductEmbedingUpdateManyMutationInput, ProductEmbedingUncheckedUpdateManyInput>
     /**
-     * Filter which ProductEmpedings to update
+     * Filter which ProductEmbedings to update
      */
-    where?: ProductEmpedingWhereInput
+    where?: ProductEmbedingWhereInput
     /**
-     * Limit how many ProductEmpedings to update.
+     * Limit how many ProductEmbedings to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: ProductEmbedingIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * ProductEmpeding upsert
+   * ProductEmbeding upsert
    */
-  export type ProductEmpedingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelect<ExtArgs> | null
+    select?: ProductEmbedingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingInclude<ExtArgs> | null
+    include?: ProductEmbedingInclude<ExtArgs> | null
     /**
-     * The filter to search for the ProductEmpeding to update in case it exists.
+     * The filter to search for the ProductEmbeding to update in case it exists.
      */
-    where: ProductEmpedingWhereUniqueInput
+    where: ProductEmbedingWhereUniqueInput
     /**
-     * In case the ProductEmpeding found by the `where` argument doesn't exist, create a new ProductEmpeding with this data.
+     * In case the ProductEmbeding found by the `where` argument doesn't exist, create a new ProductEmbeding with this data.
      */
-    create: XOR<ProductEmpedingCreateInput, ProductEmpedingUncheckedCreateInput>
+    create: XOR<ProductEmbedingCreateInput, ProductEmbedingUncheckedCreateInput>
     /**
-     * In case the ProductEmpeding was found with the provided `where` argument, update it with this data.
+     * In case the ProductEmbeding was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ProductEmpedingUpdateInput, ProductEmpedingUncheckedUpdateInput>
+    update: XOR<ProductEmbedingUpdateInput, ProductEmbedingUncheckedUpdateInput>
   }
 
   /**
-   * ProductEmpeding delete
+   * ProductEmbeding delete
    */
-  export type ProductEmpedingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelect<ExtArgs> | null
+    select?: ProductEmbedingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingInclude<ExtArgs> | null
+    include?: ProductEmbedingInclude<ExtArgs> | null
     /**
-     * Filter which ProductEmpeding to delete.
+     * Filter which ProductEmbeding to delete.
      */
-    where: ProductEmpedingWhereUniqueInput
+    where: ProductEmbedingWhereUniqueInput
   }
 
   /**
-   * ProductEmpeding deleteMany
+   * ProductEmbeding deleteMany
    */
-  export type ProductEmpedingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which ProductEmpedings to delete
+     * Filter which ProductEmbedings to delete
      */
-    where?: ProductEmpedingWhereInput
+    where?: ProductEmbedingWhereInput
     /**
-     * Limit how many ProductEmpedings to delete.
+     * Limit how many ProductEmbedings to delete.
      */
     limit?: number
   }
 
   /**
-   * ProductEmpeding without action
+   * ProductEmbeding without action
    */
-  export type ProductEmpedingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductEmbedingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductEmpeding
+     * Select specific fields to fetch from the ProductEmbeding
      */
-    select?: ProductEmpedingSelect<ExtArgs> | null
+    select?: ProductEmbedingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductEmpeding
+     * Omit specific fields from the ProductEmbeding
      */
-    omit?: ProductEmpedingOmit<ExtArgs> | null
+    omit?: ProductEmbedingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductEmpedingInclude<ExtArgs> | null
+    include?: ProductEmbedingInclude<ExtArgs> | null
   }
 
 
@@ -11120,13 +11120,13 @@ export namespace Prisma {
   export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
 
 
-  export const ProductEmpedingScalarFieldEnum: {
+  export const ProductEmbedingScalarFieldEnum: {
     id: 'id',
     productId: 'productId',
     vector: 'vector'
   };
 
-  export type ProductEmpedingScalarFieldEnum = (typeof ProductEmpedingScalarFieldEnum)[keyof typeof ProductEmpedingScalarFieldEnum]
+  export type ProductEmbedingScalarFieldEnum = (typeof ProductEmbedingScalarFieldEnum)[keyof typeof ProductEmbedingScalarFieldEnum]
 
 
   export const CartItemScalarFieldEnum: {
@@ -11466,7 +11466,7 @@ export namespace Prisma {
     orderItems?: OrderItemListRelationFilter
     cartItems?: CartItemListRelationFilter
     favoriteItems?: FavoriteItemListRelationFilter
-    embedding?: XOR<ProductEmpedingNullableScalarRelationFilter, ProductEmpedingWhereInput> | null
+    embedding?: XOR<ProductEmbedingNullableScalarRelationFilter, ProductEmbedingWhereInput> | null
   }
 
   export type ProductOrderByWithRelationInput = {
@@ -11495,7 +11495,7 @@ export namespace Prisma {
     orderItems?: OrderItemOrderByRelationAggregateInput
     cartItems?: CartItemOrderByRelationAggregateInput
     favoriteItems?: FavoriteItemOrderByRelationAggregateInput
-    embedding?: ProductEmpedingOrderByWithRelationInput
+    embedding?: ProductEmbedingOrderByWithRelationInput
   }
 
   export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -11527,7 +11527,7 @@ export namespace Prisma {
     orderItems?: OrderItemListRelationFilter
     cartItems?: CartItemListRelationFilter
     favoriteItems?: FavoriteItemListRelationFilter
-    embedding?: XOR<ProductEmpedingNullableScalarRelationFilter, ProductEmpedingWhereInput> | null
+    embedding?: XOR<ProductEmbedingNullableScalarRelationFilter, ProductEmbedingWhereInput> | null
   }, "id">
 
   export type ProductOrderByWithAggregationInput = {
@@ -11586,51 +11586,51 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
   }
 
-  export type ProductEmpedingWhereInput = {
-    AND?: ProductEmpedingWhereInput | ProductEmpedingWhereInput[]
-    OR?: ProductEmpedingWhereInput[]
-    NOT?: ProductEmpedingWhereInput | ProductEmpedingWhereInput[]
-    id?: IntFilter<"ProductEmpeding"> | number
-    productId?: StringFilter<"ProductEmpeding"> | string
-    vector?: JsonFilter<"ProductEmpeding">
+  export type ProductEmbedingWhereInput = {
+    AND?: ProductEmbedingWhereInput | ProductEmbedingWhereInput[]
+    OR?: ProductEmbedingWhereInput[]
+    NOT?: ProductEmbedingWhereInput | ProductEmbedingWhereInput[]
+    id?: IntFilter<"ProductEmbeding"> | number
+    productId?: StringFilter<"ProductEmbeding"> | string
+    vector?: JsonFilter<"ProductEmbeding">
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }
 
-  export type ProductEmpedingOrderByWithRelationInput = {
+  export type ProductEmbedingOrderByWithRelationInput = {
     id?: SortOrder
     productId?: SortOrder
     vector?: SortOrder
     product?: ProductOrderByWithRelationInput
   }
 
-  export type ProductEmpedingWhereUniqueInput = Prisma.AtLeast<{
+  export type ProductEmbedingWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     productId?: string
-    AND?: ProductEmpedingWhereInput | ProductEmpedingWhereInput[]
-    OR?: ProductEmpedingWhereInput[]
-    NOT?: ProductEmpedingWhereInput | ProductEmpedingWhereInput[]
-    vector?: JsonFilter<"ProductEmpeding">
+    AND?: ProductEmbedingWhereInput | ProductEmbedingWhereInput[]
+    OR?: ProductEmbedingWhereInput[]
+    NOT?: ProductEmbedingWhereInput | ProductEmbedingWhereInput[]
+    vector?: JsonFilter<"ProductEmbeding">
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }, "id" | "productId">
 
-  export type ProductEmpedingOrderByWithAggregationInput = {
+  export type ProductEmbedingOrderByWithAggregationInput = {
     id?: SortOrder
     productId?: SortOrder
     vector?: SortOrder
-    _count?: ProductEmpedingCountOrderByAggregateInput
-    _avg?: ProductEmpedingAvgOrderByAggregateInput
-    _max?: ProductEmpedingMaxOrderByAggregateInput
-    _min?: ProductEmpedingMinOrderByAggregateInput
-    _sum?: ProductEmpedingSumOrderByAggregateInput
+    _count?: ProductEmbedingCountOrderByAggregateInput
+    _avg?: ProductEmbedingAvgOrderByAggregateInput
+    _max?: ProductEmbedingMaxOrderByAggregateInput
+    _min?: ProductEmbedingMinOrderByAggregateInput
+    _sum?: ProductEmbedingSumOrderByAggregateInput
   }
 
-  export type ProductEmpedingScalarWhereWithAggregatesInput = {
-    AND?: ProductEmpedingScalarWhereWithAggregatesInput | ProductEmpedingScalarWhereWithAggregatesInput[]
-    OR?: ProductEmpedingScalarWhereWithAggregatesInput[]
-    NOT?: ProductEmpedingScalarWhereWithAggregatesInput | ProductEmpedingScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"ProductEmpeding"> | number
-    productId?: StringWithAggregatesFilter<"ProductEmpeding"> | string
-    vector?: JsonWithAggregatesFilter<"ProductEmpeding">
+  export type ProductEmbedingScalarWhereWithAggregatesInput = {
+    AND?: ProductEmbedingScalarWhereWithAggregatesInput | ProductEmbedingScalarWhereWithAggregatesInput[]
+    OR?: ProductEmbedingScalarWhereWithAggregatesInput[]
+    NOT?: ProductEmbedingScalarWhereWithAggregatesInput | ProductEmbedingScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ProductEmbeding"> | number
+    productId?: StringWithAggregatesFilter<"ProductEmbeding"> | string
+    vector?: JsonWithAggregatesFilter<"ProductEmbeding">
   }
 
   export type CartItemWhereInput = {
@@ -12102,7 +12102,7 @@ export namespace Prisma {
     orderItems?: OrderItemCreateNestedManyWithoutProductInput
     cartItems?: CartItemCreateNestedManyWithoutProductInput
     favoriteItems?: FavoriteItemCreateNestedManyWithoutProductInput
-    embedding?: ProductEmpedingCreateNestedOneWithoutProductInput
+    embedding?: ProductEmbedingCreateNestedOneWithoutProductInput
   }
 
   export type ProductUncheckedCreateInput = {
@@ -12131,7 +12131,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutProductInput
     favoriteItems?: FavoriteItemUncheckedCreateNestedManyWithoutProductInput
-    embedding?: ProductEmpedingUncheckedCreateNestedOneWithoutProductInput
+    embedding?: ProductEmbedingUncheckedCreateNestedOneWithoutProductInput
   }
 
   export type ProductUpdateInput = {
@@ -12160,7 +12160,7 @@ export namespace Prisma {
     orderItems?: OrderItemUpdateManyWithoutProductNestedInput
     cartItems?: CartItemUpdateManyWithoutProductNestedInput
     favoriteItems?: FavoriteItemUpdateManyWithoutProductNestedInput
-    embedding?: ProductEmpedingUpdateOneWithoutProductNestedInput
+    embedding?: ProductEmbedingUpdateOneWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateInput = {
@@ -12189,7 +12189,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutProductNestedInput
     favoriteItems?: FavoriteItemUncheckedUpdateManyWithoutProductNestedInput
-    embedding?: ProductEmpedingUncheckedUpdateOneWithoutProductNestedInput
+    embedding?: ProductEmbedingUncheckedUpdateOneWithoutProductNestedInput
   }
 
   export type ProductCreateManyInput = {
@@ -12264,39 +12264,39 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ProductEmpedingCreateInput = {
+  export type ProductEmbedingCreateInput = {
     vector: JsonNullValueInput | InputJsonValue
     product: ProductCreateNestedOneWithoutEmbeddingInput
   }
 
-  export type ProductEmpedingUncheckedCreateInput = {
+  export type ProductEmbedingUncheckedCreateInput = {
     id?: number
     productId: string
     vector: JsonNullValueInput | InputJsonValue
   }
 
-  export type ProductEmpedingUpdateInput = {
+  export type ProductEmbedingUpdateInput = {
     vector?: JsonNullValueInput | InputJsonValue
     product?: ProductUpdateOneRequiredWithoutEmbeddingNestedInput
   }
 
-  export type ProductEmpedingUncheckedUpdateInput = {
+  export type ProductEmbedingUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     productId?: StringFieldUpdateOperationsInput | string
     vector?: JsonNullValueInput | InputJsonValue
   }
 
-  export type ProductEmpedingCreateManyInput = {
+  export type ProductEmbedingCreateManyInput = {
     id?: number
     productId: string
     vector: JsonNullValueInput | InputJsonValue
   }
 
-  export type ProductEmpedingUpdateManyMutationInput = {
+  export type ProductEmbedingUpdateManyMutationInput = {
     vector?: JsonNullValueInput | InputJsonValue
   }
 
-  export type ProductEmpedingUncheckedUpdateManyInput = {
+  export type ProductEmbedingUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     productId?: StringFieldUpdateOperationsInput | string
     vector?: JsonNullValueInput | InputJsonValue
@@ -12822,9 +12822,9 @@ export namespace Prisma {
     none?: OrderItemWhereInput
   }
 
-  export type ProductEmpedingNullableScalarRelationFilter = {
-    is?: ProductEmpedingWhereInput | null
-    isNot?: ProductEmpedingWhereInput | null
+  export type ProductEmbedingNullableScalarRelationFilter = {
+    is?: ProductEmbedingWhereInput | null
+    isNot?: ProductEmbedingWhereInput | null
   }
 
   export type OrderItemOrderByRelationAggregateInput = {
@@ -12965,27 +12965,27 @@ export namespace Prisma {
     isNot?: ProductWhereInput
   }
 
-  export type ProductEmpedingCountOrderByAggregateInput = {
+  export type ProductEmbedingCountOrderByAggregateInput = {
     id?: SortOrder
     productId?: SortOrder
     vector?: SortOrder
   }
 
-  export type ProductEmpedingAvgOrderByAggregateInput = {
+  export type ProductEmbedingAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type ProductEmpedingMaxOrderByAggregateInput = {
-    id?: SortOrder
-    productId?: SortOrder
-  }
-
-  export type ProductEmpedingMinOrderByAggregateInput = {
+  export type ProductEmbedingMaxOrderByAggregateInput = {
     id?: SortOrder
     productId?: SortOrder
   }
 
-  export type ProductEmpedingSumOrderByAggregateInput = {
+  export type ProductEmbedingMinOrderByAggregateInput = {
+    id?: SortOrder
+    productId?: SortOrder
+  }
+
+  export type ProductEmbedingSumOrderByAggregateInput = {
     id?: SortOrder
   }
   export type JsonWithAggregatesFilter<$PrismaModel = never> = 
@@ -13454,10 +13454,10 @@ export namespace Prisma {
     connect?: FavoriteItemWhereUniqueInput | FavoriteItemWhereUniqueInput[]
   }
 
-  export type ProductEmpedingCreateNestedOneWithoutProductInput = {
-    create?: XOR<ProductEmpedingCreateWithoutProductInput, ProductEmpedingUncheckedCreateWithoutProductInput>
-    connectOrCreate?: ProductEmpedingCreateOrConnectWithoutProductInput
-    connect?: ProductEmpedingWhereUniqueInput
+  export type ProductEmbedingCreateNestedOneWithoutProductInput = {
+    create?: XOR<ProductEmbedingCreateWithoutProductInput, ProductEmbedingUncheckedCreateWithoutProductInput>
+    connectOrCreate?: ProductEmbedingCreateOrConnectWithoutProductInput
+    connect?: ProductEmbedingWhereUniqueInput
   }
 
   export type ReviewUncheckedCreateNestedManyWithoutProductInput = {
@@ -13488,10 +13488,10 @@ export namespace Prisma {
     connect?: FavoriteItemWhereUniqueInput | FavoriteItemWhereUniqueInput[]
   }
 
-  export type ProductEmpedingUncheckedCreateNestedOneWithoutProductInput = {
-    create?: XOR<ProductEmpedingCreateWithoutProductInput, ProductEmpedingUncheckedCreateWithoutProductInput>
-    connectOrCreate?: ProductEmpedingCreateOrConnectWithoutProductInput
-    connect?: ProductEmpedingWhereUniqueInput
+  export type ProductEmbedingUncheckedCreateNestedOneWithoutProductInput = {
+    create?: XOR<ProductEmbedingCreateWithoutProductInput, ProductEmbedingUncheckedCreateWithoutProductInput>
+    connectOrCreate?: ProductEmbedingCreateOrConnectWithoutProductInput
+    connect?: ProductEmbedingWhereUniqueInput
   }
 
   export type ProductUpdateimagesInput = {
@@ -13568,14 +13568,14 @@ export namespace Prisma {
     deleteMany?: FavoriteItemScalarWhereInput | FavoriteItemScalarWhereInput[]
   }
 
-  export type ProductEmpedingUpdateOneWithoutProductNestedInput = {
-    create?: XOR<ProductEmpedingCreateWithoutProductInput, ProductEmpedingUncheckedCreateWithoutProductInput>
-    connectOrCreate?: ProductEmpedingCreateOrConnectWithoutProductInput
-    upsert?: ProductEmpedingUpsertWithoutProductInput
-    disconnect?: ProductEmpedingWhereInput | boolean
-    delete?: ProductEmpedingWhereInput | boolean
-    connect?: ProductEmpedingWhereUniqueInput
-    update?: XOR<XOR<ProductEmpedingUpdateToOneWithWhereWithoutProductInput, ProductEmpedingUpdateWithoutProductInput>, ProductEmpedingUncheckedUpdateWithoutProductInput>
+  export type ProductEmbedingUpdateOneWithoutProductNestedInput = {
+    create?: XOR<ProductEmbedingCreateWithoutProductInput, ProductEmbedingUncheckedCreateWithoutProductInput>
+    connectOrCreate?: ProductEmbedingCreateOrConnectWithoutProductInput
+    upsert?: ProductEmbedingUpsertWithoutProductInput
+    disconnect?: ProductEmbedingWhereInput | boolean
+    delete?: ProductEmbedingWhereInput | boolean
+    connect?: ProductEmbedingWhereUniqueInput
+    update?: XOR<XOR<ProductEmbedingUpdateToOneWithWhereWithoutProductInput, ProductEmbedingUpdateWithoutProductInput>, ProductEmbedingUncheckedUpdateWithoutProductInput>
   }
 
   export type ReviewUncheckedUpdateManyWithoutProductNestedInput = {
@@ -13634,14 +13634,14 @@ export namespace Prisma {
     deleteMany?: FavoriteItemScalarWhereInput | FavoriteItemScalarWhereInput[]
   }
 
-  export type ProductEmpedingUncheckedUpdateOneWithoutProductNestedInput = {
-    create?: XOR<ProductEmpedingCreateWithoutProductInput, ProductEmpedingUncheckedCreateWithoutProductInput>
-    connectOrCreate?: ProductEmpedingCreateOrConnectWithoutProductInput
-    upsert?: ProductEmpedingUpsertWithoutProductInput
-    disconnect?: ProductEmpedingWhereInput | boolean
-    delete?: ProductEmpedingWhereInput | boolean
-    connect?: ProductEmpedingWhereUniqueInput
-    update?: XOR<XOR<ProductEmpedingUpdateToOneWithWhereWithoutProductInput, ProductEmpedingUpdateWithoutProductInput>, ProductEmpedingUncheckedUpdateWithoutProductInput>
+  export type ProductEmbedingUncheckedUpdateOneWithoutProductNestedInput = {
+    create?: XOR<ProductEmbedingCreateWithoutProductInput, ProductEmbedingUncheckedCreateWithoutProductInput>
+    connectOrCreate?: ProductEmbedingCreateOrConnectWithoutProductInput
+    upsert?: ProductEmbedingUpsertWithoutProductInput
+    disconnect?: ProductEmbedingWhereInput | boolean
+    delete?: ProductEmbedingWhereInput | boolean
+    connect?: ProductEmbedingWhereUniqueInput
+    update?: XOR<XOR<ProductEmbedingUpdateToOneWithWhereWithoutProductInput, ProductEmbedingUpdateWithoutProductInput>, ProductEmbedingUncheckedUpdateWithoutProductInput>
   }
 
   export type ProductCreateNestedOneWithoutEmbeddingInput = {
@@ -14340,18 +14340,18 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ProductEmpedingCreateWithoutProductInput = {
+  export type ProductEmbedingCreateWithoutProductInput = {
     vector: JsonNullValueInput | InputJsonValue
   }
 
-  export type ProductEmpedingUncheckedCreateWithoutProductInput = {
+  export type ProductEmbedingUncheckedCreateWithoutProductInput = {
     id?: number
     vector: JsonNullValueInput | InputJsonValue
   }
 
-  export type ProductEmpedingCreateOrConnectWithoutProductInput = {
-    where: ProductEmpedingWhereUniqueInput
-    create: XOR<ProductEmpedingCreateWithoutProductInput, ProductEmpedingUncheckedCreateWithoutProductInput>
+  export type ProductEmbedingCreateOrConnectWithoutProductInput = {
+    where: ProductEmbedingWhereUniqueInput
+    create: XOR<ProductEmbedingCreateWithoutProductInput, ProductEmbedingUncheckedCreateWithoutProductInput>
   }
 
   export type ReviewUpsertWithWhereUniqueWithoutProductInput = {
@@ -14431,22 +14431,22 @@ export namespace Prisma {
     data: XOR<FavoriteItemUpdateManyMutationInput, FavoriteItemUncheckedUpdateManyWithoutProductInput>
   }
 
-  export type ProductEmpedingUpsertWithoutProductInput = {
-    update: XOR<ProductEmpedingUpdateWithoutProductInput, ProductEmpedingUncheckedUpdateWithoutProductInput>
-    create: XOR<ProductEmpedingCreateWithoutProductInput, ProductEmpedingUncheckedCreateWithoutProductInput>
-    where?: ProductEmpedingWhereInput
+  export type ProductEmbedingUpsertWithoutProductInput = {
+    update: XOR<ProductEmbedingUpdateWithoutProductInput, ProductEmbedingUncheckedUpdateWithoutProductInput>
+    create: XOR<ProductEmbedingCreateWithoutProductInput, ProductEmbedingUncheckedCreateWithoutProductInput>
+    where?: ProductEmbedingWhereInput
   }
 
-  export type ProductEmpedingUpdateToOneWithWhereWithoutProductInput = {
-    where?: ProductEmpedingWhereInput
-    data: XOR<ProductEmpedingUpdateWithoutProductInput, ProductEmpedingUncheckedUpdateWithoutProductInput>
+  export type ProductEmbedingUpdateToOneWithWhereWithoutProductInput = {
+    where?: ProductEmbedingWhereInput
+    data: XOR<ProductEmbedingUpdateWithoutProductInput, ProductEmbedingUncheckedUpdateWithoutProductInput>
   }
 
-  export type ProductEmpedingUpdateWithoutProductInput = {
+  export type ProductEmbedingUpdateWithoutProductInput = {
     vector?: JsonNullValueInput | InputJsonValue
   }
 
-  export type ProductEmpedingUncheckedUpdateWithoutProductInput = {
+  export type ProductEmbedingUncheckedUpdateWithoutProductInput = {
     id?: IntFieldUpdateOperationsInput | number
     vector?: JsonNullValueInput | InputJsonValue
   }
@@ -14647,7 +14647,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutProductInput
     orderItems?: OrderItemCreateNestedManyWithoutProductInput
     favoriteItems?: FavoriteItemCreateNestedManyWithoutProductInput
-    embedding?: ProductEmpedingCreateNestedOneWithoutProductInput
+    embedding?: ProductEmbedingCreateNestedOneWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutCartItemsInput = {
@@ -14675,7 +14675,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutProductInput
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
     favoriteItems?: FavoriteItemUncheckedCreateNestedManyWithoutProductInput
-    embedding?: ProductEmpedingUncheckedCreateNestedOneWithoutProductInput
+    embedding?: ProductEmbedingUncheckedCreateNestedOneWithoutProductInput
   }
 
   export type ProductCreateOrConnectWithoutCartItemsInput = {
@@ -14768,7 +14768,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUpdateManyWithoutProductNestedInput
     favoriteItems?: FavoriteItemUpdateManyWithoutProductNestedInput
-    embedding?: ProductEmpedingUpdateOneWithoutProductNestedInput
+    embedding?: ProductEmbedingUpdateOneWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutCartItemsInput = {
@@ -14796,7 +14796,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
     favoriteItems?: FavoriteItemUncheckedUpdateManyWithoutProductNestedInput
-    embedding?: ProductEmpedingUncheckedUpdateOneWithoutProductNestedInput
+    embedding?: ProductEmbedingUncheckedUpdateOneWithoutProductNestedInput
   }
 
   export type UserCreateWithoutFavoritesInput = {
@@ -14867,7 +14867,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutProductInput
     orderItems?: OrderItemCreateNestedManyWithoutProductInput
     cartItems?: CartItemCreateNestedManyWithoutProductInput
-    embedding?: ProductEmpedingCreateNestedOneWithoutProductInput
+    embedding?: ProductEmbedingCreateNestedOneWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutFavoriteItemsInput = {
@@ -14895,7 +14895,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutProductInput
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutProductInput
-    embedding?: ProductEmpedingUncheckedCreateNestedOneWithoutProductInput
+    embedding?: ProductEmbedingUncheckedCreateNestedOneWithoutProductInput
   }
 
   export type ProductCreateOrConnectWithoutFavoriteItemsInput = {
@@ -14988,7 +14988,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUpdateManyWithoutProductNestedInput
     cartItems?: CartItemUpdateManyWithoutProductNestedInput
-    embedding?: ProductEmpedingUpdateOneWithoutProductNestedInput
+    embedding?: ProductEmbedingUpdateOneWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutFavoriteItemsInput = {
@@ -15016,7 +15016,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutProductNestedInput
-    embedding?: ProductEmpedingUncheckedUpdateOneWithoutProductNestedInput
+    embedding?: ProductEmbedingUncheckedUpdateOneWithoutProductNestedInput
   }
 
   export type UserCreateWithoutReviewsInput = {
@@ -15087,7 +15087,7 @@ export namespace Prisma {
     orderItems?: OrderItemCreateNestedManyWithoutProductInput
     cartItems?: CartItemCreateNestedManyWithoutProductInput
     favoriteItems?: FavoriteItemCreateNestedManyWithoutProductInput
-    embedding?: ProductEmpedingCreateNestedOneWithoutProductInput
+    embedding?: ProductEmbedingCreateNestedOneWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutReviewsInput = {
@@ -15115,7 +15115,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutProductInput
     favoriteItems?: FavoriteItemUncheckedCreateNestedManyWithoutProductInput
-    embedding?: ProductEmpedingUncheckedCreateNestedOneWithoutProductInput
+    embedding?: ProductEmbedingUncheckedCreateNestedOneWithoutProductInput
   }
 
   export type ProductCreateOrConnectWithoutReviewsInput = {
@@ -15208,7 +15208,7 @@ export namespace Prisma {
     orderItems?: OrderItemUpdateManyWithoutProductNestedInput
     cartItems?: CartItemUpdateManyWithoutProductNestedInput
     favoriteItems?: FavoriteItemUpdateManyWithoutProductNestedInput
-    embedding?: ProductEmpedingUpdateOneWithoutProductNestedInput
+    embedding?: ProductEmbedingUpdateOneWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutReviewsInput = {
@@ -15236,7 +15236,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutProductNestedInput
     favoriteItems?: FavoriteItemUncheckedUpdateManyWithoutProductNestedInput
-    embedding?: ProductEmpedingUncheckedUpdateOneWithoutProductNestedInput
+    embedding?: ProductEmbedingUncheckedUpdateOneWithoutProductNestedInput
   }
 
   export type OrderItemCreateWithoutOrderInput = {
@@ -15425,7 +15425,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutProductInput
     cartItems?: CartItemCreateNestedManyWithoutProductInput
     favoriteItems?: FavoriteItemCreateNestedManyWithoutProductInput
-    embedding?: ProductEmpedingCreateNestedOneWithoutProductInput
+    embedding?: ProductEmbedingCreateNestedOneWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutOrderItemsInput = {
@@ -15453,7 +15453,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutProductInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutProductInput
     favoriteItems?: FavoriteItemUncheckedCreateNestedManyWithoutProductInput
-    embedding?: ProductEmpedingUncheckedCreateNestedOneWithoutProductInput
+    embedding?: ProductEmbedingUncheckedCreateNestedOneWithoutProductInput
   }
 
   export type ProductCreateOrConnectWithoutOrderItemsInput = {
@@ -15528,7 +15528,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutProductNestedInput
     cartItems?: CartItemUpdateManyWithoutProductNestedInput
     favoriteItems?: FavoriteItemUpdateManyWithoutProductNestedInput
-    embedding?: ProductEmpedingUpdateOneWithoutProductNestedInput
+    embedding?: ProductEmbedingUpdateOneWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutOrderItemsInput = {
@@ -15556,7 +15556,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutProductNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutProductNestedInput
     favoriteItems?: FavoriteItemUncheckedUpdateManyWithoutProductNestedInput
-    embedding?: ProductEmpedingUncheckedUpdateOneWithoutProductNestedInput
+    embedding?: ProductEmbedingUncheckedUpdateOneWithoutProductNestedInput
   }
 
   export type CartItemCreateManyUserInput = {

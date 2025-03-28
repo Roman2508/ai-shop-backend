@@ -1,12 +1,17 @@
 const path = require('path');
+import { join } from 'path';
+import { v4 as uuidv4 } from 'uuid';
 import { spawn } from 'child_process';
 import { PythonShell } from 'python-shell';
 import { Injectable } from '@nestjs/common';
+import { writeFileSync, unlinkSync } from 'fs';
 
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { CreateVectorInput } from './inputs/create.vector.input';
 
-const SCRIPT_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/main.py');
+const TMP_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/tmp');
+const MAIN_SCRIPT_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/main.py');
+const SEARCH_SCRIPT_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/search.py');
 const PYTHON_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/venv/Scripts/python.exe');
 
 @Injectable()
@@ -17,7 +22,7 @@ export class RecommendationService {
     const textRepresentation = this.createTextRepresentation(dto);
     const embedding = await this.generateEmbedding(textRepresentation);
 
-    return this.prisma.productEmpeding.create({
+    return this.prisma.productEmbeding.create({
       data: {
         product: { connect: { id: String(dto.id) } },
         vector: embedding,
@@ -50,7 +55,7 @@ export class RecommendationService {
   private async generateEmbedding(text: string): Promise<number[]> {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await PythonShell.run(SCRIPT_PATH, { args: [text], pythonPath: PYTHON_PATH });
+        const result = await PythonShell.run(MAIN_SCRIPT_PATH, { args: [text], pythonPath: PYTHON_PATH });
         if (!result) return reject('No result from Python script');
         const embedding = JSON.parse(result[0]);
         resolve(embedding);
@@ -66,11 +71,11 @@ export class RecommendationService {
     if (viewedProductIds.length === 0) return [];
 
     // Получаем векторы просмотренных товаров
-    // const viewedProductsVectors = await this.prisma.productEmpeding.findMany({
+    // const viewedProductsVectors = await this.prisma.productEmbeding.findMany({
     //   where: { product: { id: { in: viewedProductIds } } },
     // });
 
-    const allVectors = await this.prisma.productEmpeding.findMany();
+    const allVectors = await this.prisma.productEmbeding.findMany();
 
     const viewedProductsVectors = allVectors.filter((el) => viewedProductIds.includes(el.productId));
 
@@ -86,7 +91,26 @@ export class RecommendationService {
     // Запускаем Python-скрипт для поиска ближайших соседей
     const similarProductIds = await this.findNearestNeighbors(vectorsArray, allVectorsArray);
 
-    return similarProductIds;
+    const simProdIds = await Promise.all(
+      // @ts-ignore
+      similarProductIds.ids.map(async (el) => {
+        const product = await this.prisma.productEmbeding.findUnique({ where: { id: el } });
+        if (!product) {
+          console.log(`Product embedding with ID ${el} is not exist`);
+          return;
+        }
+
+        return product.productId;
+      }),
+    );
+
+    const existedIds = simProdIds.filter((el) => el !== 'null' && !!el);
+
+    const products = await this.prisma.product.findMany({
+      where: { id: { in: existedIds } },
+    });
+
+    return products;
 
     // Возвращаем найденные товары, отсортированные по схожести
     // return this.prisma.product.findMany({
@@ -112,17 +136,27 @@ export class RecommendationService {
   }
 
   private async findNearestNeighbors(queryVector: any[], allVectors: any[]): Promise<string[]> {
+    const filename = `input_${uuidv4()}.json`;
+    const filepath = join(TMP_PATH, filename);
+
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await PythonShell.run(SCRIPT_PATH, {
-          args: [JSON.stringify(queryVector), JSON.stringify(allVectors)],
+        writeFileSync(filepath, JSON.stringify({ queryVector, allVectors }), 'utf-8');
+
+        const result = await PythonShell.run(SEARCH_SCRIPT_PATH, {
+          args: [filepath],
           pythonPath: PYTHON_PATH,
         });
         if (!result) return reject('No result from Python script');
         const embedding = JSON.parse(result[0]);
+
+        console.log('result:', result);
+
         resolve(embedding);
       } catch (e) {
         reject(e);
+      } finally {
+        unlinkSync(filepath);
       }
     });
   }

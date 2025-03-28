@@ -157,7 +157,7 @@ exports.Prisma.ProductScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.ProductEmpedingScalarFieldEnum = {
+exports.Prisma.ProductEmbedingScalarFieldEnum = {
   id: 'id',
   productId: 'productId',
   vector: 'vector'
@@ -244,7 +244,7 @@ exports.EnumOrderStatus = exports.$Enums.EnumOrderStatus = {
 exports.Prisma.ModelName = {
   User: 'User',
   Product: 'Product',
-  ProductEmpeding: 'ProductEmpeding',
+  ProductEmbeding: 'ProductEmbeding',
   CartItem: 'CartItem',
   FavoriteItem: 'FavoriteItem',
   Review: 'Review',

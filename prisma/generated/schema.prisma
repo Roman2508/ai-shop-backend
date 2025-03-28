@@ -76,19 +76,20 @@ model Product {
   cartItems     CartItem[]
   favoriteItems FavoriteItem[]
 
-  embedding ProductEmpeding?
+  embedding ProductEmbeding?
 
   @@map("products")
 }
 
-model ProductEmpeding {
+model ProductEmbeding {
   id Int @id @default(autoincrement())
 
   product   Product @relation(fields: [productId], references: [id])
-  productId String  @unique
+  productId String
 
   vector Json // Хранение эмбеддинга как JSON
 
+  @@unique([productId])
   @@map("products_embeding")
 }
 

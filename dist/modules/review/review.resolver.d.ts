@@ -44,12 +44,12 @@ export declare class ReviewResolver {
         };
     } & {
         id: string;
+        productId: string | null;
         createdAt: Date;
         updatedAt: Date;
         text: string;
         rating: number;
         userId: string | null;
-        productId: string | null;
     })[]>;
     create(userId: string, input: CreateReviewInput): Promise<boolean>;
     delete(userId: string, id: string): Promise<boolean>;
