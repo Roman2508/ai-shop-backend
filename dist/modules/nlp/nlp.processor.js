@@ -8,32 +8,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NlpProcessor = void 0;
 const path = require('path');
-const child_process_1 = require("child_process");
+const python_shell_1 = require("python-shell");
 const common_1 = require("@nestjs/common");
+const PYTHON_PATH = path.join(process.cwd(), 'src/modules/nlp/python/venv/Scripts/python.exe');
 const VENV_ACTIVATE = path.join(process.cwd(), 'src/modules/nlp/python/venv/Scripts/activate');
 const SCRIPT_PATH = path.join(process.cwd(), 'src/modules/nlp/python/analyze.py');
 let NlpProcessor = class NlpProcessor {
     async analyzeText(text) {
-        return new Promise((resolve, reject) => {
-            const command = `cmd /c "call ${VENV_ACTIVATE} && python ${SCRIPT_PATH} "${text}""`;
-            (0, child_process_1.exec)(command, (error, stdout, stderr) => {
-                if (error) {
-                    reject(`Error executing Python script: ${error.message}`);
-                    return;
-                }
-                if (stderr) {
-                    reject(`stderr: ${stderr}`);
-                    return;
-                }
-                console.log('stdout', `===${stdout}===`);
-                try {
-                    const result = JSON.parse(JSON.stringify(stdout));
-                    resolve(result);
-                }
-                catch (parseError) {
-                    reject(`Error parsing JSON from Python output: ${parseError.message}`);
-                }
-            });
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await python_shell_1.PythonShell.run(SCRIPT_PATH, {
+                    args: [text],
+                    pythonPath: PYTHON_PATH,
+                    env: {
+                        ...process.env,
+                        PATH: PYTHON_PATH,
+                        VIRTUAL_ENV: VENV_ACTIVATE,
+                    },
+                });
+                console.log('result:', result);
+                if (!result)
+                    return reject('No result from Python script');
+                const embedding = JSON.parse(result[0]);
+                resolve(embedding);
+            }
+            catch (e) {
+                reject(e);
+            }
         });
     }
 };

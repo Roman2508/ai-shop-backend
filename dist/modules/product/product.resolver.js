@@ -29,6 +29,9 @@ let ProductResolver = class ProductResolver {
     async getAll() {
         return this.productService.getAll();
     }
+    async getTotalCount() {
+        return this.productService.getTotalCount();
+    }
     async paginateAndFilter(query) {
         return this.productService.paginateAndFilter(query);
     }
@@ -70,6 +73,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "getAll", null);
+__decorate([
+    (0, graphql_1.Query)(() => Number, { name: 'getAllProductsCount' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "getTotalCount", null);
 __decorate([
     (0, graphql_1.Query)(() => products_and_total_model_1.ProductsAndTotalModel, { name: 'paginateAndFilter' }),
     __param(0, (0, graphql_1.Args)('data')),

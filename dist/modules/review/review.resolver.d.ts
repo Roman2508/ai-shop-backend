@@ -4,8 +4,25 @@ export declare class ReviewResolver {
     private readonly reviewService;
     constructor(reviewService: ReviewService);
     getByUserId(userId: string): Promise<({
+        user: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            email: string;
+            password: string;
+            username: string;
+            displayName: string;
+            avatar: string | null;
+            city: string | null;
+            street: string | null;
+            postOffice: string | null;
+            role: import("prisma/generated").$Enums.EnumUserRoles;
+            viewedProducts: string[];
+        };
         product: {
             id: string;
+            createdAt: Date;
+            updatedAt: Date;
             images: string[];
             title: string;
             price: number;
@@ -24,33 +41,17 @@ export declare class ReviewResolver {
             battery: number;
             materials: string;
             deliverySet: string;
-            createdAt: Date;
-            updatedAt: Date;
-        };
-        user: {
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            email: string;
-            password: string;
-            username: string;
-            displayName: string;
-            avatar: string | null;
-            city: string | null;
-            street: string | null;
-            postOffice: string | null;
-            role: import("prisma/generated").$Enums.EnumUserRoles;
-            viewedProducts: string[];
         };
     } & {
         id: string;
-        productId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
         text: string;
         rating: number;
         userId: string | null;
+        productId: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     })[]>;
+    getAverage(): Promise<string>;
     create(userId: string, input: CreateReviewInput): Promise<boolean>;
     delete(userId: string, id: string): Promise<boolean>;
 }

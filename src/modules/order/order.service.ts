@@ -40,37 +40,11 @@ export class OrderService {
     return false;
   }
 
-  async updateStatus() {
-    return true;
+  async getAll() {
+    const orders = await this.prismaService.order.findMany({
+      include: { user: true },
+    });
+
+    return orders;
   }
-
-  //   async updateStatus(input: PaymentStatusInput) {
-  // if (dto.event === 'payment.waiting_for_capture') {
-  //   const capturePayment = {
-  //     amount: {
-  //       value: dto.object.amount.value,
-  //       currency: dto.object.amount.currency,
-  //     },
-  //   };
-
-  //   return checkout.capturePayment(dto.object.id, capturePayment);
-  // }
-
-  // if (dto.event === 'payment.succeeded') {
-  //   const orderId = dto.object.description.split('#')[1];
-
-  //   await this.prismaService.order.update({
-  //     where: {
-  //       id: orderId,
-  //     },
-  //     data: {
-  //       status: EnumOrderStatus.PAYED,
-  //     },
-  //   });
-
-  //   return true;
-  // }
-
-  // return true;
-  //   }
 }

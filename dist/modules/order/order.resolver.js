@@ -25,8 +25,8 @@ let OrderResolver = class OrderResolver {
     async createPayment(input) {
         return this.orderService.create(input);
     }
-    async updateStatus() {
-        return this.orderService.updateStatus();
+    async getAll() {
+        return this.orderService.getAll();
     }
 };
 exports.OrderResolver = OrderResolver;
@@ -39,11 +39,11 @@ __decorate([
 ], OrderResolver.prototype, "createPayment", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
-    (0, graphql_1.Mutation)(() => Boolean, { name: 'updateStatus' }),
+    (0, graphql_1.Query)(() => [order_model_1.OrderModel], { name: 'getAllOrders' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], OrderResolver.prototype, "updateStatus", null);
+], OrderResolver.prototype, "getAll", null);
 exports.OrderResolver = OrderResolver = __decorate([
     (0, graphql_1.Resolver)('Order'),
     __metadata("design:paramtypes", [order_service_1.OrderService])

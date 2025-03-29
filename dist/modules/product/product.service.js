@@ -33,6 +33,9 @@ let ProductService = class ProductService {
         });
         return { products, total };
     }
+    getTotalCount() {
+        return this.prismaService.product.count();
+    }
     async paginateAndFilter(query) {
         const { sortBy, limit, skip, priceFrom, priceTo, ...filterParams } = query;
         const filter = [];

@@ -19,6 +19,14 @@ export class ReviewService {
     return reviews;
   }
 
+  async getAverage() {
+    const reviews = await this.prismaService.review.findMany();
+    const totalRating = reviews.reduce((acc, cur) => acc + cur.rating, 0);
+    const reviewsCount = reviews.length;
+    const avgRating = totalRating / reviewsCount;
+    return avgRating.toFixed(2);
+  }
+
   async create(userId: string, input: CreateReviewInput) {
     const { productId, ...data } = input;
     await this.productService.getById(productId);

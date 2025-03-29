@@ -18,6 +18,11 @@ export class ProductResolver {
     return this.productService.getAll();
   }
 
+  @Query(() => Number, { name: 'getAllProductsCount' })
+  async getTotalCount() {
+    return this.productService.getTotalCount();
+  }
+
   @Query(() => ProductsAndTotalModel, { name: 'paginateAndFilter' })
   async paginateAndFilter(@Args('data') query: PaginateAndFilterInput) {
     return this.productService.paginateAndFilter(query);

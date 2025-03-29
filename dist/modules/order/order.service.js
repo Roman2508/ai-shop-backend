@@ -43,8 +43,11 @@ let OrderService = class OrderService {
         }
         return false;
     }
-    async updateStatus() {
-        return true;
+    async getAll() {
+        const orders = await this.prismaService.order.findMany({
+            include: { user: true },
+        });
+        return orders;
     }
 };
 exports.OrderService = OrderService;

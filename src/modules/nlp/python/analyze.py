@@ -96,6 +96,7 @@ def rename_keys(original_dict, key_map):
 def analyze(text):
     doc = nlp(text)
     entities_dict = {ent.label_: ent.text for ent in doc.ents}
+    print('entities_dict:', entities_dict)
     result = rename_keys(entities_dict, KEY_MAP)
     return json.dumps(result, ensure_ascii=False)
 

@@ -16,6 +16,11 @@ export class ReviewResolver {
     return this.reviewService.getByUserId(userId);
   }
 
+  @Query(() => Number, { name: 'getAverageRating' })
+  async getAverage() {
+    return this.reviewService.getAverage();
+  }
+
   @Authorization()
   @Mutation(() => Boolean, { name: 'createReview' })
   async create(@Authorized('id') userId: string, @Args('data') input: CreateReviewInput) {

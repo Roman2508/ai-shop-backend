@@ -36,6 +36,7 @@ export declare class ProductService {
         }[];
         total: number;
     }>;
+    getTotalCount(): import("prisma/generated").Prisma.PrismaPromise<number>;
     paginateAndFilter(query: any): Promise<{
         products: {
             id: string;
@@ -104,12 +105,12 @@ export declare class ProductService {
             };
         } & {
             id: string;
-            productId: string | null;
             createdAt: Date;
             updatedAt: Date;
             text: string;
             rating: number;
             userId: string | null;
+            productId: string | null;
         })[];
     } & {
         id: string;

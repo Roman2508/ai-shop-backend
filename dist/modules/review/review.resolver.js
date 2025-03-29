@@ -26,6 +26,9 @@ let ReviewResolver = class ReviewResolver {
     async getByUserId(userId) {
         return this.reviewService.getByUserId(userId);
     }
+    async getAverage() {
+        return this.reviewService.getAverage();
+    }
     async create(userId, input) {
         return this.reviewService.create(userId, input);
     }
@@ -42,6 +45,12 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ReviewResolver.prototype, "getByUserId", null);
+__decorate([
+    (0, graphql_1.Query)(() => Number, { name: 'getAverageRating' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ReviewResolver.prototype, "getAverage", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
     (0, graphql_1.Mutation)(() => Boolean, { name: 'createReview' }),
