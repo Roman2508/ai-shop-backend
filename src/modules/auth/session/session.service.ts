@@ -23,7 +23,7 @@ export class SessionService {
   ) {}
 
   async findByUser(req: Request) {
-    const userId = req.session.userId;
+    const userId = (req as any).session.userId;
 
     if (!userId) {
       throw new NotFoundException('Пользователь не обнаружен в сессии');
@@ -50,11 +50,11 @@ export class SessionService {
 
     userSessions.sort((a, b) => b.createdAt - a.createdAt);
 
-    return userSessions.filter((session) => session.id !== req.session.id);
+    return userSessions.filter((session) => session.id !== (req as any).session.id);
   }
 
   async findCurrent(req: Request) {
-    const sessionId = req.session.id;
+    const sessionId = (req as any).session.id;
 
     const sessionData = await this.redisService.get(
       `${this.configService.getOrThrow<string>('SESSION_FOLDER')}${sessionId}`,
@@ -90,11 +90,11 @@ export class SessionService {
     const metadata = getSessionMetadata(req, userAgent);
 
     return new Promise((resolve, reject) => {
-      req.session.createdAt = new Date();
-      req.session.userId = user.id;
-      req.session.metadata = metadata;
+      (req as any).session.createdAt = new Date();
+      (req as any).session.userId = user.id;
+      (req as any).session.metadata = metadata;
 
-      req.session.save((err) => {
+      (req as any).session.save((err) => {
         if (err) {
           return reject(new InternalServerErrorException('Не вдалось зберегти сесію'));
         }
@@ -106,7 +106,7 @@ export class SessionService {
 
   async logout(req: Request) {
     return new Promise((resolve, reject) => {
-      req.session.destroy((err) => {
+      (req as any).session.destroy((err) => {
         if (err) {
           return reject(new InternalServerErrorException('Не вдалось завершити сесію'));
         }
@@ -125,7 +125,7 @@ export class SessionService {
   }
 
   async remove(req: Request, id: string) {
-    if (req.session.id === id) {
+    if ((req as any).session.id === id) {
       throw new ConflictException('Поточну сесію видалити не можливо');
     }
 
