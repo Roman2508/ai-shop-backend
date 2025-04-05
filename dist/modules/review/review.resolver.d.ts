@@ -9,8 +9,8 @@ export declare class ReviewResolver {
             createdAt: Date;
             updatedAt: Date;
             email: string;
-            password: string;
             username: string;
+            password: string;
             displayName: string;
             avatar: string | null;
             city: string | null;
@@ -23,9 +23,9 @@ export declare class ReviewResolver {
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            price: number;
             images: string[];
             title: string;
-            price: number;
             brand: string;
             ram: number;
             builtInMemory: number;
@@ -43,13 +43,13 @@ export declare class ReviewResolver {
             deliverySet: string;
         };
     } & {
-        id: string;
         text: string;
-        rating: number;
-        userId: string | null;
-        productId: string | null;
+        id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string | null;
+        productId: string | null;
+        rating: number;
     })[]>;
     getAverage(): Promise<string>;
     create(userId: string, input: CreateReviewInput): Promise<boolean>;

@@ -28,10 +28,10 @@ export declare class AccountResolver {
     me(id: string): Promise<{
         cart: ({
             product: {
-                price: number;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
+                price: number;
                 images: string[];
                 title: string;
                 brand: string;
@@ -51,17 +51,17 @@ export declare class AccountResolver {
                 deliverySet: string;
             };
         } & {
+            id: string;
             userId: string;
             productId: string;
-            id: string;
             count: number;
         })[];
         favorites: ({
             product: {
-                price: number;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
+                price: number;
                 images: string[];
                 title: string;
                 brand: string;
@@ -81,9 +81,9 @@ export declare class AccountResolver {
                 deliverySet: string;
             };
         } & {
+            id: string;
             userId: string;
             productId: string;
-            id: string;
         })[];
         reviews: ({
             user: {
@@ -102,10 +102,10 @@ export declare class AccountResolver {
                 viewedProducts: string[];
             };
             product: {
-                price: number;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
+                price: number;
                 images: string[];
                 title: string;
                 brand: string;
@@ -126,20 +126,20 @@ export declare class AccountResolver {
             };
         } & {
             text: string;
-            userId: string | null;
-            productId: string | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            userId: string | null;
+            productId: string | null;
             rating: number;
         })[];
         orders: ({
             items: ({
                 product: {
-                    price: number;
                     id: string;
                     createdAt: Date;
                     updatedAt: Date;
+                    price: number;
                     images: string[];
                     title: string;
                     brand: string;
@@ -159,22 +159,22 @@ export declare class AccountResolver {
                     deliverySet: string;
                 };
             } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
                 orderId: string | null;
                 quantity: number;
                 price: number;
                 productId: string | null;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
             })[];
         } & {
-            orderId: string;
-            userId: string | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            orderId: string;
             status: import("prisma/generated").$Enums.EnumOrderStatus;
             total: number;
+            userId: string | null;
         })[];
     } & {
         id: string;

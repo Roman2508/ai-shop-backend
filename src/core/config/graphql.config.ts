@@ -1,6 +1,7 @@
-import { ApolloDriverConfig } from '@nestjs/apollo';
-import { ConfigService } from '@nestjs/config';
 import { join } from 'path';
+import { ConfigService } from '@nestjs/config';
+import { ApolloDriverConfig } from '@nestjs/apollo';
+
 import { isDev } from 'src/shared/utils/is-dev.util';
 
 export const getGraphglConfig = (configService: ConfigService): ApolloDriverConfig => {
