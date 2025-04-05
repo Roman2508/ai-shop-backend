@@ -9,9 +9,9 @@ export declare class PaymentController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string | null;
         orderId: string;
         status: import("prisma/generated").$Enums.EnumOrderStatus;
         total: number;
-        userId: string | null;
     }>;
 }

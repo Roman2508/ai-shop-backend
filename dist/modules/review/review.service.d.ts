@@ -8,11 +8,9 @@ export declare class ReviewService {
     getByUserId(userId: string): Promise<({
         user: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
             email: string;
-            username: string;
             password: string;
+            username: string;
             displayName: string;
             avatar: string | null;
             city: string | null;
@@ -20,14 +18,16 @@ export declare class ReviewService {
             postOffice: string | null;
             role: import("prisma/generated").$Enums.EnumUserRoles;
             viewedProducts: string[];
+            createdAt: Date;
+            updatedAt: Date;
         };
         product: {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            price: number;
             images: string[];
             title: string;
+            price: number;
             brand: string;
             ram: number;
             builtInMemory: number;
@@ -45,12 +45,12 @@ export declare class ReviewService {
             deliverySet: string;
         };
     } & {
-        text: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
         userId: string | null;
         productId: string | null;
+        text: string;
         rating: number;
     })[]>;
     getAverage(): Promise<string>;
