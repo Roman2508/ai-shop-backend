@@ -35,8 +35,10 @@ async function bootstrap() {
         domain: config.getOrThrow<string>('SESSION_DOMAIN'),
         maxAge: ms(config.getOrThrow<StringValue>('SESSION_MAX_AGE')),
         httpOnly: parseBoolean(config.getOrThrow<string>('SESSION_HTTP_ONLY')),
-        secure: parseBoolean(config.getOrThrow<string>('SESSION_SECURE')),
-        sameSite: 'lax',
+        sameSite: 'none',
+        secure: true,
+        // secure: parseBoolean(config.getOrThrow<string>('SESSION_SECURE')),
+        // sameSite: 'lax',
       },
       store: new RedisStore({
         client: redis,
@@ -46,7 +48,6 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    // origin: '*',
     origin: config
       .getOrThrow<string>('ALLOWED_ORIGIN')
       .split(',')
