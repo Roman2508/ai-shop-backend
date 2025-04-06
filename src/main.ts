@@ -56,6 +56,6 @@ async function bootstrap() {
     exposedHeaders: ['set-cookie'],
   });
 
-  await app.listen(config.getOrThrow<number>('APPLICATION_PORT'));
+  await app.listen(config.getOrThrow<number>('PORT'));
 }
 bootstrap();
