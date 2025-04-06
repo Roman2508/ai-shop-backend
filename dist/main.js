@@ -30,6 +30,8 @@ async function bootstrap() {
             domain: config.getOrThrow('SESSION_DOMAIN'),
             maxAge: (0, ms_util_1.ms)(config.getOrThrow('SESSION_MAX_AGE')),
             httpOnly: (0, parse_boolean_util_1.parseBoolean)(config.getOrThrow('SESSION_HTTP_ONLY')),
+            secure: config.getOrThrow('NODE_ENV') === 'production',
+            sameSite: config.getOrThrow('NODE_ENV') === 'production' ? 'none' : 'lax',
         },
         store: new connect_redis_1.RedisStore({
             client: redis,

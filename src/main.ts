@@ -36,8 +36,11 @@ async function bootstrap() {
         maxAge: ms(config.getOrThrow<StringValue>('SESSION_MAX_AGE')),
         httpOnly: parseBoolean(config.getOrThrow<string>('SESSION_HTTP_ONLY')),
 
-        // sameSite: 'none',
+        secure: config.getOrThrow<string>('NODE_ENV') === 'production',
+        sameSite: config.getOrThrow<string>('NODE_ENV') === 'production' ? 'none' : 'lax',
+
         // secure: true,
+        // sameSite: 'none',
 
         // secure: parseBoolean(config.getOrThrow<string>('SESSION_SECURE')),
         // sameSite: 'lax',
