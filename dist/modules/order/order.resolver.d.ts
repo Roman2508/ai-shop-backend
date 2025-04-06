@@ -7,17 +7,19 @@ export declare class OrderResolver {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        userId: string | null;
         orderId: string;
         status: import("prisma/generated").$Enums.EnumOrderStatus;
         total: number;
+        userId: string | null;
     }>;
     getAll(): Promise<({
         user: {
             id: string;
+            createdAt: Date;
+            updatedAt: Date;
             email: string;
-            password: string;
             username: string;
+            password: string;
             displayName: string;
             avatar: string | null;
             city: string | null;
@@ -25,16 +27,14 @@ export declare class OrderResolver {
             postOffice: string | null;
             role: import("prisma/generated").$Enums.EnumUserRoles;
             viewedProducts: string[];
-            createdAt: Date;
-            updatedAt: Date;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        userId: string | null;
         orderId: string;
         status: import("prisma/generated").$Enums.EnumOrderStatus;
         total: number;
+        userId: string | null;
     })[]>;
 }

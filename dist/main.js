@@ -30,8 +30,6 @@ async function bootstrap() {
             domain: config.getOrThrow('SESSION_DOMAIN'),
             maxAge: (0, ms_util_1.ms)(config.getOrThrow('SESSION_MAX_AGE')),
             httpOnly: (0, parse_boolean_util_1.parseBoolean)(config.getOrThrow('SESSION_HTTP_ONLY')),
-            secure: (0, parse_boolean_util_1.parseBoolean)(config.getOrThrow('SESSION_SECURE')),
-            sameSite: 'lax',
         },
         store: new connect_redis_1.RedisStore({
             client: redis,
@@ -39,11 +37,14 @@ async function bootstrap() {
         }),
     }));
     app.enableCors({
-        origin: config.getOrThrow('ALLOWED_ORIGIN').split(','),
+        origin: config
+            .getOrThrow('ALLOWED_ORIGIN')
+            .split(',')
+            .map((origin) => origin.trim()),
         credentials: true,
         exposedHeaders: ['set-cookie'],
     });
-    await app.listen(config.getOrThrow('APPLICATION_PORT'));
+    await app.listen(config.getOrThrow('PORT'));
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

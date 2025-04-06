@@ -25,7 +25,7 @@ let SessionService = class SessionService {
     async findByUser(req) {
         const userId = req.session.userId;
         if (!userId) {
-            throw new common_1.NotFoundException('Пользователь не обнаружен в сессии');
+            throw new common_1.NotFoundException('Користувач не знайдений в сессии');
         }
         const keys = await this.redisService.keys('*');
         const userSessions = [];

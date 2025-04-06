@@ -26,7 +26,7 @@ export class SessionService {
     const userId = (req as any).session.userId;
 
     if (!userId) {
-      throw new NotFoundException('Пользователь не обнаружен в сессии');
+      throw new NotFoundException('Користувач не знайдений в сессии');
     }
 
     const keys = await this.redisService.keys('*');
