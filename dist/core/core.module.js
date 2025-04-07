@@ -71,11 +71,6 @@ exports.CoreModule = CoreModule = __decorate([
                     autoSchemaFile: true,
                     uploads: false,
                     csrfPrevention: false,
-                    cors: {
-                        origin: process.env.ALLOWED_ORIGIN.split(',').map((origin) => origin.trim()),
-                        credentials: true,
-                        exposedHeaders: ['set-cookie'],
-                    },
                 }),
                 inject: [config_1.ConfigService],
             }),

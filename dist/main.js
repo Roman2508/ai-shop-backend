@@ -29,7 +29,7 @@ async function bootstrap() {
             maxAge: (0, ms_util_1.ms)(config.getOrThrow('SESSION_MAX_AGE')),
             secure: config.getOrThrow('NODE_ENV') === 'development' ? false : true,
             sameSite: config.getOrThrow('NODE_ENV') === 'development' ? 'lax' : 'none',
-            httpOnly: config.getOrThrow('NODE_ENV') === 'development' ? true : false,
+            httpOnly: config.getOrThrow('NODE_ENV') === 'development' ? false : true,
         },
         store: new connect_redis_1.RedisStore({
             client: redis,
