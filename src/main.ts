@@ -33,15 +33,15 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         domain: config.getOrThrow<string>('SESSION_DOMAIN'),
-        maxAge: 1000 * 60 * 60 * 24 * 30, // 7 дней
+        maxAge: 1000 * 60 * 60 * 24 * 30,
         // maxAge: ms(config.getOrThrow<StringValue>('SESSION_MAX_AGE')),
         httpOnly: parseBoolean(config.getOrThrow<string>('SESSION_HTTP_ONLY')),
 
-        secure: config.getOrThrow<string>('NODE_ENV') === 'production',
-        sameSite: config.getOrThrow<string>('NODE_ENV') === 'production' ? 'none' : 'lax',
+        // secure: config.getOrThrow<string>('NODE_ENV') === 'production',
+        // sameSite: config.getOrThrow<string>('NODE_ENV') === 'production' ? 'none' : 'lax',
 
-        // secure: true,
-        // sameSite: 'none',
+        secure: true,
+        sameSite: 'none',
 
         // secure: parseBoolean(config.getOrThrow<string>('SESSION_SECURE')),
         // sameSite: 'lax',
