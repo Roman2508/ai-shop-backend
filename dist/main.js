@@ -12,7 +12,6 @@ const graphqlUploadExpress = require("graphql-upload/graphqlUploadExpress.js");
 const core_module_1 = require("./core/core.module");
 const ms_util_1 = require("./shared/utils/ms.util");
 const redis_service_1 = require("./core/redis/redis.service");
-const parse_boolean_util_1 = require("./shared/utils/parse-boolean.util");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(core_module_1.CoreModule);
     const config = app.get(config_1.ConfigService);
@@ -27,11 +26,10 @@ async function bootstrap() {
         resave: false,
         saveUninitialized: false,
         cookie: {
-            domain: config.getOrThrow('SESSION_DOMAIN'),
             maxAge: (0, ms_util_1.ms)(config.getOrThrow('SESSION_MAX_AGE')),
-            httpOnly: (0, parse_boolean_util_1.parseBoolean)(config.getOrThrow('SESSION_HTTP_ONLY')),
-            secure: config.getOrThrow('NODE_ENV') === 'production',
-            sameSite: config.getOrThrow('NODE_ENV') === 'production' ? 'none' : 'lax',
+            secure: config.getOrThrow('NODE_ENV') === 'development' ? false : true,
+            sameSite: config.getOrThrow('NODE_ENV') === 'development' ? 'lax' : 'none',
+            httpOnly: config.getOrThrow('NODE_ENV') === 'development' ? true : false,
         },
         store: new connect_redis_1.RedisStore({
             client: redis,

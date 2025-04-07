@@ -33,17 +33,17 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         // domain: config.getOrThrow<string>('SESSION_DOMAIN'),
-        maxAge: 1000 * 60 * 60 * 24 * 30,
-        // maxAge: ms(config.getOrThrow<StringValue>('SESSION_MAX_AGE')),
         // httpOnly: parseBoolean(config.getOrThrow<string>('SESSION_HTTP_ONLY')),
 
-        // secure: config.getOrThrow<string>('NODE_ENV') === 'development' ? false : true,
-        // sameSite: config.getOrThrow<string>('NODE_ENV') === 'development' ? 'lax' : 'none',
-        // httpOnly: config.getOrThrow<string>('NODE_ENV') === 'development' true : false,
+        maxAge: ms(config.getOrThrow<StringValue>('SESSION_MAX_AGE')),
+        secure: config.getOrThrow<string>('NODE_ENV') === 'development' ? false : true,
+        sameSite: config.getOrThrow<string>('NODE_ENV') === 'development' ? 'lax' : 'none',
+        httpOnly: config.getOrThrow<string>('NODE_ENV') === 'development' ? true : false,
 
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none',
+        // maxAge: 1000 * 60 * 60 * 24 * 30,
+        // httpOnly: true,
+        // secure: true,
+        // sameSite: 'none',
 
         // secure: parseBoolean(config.getOrThrow<string>('SESSION_SECURE')),
         // sameSite: 'lax',
