@@ -56,7 +56,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['https://phone-shop-puce-ten.vercel.app/'],
+    origin: ['https://phone-shop-puce-ten.vercel.app'],
     // origin: config
     //   .getOrThrow<string>('ALLOWED_ORIGIN')
     //   .split(',')
