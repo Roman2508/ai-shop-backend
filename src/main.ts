@@ -56,11 +56,10 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['https://phone-shop-puce-ten.vercel.app'],
-    // origin: config
-    //   .getOrThrow<string>('ALLOWED_ORIGIN')
-    //   .split(',')
-    //   .map((origin) => origin.trim()),
+    origin: config
+      .getOrThrow<string>('ALLOWED_ORIGIN')
+      .split(',')
+      .map((origin) => origin.trim()),
     credentials: true,
     exposedHeaders: ['set-cookie'],
   });
