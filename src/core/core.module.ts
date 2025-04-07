@@ -66,7 +66,7 @@ import { FavoriteItemModel } from 'src/modules/auth/account/models/favorite-item
         uploads: false,
         csrfPrevention: false,
         cors: {
-          origin: process.env.ALLOWED_ORIGIN.split(',').map((origin) => origin.trim()),
+          origin: ['https://phone-shop-puce-ten.vercel.app/'],
           credentials: true,
           exposedHeaders: ['set-cookie'],
         },
