@@ -67,6 +67,10 @@ import { FavoriteItemModel } from 'src/modules/auth/account/models/favorite-item
         csrfPrevention: false,
         introspection: true,
         context: ({ req, res }) => ({ req, res }),
+        installSubscriptionHandlers: true,
+        sortSchema: true,
+        playground: true,
+
       }),
       inject: [ConfigService],
     }),
