@@ -41,7 +41,7 @@ async function bootstrap() {
         // sameSite: config.getOrThrow<string>('NODE_ENV') === 'development' ? 'lax' : 'none',
         // httpOnly: config.getOrThrow<string>('NODE_ENV') === 'development' true : false,
 
-        // httpOnly: false,
+        httpOnly: true,
         secure: true,
         sameSite: 'none',
 
