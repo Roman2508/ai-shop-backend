@@ -36,9 +36,9 @@ async function bootstrap() {
         // httpOnly: parseBoolean(config.getOrThrow<string>('SESSION_HTTP_ONLY')),
 
         maxAge: ms(config.getOrThrow<StringValue>('SESSION_MAX_AGE')),
-        secure: config.getOrThrow<string>('NODE_ENV') === 'production' ? false : true,
-        sameSite: config.getOrThrow<string>('NODE_ENV') === 'production' ? 'lax' : 'none',
-        httpOnly: config.getOrThrow<string>('NODE_ENV') === 'production' ? false : true,
+        secure: config.getOrThrow<string>('NODE_ENV') === 'development' ? false : true,
+        sameSite: config.getOrThrow<string>('NODE_ENV') === 'development' ? 'lax' : 'none',
+        httpOnly: config.getOrThrow<string>('NODE_ENV') === 'development' ? false : true,
 
         // maxAge: 1000 * 60 * 60 * 24 * 30,
         // httpOnly: true,
