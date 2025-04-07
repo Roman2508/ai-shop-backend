@@ -70,10 +70,6 @@ import { FavoriteItemModel } from 'src/modules/auth/account/models/favorite-item
         installSubscriptionHandlers: true,
         sortSchema: true,
         playground: true,
-        cors: {
-          origin: true,
-          credentials: true,
-        },
       }),
 
       inject: [ConfigService],
