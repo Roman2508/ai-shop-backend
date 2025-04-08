@@ -19,10 +19,11 @@ export class PaymentService {
     const FONDY_MERCHANT_ID = this.configService.getOrThrow<string>('FONDY_MERCHANT_ID');
     const FONDY_MARCHANT_PASSWORD = this.configService.getOrThrow<string>('FONDY_MERCHANT_PASSWORD');
     const FRONTEND_URL = this.configService.getOrThrow<string>('FRONTEND_URL');
+    const APPLICATION_URL = this.configService.getOrThrow<string>('APPLICATION_URL');
     const NGROCK_FORWARDING_URL = this.configService.getOrThrow<string>('NGROCK_FORWARDING_URL');
     const ENVIRONMENT = this.configService.getOrThrow<string>('NODE_ENV');
 
-    const BASE_URL = ENVIRONMENT === 'development' ? NGROCK_FORWARDING_URL : FRONTEND_URL;
+    const BASE_URL = ENVIRONMENT === 'development' ? NGROCK_FORWARDING_URL : APPLICATION_URL;
 
     const orderedItemsString = JSON.stringify(dto.items);
     const order_id = `name=${dto.name}//price=${dto.price}//userId=${dto.userId}//items=${orderedItemsString}//createdAt=${Date.now()}`;

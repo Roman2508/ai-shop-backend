@@ -25,9 +25,10 @@ let PaymentService = class PaymentService {
         const FONDY_MERCHANT_ID = this.configService.getOrThrow('FONDY_MERCHANT_ID');
         const FONDY_MARCHANT_PASSWORD = this.configService.getOrThrow('FONDY_MERCHANT_PASSWORD');
         const FRONTEND_URL = this.configService.getOrThrow('FRONTEND_URL');
+        const APPLICATION_URL = this.configService.getOrThrow('APPLICATION_URL');
         const NGROCK_FORWARDING_URL = this.configService.getOrThrow('NGROCK_FORWARDING_URL');
         const ENVIRONMENT = this.configService.getOrThrow('NODE_ENV');
-        const BASE_URL = ENVIRONMENT === 'development' ? NGROCK_FORWARDING_URL : FRONTEND_URL;
+        const BASE_URL = ENVIRONMENT === 'development' ? NGROCK_FORWARDING_URL : APPLICATION_URL;
         const orderedItemsString = JSON.stringify(dto.items);
         const order_id = `name=${dto.name}//price=${dto.price}//userId=${dto.userId}//items=${orderedItemsString}//createdAt=${Date.now()}`;
         console.log('CREATE PAYMENT', FRONTEND_URL, BASE_URL);
