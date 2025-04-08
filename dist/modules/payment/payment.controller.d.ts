@@ -1,3 +1,4 @@
+import { Response } from 'express';
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { FondyCallbackResponseDto } from './dto/fondy-callback-response.dto';
@@ -14,4 +15,5 @@ export declare class PaymentController {
         total: number;
         userId: string | null;
     }>;
+    testCookie(res: Response): void;
 }

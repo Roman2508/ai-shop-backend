@@ -30,8 +30,8 @@ let SessionResolver = class SessionResolver {
     async findCurrent({ req }) {
         return this.sessionService.findCurrent(req);
     }
-    async login({ req }, input, userAgent) {
-        return this.sessionService.login(req, input, userAgent);
+    async login({ req, res }, input, userAgent) {
+        return this.sessionService.login(req, input, userAgent, res);
     }
     async logout({ req }) {
         return this.sessionService.logout(req);

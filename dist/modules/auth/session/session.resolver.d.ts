@@ -6,7 +6,7 @@ export declare class SessionResolver {
     constructor(sessionService: SessionService);
     findByUser({ req }: GqlContext): Promise<any[]>;
     findCurrent({ req }: GqlContext): Promise<any>;
-    login({ req }: GqlContext, input: LoginInput, userAgent: string): Promise<unknown>;
+    login({ req, res }: GqlContext, input: LoginInput, userAgent: string): Promise<unknown>;
     logout({ req }: GqlContext): Promise<unknown>;
     clearSession({ req }: GqlContext): Promise<boolean>;
     remove({ req }: GqlContext, id: string): Promise<boolean>;

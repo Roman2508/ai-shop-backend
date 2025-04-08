@@ -53,7 +53,7 @@ let SessionService = class SessionService {
             id: sessionId,
         };
     }
-    async login(req, input, userAgent) {
+    async login(req, input, userAgent, res) {
         const { login, password } = input;
         const user = await this.prismaService.user.findFirst({
             where: {

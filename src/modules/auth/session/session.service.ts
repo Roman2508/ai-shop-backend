@@ -78,7 +78,7 @@ export class SessionService {
       },
     });
 
-    res.setHeader('Set-Cookie', 'token=abc; Path=/; Secure; SameSite=None');
+    // res.setHeader('Set-Cookie', 'token=abc; Path=/; Secure; SameSite=None');
 
     if (!user) {
       throw new NotFoundException('Користувач не знайдений');
@@ -91,6 +91,12 @@ export class SessionService {
     }
 
     const metadata = getSessionMetadata(req, userAgent);
+
+    // const sessionData = { createdAt: new Date(), userId: user.id, metadata };
+    // const SESSION_NAME = this.configService.getOrThrow<string>('SESSION_NAME');
+    // res.setHeader('Set-Cookie', `${SESSION_NAME}=${JSON.stringify(sessionData)}; Path=/; Secure; SameSite=None`);
+
+    // return user;
 
     return new Promise((resolve, reject) => {
       (req as any).session.createdAt = new Date();
