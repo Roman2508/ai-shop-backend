@@ -14,9 +14,9 @@ export declare class PaymentService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        userId: string | null;
         orderId: string;
         status: import("prisma/generated").$Enums.EnumOrderStatus;
         total: number;
+        userId: string | null;
     }>;
 }

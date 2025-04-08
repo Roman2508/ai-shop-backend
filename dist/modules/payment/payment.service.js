@@ -30,6 +30,7 @@ let PaymentService = class PaymentService {
         const BASE_URL = ENVIRONMENT === 'development' ? NGROCK_FORWARDING_URL : FRONTEND_URL;
         const orderedItemsString = JSON.stringify(dto.items);
         const order_id = `name=${dto.name}//price=${dto.price}//userId=${dto.userId}//items=${orderedItemsString}//createdAt=${Date.now()}`;
+        console.log('CREATE PAYMENT', FRONTEND_URL, BASE_URL);
         const orderBody = {
             response_url: `${FRONTEND_URL}/checkout/thank-you`,
             server_callback_url: `${BASE_URL}/payment/confirmation`,
