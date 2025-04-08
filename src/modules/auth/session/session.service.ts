@@ -9,6 +9,7 @@ import { verify } from 'argon2';
 import { Request } from 'express';
 import { ConfigService } from '@nestjs/config';
 
+import { Response } from 'express';
 import { LoginInput } from './inputs/login.input';
 import { RedisService } from 'src/core/redis/redis.service';
 import { PrismaService } from 'src/core/prisma/prisma.service';
@@ -68,7 +69,7 @@ export class SessionService {
     };
   }
 
-  async login(req: Request, input: LoginInput, userAgent: string) {
+  async login(req: Request, input: LoginInput, userAgent: string, res: Response) {
     const { login, password } = input;
 
     const user = await this.prismaService.user.findFirst({
@@ -76,6 +77,8 @@ export class SessionService {
         OR: [{ username: { equals: login } }, { email: { equals: login } }],
       },
     });
+
+    res.setHeader('Set-Cookie', 'token=abc; Path=/; Secure; SameSite=None');
 
     if (!user) {
       throw new NotFoundException('Користувач не знайдений');

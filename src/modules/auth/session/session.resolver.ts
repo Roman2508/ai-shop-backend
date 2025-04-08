@@ -25,8 +25,8 @@ export class SessionResolver {
   }
 
   @Mutation(() => UserModel, { name: 'loginUser' })
-  async login(@Context() { req }: GqlContext, @Args('data') input: LoginInput, @UserAgent() userAgent: string) {
-    return this.sessionService.login(req, input, userAgent);
+  async login(@Context() { req, res }: GqlContext, @Args('data') input: LoginInput, @UserAgent() userAgent: string) {
+    return this.sessionService.login(req, input, userAgent, res);
   }
 
   @Authorization()
