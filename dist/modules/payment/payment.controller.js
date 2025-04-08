@@ -27,10 +27,6 @@ let PaymentController = class PaymentController {
     async paymentConfirmation(dto) {
         return this.paymentService.confirmPayment(dto);
     }
-    testCookie(res) {
-        res.setHeader('Set-Cookie', 'test_cookie=value; Path=/; Secure; SameSite=None');
-        res.send('Кука отправлена');
-    }
 };
 exports.PaymentController = PaymentController;
 __decorate([
@@ -47,13 +43,6 @@ __decorate([
     __metadata("design:paramtypes", [fondy_callback_response_dto_1.FondyCallbackResponseDto]),
     __metadata("design:returntype", Promise)
 ], PaymentController.prototype, "paymentConfirmation", null);
-__decorate([
-    (0, common_1.Get)('cookie'),
-    __param(0, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], PaymentController.prototype, "testCookie", null);
 exports.PaymentController = PaymentController = __decorate([
     (0, common_1.Controller)('payment'),
     __metadata("design:paramtypes", [payment_service_1.PaymentService])
