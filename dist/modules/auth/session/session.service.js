@@ -16,7 +16,6 @@ const config_1 = require("@nestjs/config");
 const redis_service_1 = require("../../../core/redis/redis.service");
 const prisma_service_1 = require("../../../core/prisma/prisma.service");
 const session_metadata_util_1 = require("../../../shared/utils/session-metadata.util");
-const ms_util_1 = require("../../../shared/utils/ms.util");
 let SessionService = class SessionService {
     constructor(prismaService, redisService, configService) {
         this.prismaService = prismaService;
@@ -69,12 +68,6 @@ let SessionService = class SessionService {
             throw new common_1.UnauthorizedException('Пароль не вірний');
         }
         const metadata = (0, session_metadata_util_1.getSessionMetadata)(req, userAgent);
-        res.cookie('isAuth', '1', {
-            maxAge: (0, ms_util_1.ms)(this.configService.getOrThrow('SESSION_MAX_AGE')),
-            secure: this.configService.getOrThrow('NODE_ENV') === 'development' ? false : true,
-            sameSite: this.configService.getOrThrow('NODE_ENV') === 'development' ? 'lax' : 'none',
-            httpOnly: this.configService.getOrThrow('NODE_ENV') === 'development' ? false : false,
-        });
         return new Promise((resolve, reject) => {
             req.session.createdAt = new Date();
             req.session.userId = user.id;

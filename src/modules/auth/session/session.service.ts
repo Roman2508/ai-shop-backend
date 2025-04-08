@@ -93,23 +93,6 @@ export class SessionService {
 
     const metadata = getSessionMetadata(req, userAgent);
 
-    // const sessionData = { createdAt: new Date(), userId: user.id, metadata };
-    // const SESSION_NAME = this.configService.getOrThrow<string>('SESSION_NAME');
-    // res.setHeader('Set-Cookie', `${SESSION_NAME}=${JSON.stringify(sessionData)}; Path=/; Secure; SameSite=None`);
-
-    // return user;
-
-    res.cookie('isAuth', '1', {
-      // httpOnly: false,
-      // sameSite: 'none',
-      // secure: true,
-      // maxAge: 60 * 60 * 1000,
-      maxAge: ms(this.configService.getOrThrow<StringValue>('SESSION_MAX_AGE')),
-      secure: this.configService.getOrThrow<string>('NODE_ENV') === 'development' ? false : true,
-      sameSite: this.configService.getOrThrow<string>('NODE_ENV') === 'development' ? 'lax' : 'none',
-      httpOnly: this.configService.getOrThrow<string>('NODE_ENV') === 'development' ? false : false,
-    });
-
     return new Promise((resolve, reject) => {
       (req as any).session.createdAt = new Date();
       (req as any).session.userId = user.id;
