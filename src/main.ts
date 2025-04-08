@@ -35,6 +35,7 @@ async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: {
+        domain: config.getOrThrow<string>('NODE_ENV') === 'development' ? 'localhost' : '.onrender.com',
         maxAge: ms(config.getOrThrow<StringValue>('SESSION_MAX_AGE')),
         secure: config.getOrThrow<string>('NODE_ENV') === 'development' ? false : true,
         sameSite: config.getOrThrow<string>('NODE_ENV') === 'development' ? 'lax' : 'none',
