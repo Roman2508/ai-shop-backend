@@ -23,13 +23,13 @@ import { SessionModule } from 'src/modules/auth/session/session.module';
 import { CartItemModel } from 'src/modules/auth/account/models/cart-item.model';
 import { RecommendationModule } from 'src/modules/recommendation/recommendation.module';
 import { FavoriteItemModel } from 'src/modules/auth/account/models/favorite-item.model';
+import { getGraphglConfig } from './config/graphql.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       ignoreEnvFile: !IS_DEV_ENV,
       isGlobal: true,
-      // isGlobal: true, // Makes the ConfigModule available globally
       // envFilePath: '.env', // Specifies the path to the .env file (optional if using the default)
     }),
 
@@ -58,22 +58,29 @@ import { FavoriteItemModel } from 'src/modules/auth/account/models/favorite-item
       synchronize: true,
     }),
 
-    GraphQLModule.forRootAsync<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        autoSchemaFile: true,
-        uploads: false,
-        csrfPrevention: false,
-        introspection: true,
-        context: ({ req, res }) => ({ req, res }),
-        installSubscriptionHandlers: true,
-        sortSchema: true,
-        playground: true,
-      }),
+    // GraphQLModule.forRootAsync<ApolloDriverConfig>({
+    //   driver: ApolloDriver,
+    //   imports: [ConfigModule],
+    //   useFactory: async (configService: ConfigService) => ({
+    //     autoSchemaFile: true,
+    //     uploads: false,
+    //     csrfPrevention: false,
+    //     introspection: true,
+    //     context: ({ req, res }) => ({ req, res }),
+    //     installSubscriptionHandlers: true,
+    //     sortSchema: true,
+    //     playground: true,
+    //   }),
 
-      inject: [ConfigService],
-    }),
+    //   inject: [ConfigService],
+    // }),
+
+    GraphQLModule.forRootAsync({
+			driver: ApolloDriver,
+			imports: [ConfigModule],
+			useFactory: getGraphglConfig,
+			inject: [ConfigService]
+		}),
 
     NlpModule,
     FileModule,
