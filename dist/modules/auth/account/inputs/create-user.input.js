@@ -19,7 +19,7 @@ __decorate([
     (0, graphql_1.Field)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.Matches)(/^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$/),
+    (0, class_validator_1.Matches)(/^[a-zA-Z0-9_]+(?:-[a-zA-Z0-9_]+)*$/),
     __metadata("design:type", String)
 ], CreateUserInput.prototype, "username", void 0);
 __decorate([

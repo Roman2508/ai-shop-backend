@@ -5,7 +5,7 @@ import { IsEmail, Matches, IsString, MinLength, IsOptional } from 'class-validat
 export class UpdateUserInput {
   @Field()
   @IsString()
-  @Matches(/^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$/)
+  @Matches(/^[a-zA-Z0-9_]+(?:-[a-zA-Z0-9_]+)*$/)
   username?: string;
 
   @Field()
