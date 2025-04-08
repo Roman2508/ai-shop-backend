@@ -31,6 +31,7 @@ const session_module_1 = require("../modules/auth/session/session.module");
 const cart_item_model_1 = require("../modules/auth/account/models/cart-item.model");
 const recommendation_module_1 = require("../modules/recommendation/recommendation.module");
 const favorite_item_model_1 = require("../modules/auth/account/models/favorite-item.model");
+const graphql_config_1 = require("./config/graphql.config");
 let CoreModule = class CoreModule {
 };
 exports.CoreModule = CoreModule;
@@ -67,17 +68,8 @@ exports.CoreModule = CoreModule = __decorate([
             graphql_1.GraphQLModule.forRootAsync({
                 driver: apollo_1.ApolloDriver,
                 imports: [config_1.ConfigModule],
-                useFactory: async (configService) => ({
-                    autoSchemaFile: true,
-                    uploads: false,
-                    csrfPrevention: false,
-                    introspection: true,
-                    context: ({ req, res }) => ({ req, res }),
-                    installSubscriptionHandlers: true,
-                    sortSchema: true,
-                    playground: true,
-                }),
-                inject: [config_1.ConfigService],
+                useFactory: graphql_config_1.getGraphglConfig,
+                inject: [config_1.ConfigService]
             }),
             nlp_module_1.NlpModule,
             file_module_1.FileModule,

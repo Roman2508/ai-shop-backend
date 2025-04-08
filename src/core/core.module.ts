@@ -74,7 +74,6 @@ import { getGraphglConfig } from './config/graphql.config';
 
     //   inject: [ConfigService],
     // }),
-
     GraphQLModule.forRootAsync({
 			driver: ApolloDriver,
 			imports: [ConfigModule],

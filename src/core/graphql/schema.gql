@@ -2,136 +2,23 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type ProductModel {
+input AddToCartInput {
+  count: Float!
+  productId: String!
+}
+
+type CartItemModel {
+  count: Float!
   id: ID!
-  title: String!
-  price: Float!
-  brand: String!
-  images: [String!]!
-  ram: Float!
-  builtInMemory: Float!
-  color: String!
-  frontCamera: Float!
-  mainCamera: Float!
-  screenDiagonal: Float!
-  simCount: Float!
-  simFormat: [String!]!
-  os: String!
-  processorName: String!
-  processorCores: String!
-  battery: Float!
-  materials: String!
-  deliverySet: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-type ProductsAndTotalModel {
-  products: [ProductModel!]!
-  total: Int!
-}
-
-type UserModel {
-  id: ID!
-  email: String!
-  password: String!
-  username: String!
-  displayName: String!
-  avatar: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-type LocationModel {
-  country: String!
-  city: String!
-  latitude: Float!
-  longitude: Float!
-}
-
-type DeviceModel {
-  browser: String!
-  os: String!
-  type: String!
-}
-
-type SessionMetadataModel {
-  location: LocationModel!
-  device: DeviceModel!
-  ip: String!
-}
-
-type SessionModel {
-  id: ID!
+  product: ProductModel!
+  productId: String!
+  user: UserModel!
   userId: String!
-  createdAt: String!
-  metadata: SessionMetadataModel!
 }
 
-type Query {
-  findAllUsers: [UserModel!]!
-  findProfile: UserModel!
-  findSessionsByUser: [SessionModel!]!
-  findCurrentSession: SessionModel!
-  getAllProducts: ProductsAndTotalModel!
-  paginateAndFilter(data: PaginateAndFilterInput!): ProductsAndTotalModel!
-  getProductById(productId: String!): ProductModel!
-  searchProduct(data: String!): [ProductModel!]!
-  getMostPopularProducts: [ProductModel!]!
-  getSimilarProducts(productId: String!): ProductModel!
-}
-
-input PaginateAndFilterInput {
-  skip: Int = 0
-  limit: Int = 24
-  sortBy: String
-  priceFrom: Int
-  priceTo: Int
-  brand: String
-  ram: String
-  builtInMemory: String
-  color: String
-  frontCamera: String
-  mainCamera: String
-  screenDiagonal: String
-  simCount: String
-  simFormat: String
-  os: String
-  processorName: String
-  processorCores: String
-  battery: String
-  materials: String
-  deliverySet: String
-}
-
-type Mutation {
-  createUser(data: CreateUserInput!): Boolean!
-  changeEmail(data: ChangeEmailInput!): Boolean!
-  changePassword(data: ChangePasswordInput!): Boolean!
-  toggleFavorite(data: String!): Boolean!
-  loginUser(data: LoginInput!): UserModel!
-  logoutUser: Boolean!
-  clearSessionCookie: Boolean!
-  removeSession(id: String!): Boolean!
-  createProduct(data: CreateProductInput!): ProductModel!
-  createManyProducts: Boolean!
-  updateProduct(productId: String!): ProductModel!
-  createReview(data: CreateReviewInput!): Boolean!
-  deleteReview(id: String!): Boolean!
-  createPayment(data: CreateOrderInput!): Boolean!
-  updateStatus: Boolean!
-  uploadFile(file: Upload!): String!
-}
-
-input CreateUserInput {
-  username: String!
-  email: String!
-  password: String!
+input ChangeCartItemCountInput {
+  count: Float!
+  id: String!
 }
 
 input ChangeEmailInput {
@@ -139,8 +26,83 @@ input ChangeEmailInput {
 }
 
 input ChangePasswordInput {
-  oldPassword: String!
   newPassword: String!
+  oldPassword: String!
+}
+
+input CreateOrderInput {
+  items: [OrderItemDto!]!
+  orderId: String!
+  userId: String!
+}
+
+input CreateProductInput {
+  battery: Float!
+  brand: String!
+  builtInMemory: Float!
+  color: String!
+  deliverySet: String!
+  frontCamera: Float!
+  mainCamera: Float!
+  materials: String!
+  os: String!
+  price: Float!
+  processorCores: String!
+  processorName: String!
+  ram: Float!
+  screenDiagonal: Float!
+  simCount: Float!
+  simFormat: [String!]!
+  title: String!
+}
+
+input CreateReviewInput {
+  productId: String!
+  rating: Float!
+  text: String!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  username: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type DeviceModel {
+  browser: String!
+  os: String!
+  type: String!
+}
+
+enum EnumOrderStatus {
+  DELIVERED
+  PAYED
+  PENDING
+}
+
+enum EnumUserRoles {
+  ADMIN
+  USER
+}
+
+type FavoriteItemModel {
+  id: ID!
+  product: ProductModel!
+  productId: String!
+  user: UserModel!
+  userId: String!
+}
+
+type LocationModel {
+  city: String!
+  country: String!
+  latitude: Float!
+  longitude: Float!
 }
 
 input LoginInput {
@@ -148,43 +110,212 @@ input LoginInput {
   password: String!
 }
 
-input CreateProductInput {
-  title: String!
-  price: Float!
-  brand: String!
-  images: [String!]!
-  ram: Float!
-  builtInMemory: Float!
-  color: String!
-  frontCamera: Float!
-  mainCamera: Float!
-  screenDiagonal: Float!
-  simCount: Float!
-  simFormat: [String!]!
-  os: String!
-  processorName: String!
-  processorCores: String!
-  battery: Float!
-  materials: String!
-  deliverySet: String!
-}
-
-input CreateReviewInput {
-  productId: String!
-  text: String!
-  rating: Float!
-}
-
-input CreateOrderInput {
-  status: String!
-  items: [OrderItemDto!]!
+type Mutation {
+  addProductPhoto(file: Upload!, productId: String!): Boolean!
+  changeCartItemCount(input: ChangeCartItemCountInput!): Boolean!
+  changeEmail(data: ChangeEmailInput!): Boolean!
+  changePassword(data: ChangePasswordInput!): Boolean!
+  clearSessionCookie: Boolean!
+  createManyProducts: Boolean!
+  createOrder(data: CreateOrderInput!): OrderModel!
+  createProduct(data: CreateProductInput!): ProductModel!
+  createReview(data: CreateReviewInput!): Boolean!
+  createUser(data: CreateUserInput!): Boolean!
+  deleteProduct(productId: String!): Boolean!
+  deleteReview(id: String!): Boolean!
+  loginUser(data: LoginInput!): UserModel!
+  logoutUser: Boolean!
+  removeProductPhoto(filename: String!, productId: String!): Boolean!
+  removeSession(id: String!): Boolean!
+  toggleCart(input: AddToCartInput!): Boolean!
+  toggleFavorite(productId: String!): Boolean!
+  updateProduct(data: UpdateProductInput!): ProductModel!
+  updateUserData(user: UpdateUserInput!): Boolean!
+  updateUserRole(input: UpdateRoleInput!): Boolean!
+  uploadAvatar(file: Upload!): Boolean!
+  uploadFile(file: Upload!): String!
 }
 
 input OrderItemDto {
-  quantity: Float!
   price: Float!
   productId: String!
+  quantity: Float!
+}
+
+type OrderItemModel {
+  createdAt: DateTime!
+  id: ID!
+  order: OrderModel!
+  orderId: String!
+  price: Float!
+  product: ProductModel!
+  productId: String!
+  quantity: Float!
+  updatedAt: DateTime!
+}
+
+type OrderModel {
+  createdAt: DateTime!
+  id: ID!
+  items: [OrderItemModel!]!
+  orderId: String!
+  status: EnumOrderStatus!
+  total: Float!
+  updatedAt: DateTime!
+  user: UserModel!
+  userId: String!
+}
+
+input PaginateAndFilterInput {
+  battery: String
+  brand: String
+  builtInMemory: String
+  color: String
+  deliverySet: String
+  frontCamera: String
+  limit: Int = 24
+  mainCamera: String
+  materials: String
+  os: String
+  priceFrom: Int
+  priceTo: Int
+  processorCores: String
+  processorName: String
+  ram: String
+  screenDiagonal: String
+  simCount: String
+  simFormat: String
+  skip: Int = 0
+  sortBy: String
+}
+
+type ProductModel {
+  battery: Float!
+  brand: String!
+  builtInMemory: Float!
+  color: String!
+  createdAt: DateTime!
+  deliverySet: String!
+  frontCamera: Float!
+  id: ID!
+  images: [String!]!
+  mainCamera: Float!
+  materials: String!
+  os: String!
+  price: Float!
+  processorCores: String!
+  processorName: String!
+  ram: Float!
+  reviews: [ReviewModel!]!
+  screenDiagonal: Float!
+  simCount: Float!
+  simFormat: [String!]!
+  title: String!
+  updatedAt: DateTime!
+}
+
+type ProductsAndTotalModel {
+  products: [ProductModel!]!
+  total: Int!
+}
+
+type Query {
+  findAllUsers: [UserModel!]!
+  findCurrentSession: SessionModel!
+  findProfile: UserModel!
+  findSessionsByUser: [SessionModel!]!
+  getAllOrders: [OrderModel!]!
+  getAllProducts: ProductsAndTotalModel!
+  getAllProductsCount: Float!
+  getAverageRating: Float!
+  getMostPopularProducts: [ProductModel!]!
+  getProductById(productId: String!): ProductModel!
+  getReviewByUserId: [ReviewModel!]!
+  getSimilarProducts(productId: String!): ProductModel!
+  paginateAndFilter(data: PaginateAndFilterInput!): ProductsAndTotalModel!
+  searchProduct(data: String!): [ProductModel!]!
+}
+
+type ReviewModel {
+  createdAt: DateTime!
+  id: ID!
+  product: ProductModel!
+  productId: String!
+  rating: Float!
+  text: String!
+  updatedAt: DateTime!
+  user: UserModel!
+  userId: String!
+}
+
+type SessionMetadataModel {
+  device: DeviceModel!
+  ip: String!
+  location: LocationModel!
+}
+
+type SessionModel {
+  createdAt: String!
+  id: ID!
+  metadata: SessionMetadataModel!
+  userId: String!
+}
+
+input UpdateProductInput {
+  battery: Float
+  brand: String
+  builtInMemory: Float
+  color: String
+  deliverySet: String
+  frontCamera: Float
+  mainCamera: Float
+  materials: String
+  os: String
+  price: Float
+  processorCores: String
+  processorName: String
+  productId: String!
+  ram: Float
+  screenDiagonal: Float
+  simCount: Float
+  simFormat: [String!]
+  title: String
+}
+
+input UpdateRoleInput {
+  id: String!
+  role: String!
+}
+
+input UpdateUserInput {
+  city: String!
+  displayName: String!
+  email: String!
+  password: String
+  postOffice: String!
+  street: String!
+  username: String!
 }
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+type UserModel {
+  avatar: String
+  cart: [CartItemModel!]!
+  city: String
+  createdAt: DateTime!
+  displayName: String!
+  email: String!
+  favorites: [FavoriteItemModel!]!
+  id: ID!
+  orders: [OrderModel!]!
+  password: String!
+  postOffice: String
+  reviews: [ReviewModel!]!
+  role: EnumUserRoles!
+  street: String
+  updatedAt: DateTime!
+  username: String!
+  viewedProducts: [String!]!
+}

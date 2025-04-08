@@ -10,6 +10,7 @@ const getGraphglConfig = (configService) => {
         autoSchemaFile: (0, path_1.join)(process.cwd(), 'src/core/graphql/schema.gql'),
         sortSchema: true,
         context: ({ req, res }) => ({ req, res }),
+        introspection: true,
     };
 };
 exports.getGraphglConfig = getGraphglConfig;

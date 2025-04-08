@@ -16,14 +16,8 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(core_module_1.CoreModule);
     const config = app.get(config_1.ConfigService);
     const redis = app.get(redis_service_1.RedisService);
-    app.enableCors({
-        origin: config
-            .getOrThrow('ALLOWED_ORIGIN')
-            .split(',')
-            .map((origin) => origin.trim()),
-        credentials: true,
-        exposedHeaders: ['set-cookie'],
-    });
+    const expressApp = app.getHttpAdapter().getInstance();
+    expressApp.set('trust proxy', true);
     app.use(cookieParser(config.getOrThrow('COOKIES_SECRET')));
     app.use(graphqlUploadExpress());
     app.use('/uploads', express.static((0, path_1.join)(__dirname, '..', 'uploads')));
@@ -44,6 +38,14 @@ async function bootstrap() {
             prefix: config.getOrThrow('SESSION_FOLDER'),
         }),
     }));
+    app.enableCors({
+        origin: config
+            .getOrThrow('ALLOWED_ORIGIN')
+            .split(',')
+            .map((origin) => origin.trim()),
+        credentials: true,
+        exposedHeaders: ['set-cookie'],
+    });
     await app.listen(config.getOrThrow('PORT'));
 }
 bootstrap();

@@ -19,14 +19,8 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const redis = app.get(RedisService);
 
-  app.enableCors({
-    origin: config
-      .getOrThrow<string>('ALLOWED_ORIGIN')
-      .split(',')
-      .map((origin) => origin.trim()),
-    credentials: true,
-    exposedHeaders: ['set-cookie'],
-  });
+  const expressApp = app.getHttpAdapter().getInstance();
+  expressApp.set('trust proxy', true);
 
   app.use(cookieParser(config.getOrThrow<string>('COOKIES_SECRET')));
   app.use(graphqlUploadExpress());
@@ -63,6 +57,15 @@ async function bootstrap() {
       }),
     }),
   );
+
+  app.enableCors({
+    origin: config
+      .getOrThrow<string>('ALLOWED_ORIGIN')
+      .split(',')
+      .map((origin) => origin.trim()),
+    credentials: true,
+    exposedHeaders: ['set-cookie'],
+  });
 
   await app.listen(config.getOrThrow<number>('PORT'));
 }
