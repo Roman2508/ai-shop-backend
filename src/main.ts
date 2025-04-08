@@ -47,7 +47,7 @@ async function bootstrap() {
         maxAge: ms(config.getOrThrow<StringValue>('SESSION_MAX_AGE')),
         secure: config.getOrThrow<string>('NODE_ENV') === 'development' ? false : true,
         sameSite: config.getOrThrow<string>('NODE_ENV') === 'development' ? 'lax' : 'none',
-        httpOnly: config.getOrThrow<string>('NODE_ENV') === 'development' ? false : true,
+        httpOnly: config.getOrThrow<string>('NODE_ENV') === 'development' ? true : false,
 
         // maxAge: 1000 * 60 * 60 * 24 * 30,
         // httpOnly: true,
