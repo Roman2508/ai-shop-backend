@@ -14,6 +14,7 @@ import { LoginInput } from './inputs/login.input';
 import { RedisService } from 'src/core/redis/redis.service';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { getSessionMetadata } from 'src/shared/utils/session-metadata.util';
+import { ms, StringValue } from 'src/shared/utils/ms.util';
 
 @Injectable()
 export class SessionService {
@@ -97,6 +98,17 @@ export class SessionService {
     // res.setHeader('Set-Cookie', `${SESSION_NAME}=${JSON.stringify(sessionData)}; Path=/; Secure; SameSite=None`);
 
     // return user;
+
+    res.cookie('isAuth', '1', {
+      // httpOnly: false,
+      // sameSite: 'none',
+      // secure: true,
+      // maxAge: 60 * 60 * 1000,
+      maxAge: ms(this.configService.getOrThrow<StringValue>('SESSION_MAX_AGE')),
+      secure: this.configService.getOrThrow<string>('NODE_ENV') === 'development' ? false : true,
+      sameSite: this.configService.getOrThrow<string>('NODE_ENV') === 'development' ? 'lax' : 'none',
+      httpOnly: this.configService.getOrThrow<string>('NODE_ENV') === 'development' ? false : false,
+    });
 
     return new Promise((resolve, reject) => {
       (req as any).session.createdAt = new Date();
