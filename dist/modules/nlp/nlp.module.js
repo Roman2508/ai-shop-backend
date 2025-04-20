@@ -10,14 +10,13 @@ exports.NlpModule = void 0;
 const common_1 = require("@nestjs/common");
 const nlp_service_1 = require("./nlp.service");
 const nlp_controller_1 = require("./nlp.controller");
-const nlp_processor_1 = require("./nlp.processor");
 let NlpModule = class NlpModule {
 };
 exports.NlpModule = NlpModule;
 exports.NlpModule = NlpModule = __decorate([
     (0, common_1.Module)({
         controllers: [nlp_controller_1.NlpController],
-        providers: [nlp_service_1.NlpService, nlp_processor_1.NlpProcessor],
+        providers: [nlp_service_1.NlpService],
         exports: [nlp_service_1.NlpService],
     })
 ], NlpModule);

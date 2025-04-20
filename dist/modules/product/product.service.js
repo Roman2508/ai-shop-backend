@@ -24,6 +24,110 @@ let ProductService = class ProductService {
         this.prismaService = prismaService;
         this.recommendationService = recommendationService;
     }
+    getDescriptionQuery(text) {
+        const desc = {
+            айфон: 'iphone',
+            'айфон 12': 'iphone 12',
+            'айфон 12 про': 'iphone 12 pro',
+            'айфон 12 про макс': 'iphone 12 pro max',
+            iphone: 'iphone',
+            'iphone 12': 'iphone 12',
+            'iphone 12 pro': 'iphone 12 pro',
+            'iphone 12 pro max': 'iphone 12 pro max',
+            'айфон 13': 'iphone 13',
+            'айфон 13 про': 'iphone 13 pro',
+            'айфон 13 про макс': 'iphone 13 pro max',
+            'iphone 13': 'iphone 13',
+            'iphone 13 pro': 'iphone 13 pro',
+            'iphone 13 pro max': 'iphone 13 pro max',
+            'айфон 14': 'iphone 14',
+            'айфон 14 про': 'iphone 14 pro',
+            'айфон 14 про макс': 'iphone 14 pro max',
+            'iphone 14': 'iphone 14',
+            'iphone 14 pro': 'iphone 14 pro',
+            'iphone 14 pro max': 'iphone 14 pro max',
+            'айфон 15': 'iphone 15',
+            'айфон 15 про': 'iphone 15 pro',
+            'айфон 15 про макс': 'iphone 15 pro max',
+            'iphone 15': 'iphone 15',
+            'iphone 15 pro': 'iphone 15 pro',
+            'iphone 15 pro max': 'iphone 15 pro max',
+            'айфон 16': 'iphone 16',
+            'айфон 16 про': 'iphone 16 pro',
+            'айфон 16 про макс': 'iphone 16 pro max',
+            'iphone 16': 'iphone 16',
+            'iphone 16 pro': 'iphone 16 pro',
+            'iphone 16 pro max': 'iphone 16 pro max',
+            samsung: 'samsung',
+            'samsung s22': 'samsung galaxy s22',
+            'samsung s 22': 'samsung galaxy s22',
+            'самсунг с22': 'samsung galaxy s22',
+            'самсунг с 22': 'samsung galaxy s22',
+            'samsung s22 ultra': 'samsung galaxy s22 ultra',
+            'samsung s 22 ultra': 'samsung galaxy s22 ultra',
+            'самсунг с22 ультра': 'samsung galaxy s22 ultra',
+            'самсунг с 22 ультра': 'samsung galaxy s22 ultra',
+            'samsung s23': 'samsung galaxy s23',
+            'samsung s 23': 'samsung galaxy s23',
+            'самсунг с23': 'samsung galaxy s23',
+            'самсунг с 23': 'samsung galaxy s23',
+            'samsung s23 ultra': 'samsung galaxy s23 ultra',
+            'samsung s 23 ultra': 'samsung galaxy s23 ultra',
+            'самсунг с23 ультра': 'samsung galaxy s23 ultra',
+            'самсунг с 23 ультра': 'samsung galaxy s23 ultra',
+            'samsung s24': 'samsung galaxy s24',
+            'samsung s 24': 'samsung galaxy s24',
+            'самсунг с24': 'samsung galaxy s24',
+            'самсунг с 24': 'samsung galaxy s24',
+            'samsung s24 ultra': 'samsung galaxy s24 ultra',
+            'samsung s 24 ultra': 'samsung galaxy s24 ultra',
+            'самсунг с24 ультра': 'samsung galaxy s24 ultra',
+            'самсунг с 24 ультра': 'samsung galaxy s24 ultra',
+            'samsung s25': 'samsung galaxy s25',
+            'samsung s 25': 'samsung galaxy s25',
+            'самсунг с25': 'samsung galaxy s25',
+            'самсунг с 25': 'samsung galaxy s25',
+            'samsung s25 ultra': 'samsung galaxy s25 ultra',
+            'samsung s 25 ultra': 'samsung galaxy s25 ultra',
+            'самсунг с25 ультра': 'samsung galaxy s25 ultra',
+            'самсунг с 25 ультра': 'samsung galaxy s25 ultra',
+            xiaomi: 'xiaomi',
+            'xiaomi redmi 12': 'xiaomi redmi 12',
+            'xiaomi redmi note 12': 'xiaomi redmi note 12',
+            'сяомі редмі 12': 'xiaomi redmi 12',
+            'сяомі редмі ноут 12': 'xiaomi redmi note 12',
+            'xiaomi redmi 13': 'xiaomi redmi 13',
+            'xiaomi redmi note 13': 'xiaomi redmi note 13',
+            'сяомі редмі 13': 'xiaomi redmi 13',
+            сяомі: 'xiaomi',
+            'сяомі редмі ноут 13': 'xiaomi redmi note 13',
+            'xiaomi redmi 14': 'xiaomi redmi 14',
+            'xiaomi redmi note 14': 'xiaomi redmi note 14',
+            'сяомі редмі 14': 'xiaomi redmi 14',
+            'сяомі редмі ноут 14': 'xiaomi redmi note 14',
+            'xiaomi redmi 15': 'xiaomi redmi 15',
+            'xiaomi redmi note 15': 'xiaomi redmi note 15',
+            'сяомі редмі 15': 'xiaomi redmi 15',
+            'сяомі редмі ноут 15': 'xiaomi redmi note 15',
+            'oneplus one plus ванплас ван плас': 'oneplus',
+            'google pixel/гугл піксель/піксель/гугл': 'google pixel',
+            'motorola/моторола/мото': 'motorola',
+            'nokia/нокіа': 'nokia',
+            'poco/поко': 'poco',
+            'oppo/оппо': 'oppo',
+            'realme/реалмі': 'realme',
+            'huawei/хуавей': 'huawei',
+            'honor/хонор/онор': 'honor',
+            'meizu/мейзу': 'meizu',
+            'sony/соні': 'sony',
+        };
+        const lowerText = text.toLowerCase();
+        for (const key in desc) {
+            if (key.includes(lowerText)) {
+                return { title: { contains: desc[key], mode: 'insensitive' } };
+            }
+        }
+    }
     async getAll() {
         const total = await this.prismaService.product.count();
         const products = await this.prismaService.product.findMany({
@@ -94,6 +198,7 @@ let ProductService = class ProductService {
             orderBy: order,
             take: limit ? limit : 24,
             skip: skip ? skip : 0,
+            include: { reviews: true },
         });
         let totalProductsCount = 0;
         if (priceFrom || priceTo || Object.keys(filterParams).length) {
@@ -133,9 +238,18 @@ let ProductService = class ProductService {
         else {
             prismaQueryObject = (0, convert_keys_to_camel_util_1.convertKeysToCamel)(queryObject);
         }
-        const products = await this.prismaService.product.findMany({ where: prismaQueryObject });
+        const titleQuery = this.getDescriptionQuery(input);
+        const query = titleQuery ? { ...prismaQueryObject, ...titleQuery } : prismaQueryObject;
+        const products = await this.prismaService.product.findMany({ where: query });
         if (!products.length) {
-            throw new common_1.NotFoundException('Нічого не знайдено');
+            const query = this.getDescriptionQuery(input);
+            const newQuery = query ? query : { title: { contains: input, mode: 'insensitive' } };
+            console.log(newQuery);
+            const products = await this.prismaService.product.findMany({ where: newQuery });
+            if (!products.length) {
+                throw new common_1.NotFoundException('Нічого не знайдено');
+            }
+            return products;
         }
         return products;
     }

@@ -1,0 +1,41 @@
+import sys
+import json
+import numpy
+import faiss
+
+json_file_path = sys.argv[1]
+
+with open(json_file_path, 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+
+user_viewed_vectors = numpy.array(data['queryVector'], dtype='float32')
+all_product_vectors = numpy.array(data['allVectors'], dtype='float32')
+
+dimension = all_product_vectors.shape[1]  
+index = faiss.IndexFlatL2(dimension) 
+index.add(all_product_vectors)
+
+user_viewed_vectors = user_viewed_vectors.reshape(user_viewed_vectors.shape[0], -1)
+
+all_similar_products = []
+for query_vector in user_viewed_vectors:
+    query_vector = numpy.array(query_vector, dtype='float32').reshape(1, -1)
+    distances, indices = index.search(query_vector, 50)
+
+    for i in range(len(indices[0])):
+        all_similar_products.append((int(indices[0][i]), float(distances[0][i])))  
+
+
+all_similar_products.sort(key=lambda x: x[1])
+
+similar_product_ids = [product[0] for product in all_similar_products]
+similar_distances = [product[1] for product in all_similar_products]
+
+result = {
+    'ids': similar_product_ids,
+    'distances': similar_distances
+}
+
+print(json.dumps(result))
+
