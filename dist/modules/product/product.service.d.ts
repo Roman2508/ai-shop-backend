@@ -241,6 +241,7 @@ export declare class ProductService {
     addPhoto(id: string, file: any): Promise<boolean>;
     removePhotos(id: string, filename: string): Promise<boolean>;
     createMany(): Promise<boolean>;
+    createAllEmbeddings(): Promise<boolean>;
     update(input: UpdateProductInput): Promise<{
         id: string;
         images: string[];

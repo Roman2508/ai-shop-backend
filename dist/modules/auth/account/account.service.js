@@ -161,6 +161,27 @@ let AccountService = class AccountService {
         await this.prismaService.user.update({ where: { id }, data: { avatar: filename } });
         return true;
     }
+    async addToViewed(input) {
+        const { userId, productId } = input;
+        const user = await this.prismaService.user.findUnique({ where: { id: userId } });
+        const product = await this.prismaService.product.findUnique({ where: { id: productId } });
+        if (!user || !product) {
+            return;
+        }
+        let viewedProducts = user.viewedProducts;
+        if (viewedProducts.length >= 10) {
+            viewedProducts.unshift(productId);
+            viewedProducts.pop();
+        }
+        else {
+            viewedProducts.push(productId);
+        }
+        await this.prismaService.user.update({
+            where: { id: userId },
+            data: { viewedProducts },
+        });
+        return true;
+    }
     async changeCartItemCount(input) {
         await this.prismaService.cartItem.update({
             where: { id: input.id },

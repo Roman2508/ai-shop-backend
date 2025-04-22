@@ -59,6 +59,9 @@ let ProductResolver = class ProductResolver {
     async createMany() {
         return this.productService.createMany();
     }
+    async createAllEmbeddings() {
+        return this.productService.createAllEmbeddings();
+    }
     async update(input) {
         return this.productService.update(input);
     }
@@ -145,6 +148,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "createMany", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'createAllEmbeddings' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "createAllEmbeddings", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
     (0, graphql_1.Mutation)(() => product_model_1.ProductModel, { name: 'updateProduct' }),

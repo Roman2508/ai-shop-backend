@@ -26,6 +26,7 @@ const authorized_decorator_1 = require("../../../shared/decorators/authorized.de
 const add_to_cart_input_1 = require("./inputs/add-to-cart.input");
 const change_cart_item_count_input_1 = require("./inputs/change-cart-item-count.input");
 const update_role_input_1 = require("./inputs/update-role-input");
+const add_to_viewed_input_1 = require("./inputs/add-to-viewed.input");
 let AccountResolver = class AccountResolver {
     constructor(accountService) {
         this.accountService = accountService;
@@ -59,6 +60,9 @@ let AccountResolver = class AccountResolver {
     }
     async uploadAvatar(userId, file) {
         return this.accountService.uploadAvatar(userId, file);
+    }
+    async addToViewed(input) {
+        return this.accountService.addToViewed(input);
     }
     async changeCartItemCount(input) {
         return this.accountService.changeCartItemCount(input);
@@ -149,6 +153,14 @@ __decorate([
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], AccountResolver.prototype, "uploadAvatar", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'addProductToViewed' }),
+    __param(0, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [add_to_viewed_input_1.AddToViewedInput]),
+    __metadata("design:returntype", Promise)
+], AccountResolver.prototype, "addToViewed", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
     (0, graphql_1.Mutation)(() => Boolean, { name: 'changeCartItemCount' }),

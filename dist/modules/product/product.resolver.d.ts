@@ -235,6 +235,7 @@ export declare class ProductResolver {
     addPhoto(productId: string, file: any): Promise<boolean>;
     removePhotos(productId: string, filename: string): Promise<boolean>;
     createMany(): Promise<boolean>;
+    createAllEmbeddings(): Promise<boolean>;
     update(input: UpdateProductInput): Promise<{
         id: string;
         images: string[];

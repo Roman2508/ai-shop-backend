@@ -7,6 +7,11 @@ input AddToCartInput {
   productId: String!
 }
 
+input AddToViewedInput {
+  productId: String!
+  userId: String!
+}
+
 type CartItemModel {
   count: Float!
   id: ID!
@@ -112,10 +117,12 @@ input LoginInput {
 
 type Mutation {
   addProductPhoto(file: Upload!, productId: String!): Boolean!
+  addProductToViewed(input: AddToViewedInput!): Boolean!
   changeCartItemCount(input: ChangeCartItemCountInput!): Boolean!
   changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
   clearSessionCookie: Boolean!
+  createAllEmbeddings: Boolean!
   createManyProducts: Boolean!
   createOrder(data: CreateOrderInput!): OrderModel!
   createProduct(data: CreateProductInput!): ProductModel!

@@ -17,6 +17,7 @@ import { ChangeEmailInput } from './inputs/change-email.input';
 import { ChangePasswordInput } from './inputs/change-password.input';
 import { ChangeCartItemCountInput } from './inputs/change-cart-item-count.input';
 import { UpdateRoleInput } from './inputs/update-role-input';
+import { AddToViewedInput } from './inputs/add-to-viewed.input';
 
 @Injectable()
 export class AccountService {
@@ -201,6 +202,32 @@ export class AccountService {
 
     const filename = await this.fileService.upload(file, 'users');
     await this.prismaService.user.update({ where: { id }, data: { avatar: filename } });
+    return true;
+  }
+
+  async addToViewed(input: AddToViewedInput) {
+    const { userId, productId } = input;
+    const user = await this.prismaService.user.findUnique({ where: { id: userId } });
+    const product = await this.prismaService.product.findUnique({ where: { id: productId } });
+
+    if (!user || !product) {
+      return;
+    }
+
+    let viewedProducts = user.viewedProducts;
+
+    if (viewedProducts.length >= 10) {
+      viewedProducts.unshift(productId);
+      viewedProducts.pop();
+    } else {
+      viewedProducts.push(productId);
+    }
+
+    await this.prismaService.user.update({
+      where: { id: userId },
+      data: { viewedProducts },
+    });
+
     return true;
   }
 

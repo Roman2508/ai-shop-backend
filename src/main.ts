@@ -11,7 +11,6 @@ import * as graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
 import { CoreModule } from './core/core.module';
 import { ms, StringValue } from './shared/utils/ms.util';
 import { RedisService } from './core/redis/redis.service';
-import { parseBoolean } from './shared/utils/parse-boolean.util';
 
 async function bootstrap() {
   const app = await NestFactory.create(CoreModule);

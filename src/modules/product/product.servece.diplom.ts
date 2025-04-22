@@ -195,7 +195,7 @@ export class ProductService {
 
   async create(input: CreateProductInput) {
     const newProduct = await this.prismaService.product.create({ data: input });
-    await this.recommendationService.createProduct(newProduct);
+    await this.recommendationService.createProductVector(newProduct);
     return newProduct;
   }
 

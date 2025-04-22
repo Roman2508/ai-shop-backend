@@ -71,6 +71,11 @@ export class ProductResolver {
     return this.productService.createMany();
   }
 
+  @Mutation(() => Boolean, { name: 'createAllEmbeddings' })
+  async createAllEmbeddings() {
+    return this.productService.createAllEmbeddings();
+  }
+
   @Authorization()
   @Mutation(() => ProductModel, { name: 'updateProduct' })
   async update(@Args('data') input: UpdateProductInput) {

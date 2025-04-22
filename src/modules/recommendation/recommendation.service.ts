@@ -18,7 +18,7 @@ const PYTHON_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/
 export class RecommendationService {
   constructor(private prisma: PrismaService) {}
 
-  async createProduct(dto: CreateVectorInput) {
+  async createProductVector(dto: CreateVectorInput) {
     const textRepresentation = this.createTextRepresentation(dto);
     const embedding = await this.generateEmbedding(textRepresentation);
 
