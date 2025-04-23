@@ -265,18 +265,28 @@ let ProductService = class ProductService {
         });
         return products;
     }
-    async getSimilar(id) {
-        const currentProduct = await this.getById(id);
-        if (!currentProduct)
-            throw new common_1.NotFoundException('Поточний товар не знайдений');
-        const products = await this.prismaService.product.findMany({
-            where: {
-                title: currentProduct.title,
-                NOT: { id: currentProduct.id },
-            },
-            orderBy: { createdAt: 'desc' },
+    async getSimilar(userId) {
+        const user = await this.prismaService.user.findUnique({ where: { id: userId } });
+        if (!user) {
+            throw new common_1.BadRequestException();
+        }
+        if (user.viewedProducts.length < 5) {
+            return this.prismaService.product.findMany({ take: 10 });
+        }
+        const similarProductsIds = await this.recommendationService.findSimilarProducts(user.viewedProducts);
+        const prioritizedProducts = await this.prismaService.product.findMany({
+            where: { id: { in: similarProductsIds } },
         });
-        return products;
+        const remainingCount = 10 - prioritizedProducts.length;
+        let otherProducts = [];
+        if (remainingCount > 0) {
+            otherProducts = await this.prismaService.product.findMany({
+                where: { id: { notIn: similarProductsIds } },
+                take: remainingCount,
+            });
+        }
+        const result = [...prioritizedProducts, ...otherProducts];
+        return result;
     }
     async create(input) {
         const newProduct = await this.prismaService.product.create({ data: input });

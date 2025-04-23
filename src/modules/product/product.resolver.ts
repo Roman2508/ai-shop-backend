@@ -8,6 +8,7 @@ import { UpdateProductInput } from './inputs/update-product.input';
 import { Authorization } from 'src/shared/decorators/auth.decorator';
 import { ProductsAndTotalModel } from './models/products-and-total.model';
 import { PaginateAndFilterInput } from './inputs/paginate-and-filter.input';
+import { Authorized } from 'src/shared/decorators/authorized.decorator';
 
 @Resolver('Product')
 export class ProductResolver {
@@ -43,9 +44,10 @@ export class ProductResolver {
     return this.productService.getMostPopular();
   }
 
+  @Authorization()
   @Query(() => ProductModel, { name: 'getSimilarProducts' })
-  async getSimilar(@Args('productId') productId: string) {
-    return this.productService.getSimilar(productId);
+  async getSimilar(@Authorized('id') userId: string) {
+    return this.productService.getSimilar(userId);
   }
 
   @Authorization()
@@ -88,4 +90,3 @@ export class ProductResolver {
     return this.productService.delete(productId);
   }
 }
-

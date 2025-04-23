@@ -215,8 +215,13 @@ export class AccountService {
     }
 
     let viewedProducts = user.viewedProducts;
+    const isProductExistInViewed = viewedProducts.some((id) => id === productId);
 
-    if (viewedProducts.length >= 10) {
+    if (isProductExistInViewed) {
+      return true;
+    }
+
+    if (viewedProducts.length >= 5) {
       viewedProducts.unshift(productId);
       viewedProducts.pop();
     } else {

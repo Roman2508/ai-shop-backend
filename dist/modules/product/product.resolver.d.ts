@@ -186,29 +186,7 @@ export declare class ProductResolver {
         createdAt: Date;
         updatedAt: Date;
     }[]>;
-    getSimilar(productId: string): Promise<{
-        id: string;
-        images: string[];
-        title: string;
-        price: number;
-        brand: string;
-        ram: number;
-        builtInMemory: number;
-        color: string;
-        frontCamera: number;
-        mainCamera: number;
-        screenDiagonal: number;
-        simCount: number;
-        simFormat: string[];
-        os: string;
-        processorName: string;
-        processorCores: string;
-        battery: number;
-        materials: string;
-        deliverySet: string;
-        createdAt: Date;
-        updatedAt: Date;
-    }[]>;
+    getSimilar(userId: string): Promise<any[]>;
     create(input: CreateProductInput): Promise<{
         id: string;
         images: string[];

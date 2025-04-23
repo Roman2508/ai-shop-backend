@@ -70,13 +70,7 @@ export class RecommendationService {
   async findSimilarProducts(viewedProductIds: string[]) {
     if (viewedProductIds.length === 0) return [];
 
-    // Получаем векторы просмотренных товаров
-    // const viewedProductsVectors = await this.prisma.productEmbeding.findMany({
-    //   where: { product: { id: { in: viewedProductIds } } },
-    // });
-
     const allVectors = await this.prisma.productEmbeding.findMany();
-
     const viewedProductsVectors = allVectors.filter((el) => viewedProductIds.includes(el.productId));
 
     // Проверяем, есть ли векторы
@@ -89,12 +83,40 @@ export class RecommendationService {
     // const userVector = this.averageVectors(vectorsArray);
 
     // Запускаем Python-скрипт для поиска ближайших соседей
-    const similarProductIds = await this.findNearestNeighbors(vectorsArray, allVectorsArray);
+    const similarProductIds = (await this.findNearestNeighbors(vectorsArray, allVectorsArray)) as unknown as {
+      ids: string[];
+      distances: string[];
+    };
 
-    const simProdIds = await Promise.all(
-      // @ts-ignore
-      similarProductIds.ids.map(async (el) => {
-        const product = await this.prisma.productEmbeding.findUnique({ where: { id: el } });
+    // const simProdIds = await Promise.all(
+    //   similarProductIds.ids.map(async (el) => {
+    //     const product = await this.prisma.productEmbeding.findUnique({ where: { id: Number(el) } });
+    //     if (!product) {
+    //       console.log(`Product embedding with ID ${el} is not exist`);
+    //       return;
+    //     }
+
+    //     return product.productId;
+    //   }),
+    // );
+
+    // const existedIds = simProdIds.filter((el) => el !== 'null' && !!el);
+
+    // const products = await this.prisma.product.findMany({
+    //   where: { id: { in: existedIds } },
+    // });
+
+    const result = similarProductIds.ids.map((id, index) => ({
+      id,
+      distance: similarProductIds.distances[index],
+    }));
+
+    const unique = result.filter((item, index, self) => self.findIndex((el) => el.id === item.id) === index);
+    const uniqueIds = unique.map((el) => el.id);
+
+    const productsIdByVectors = await Promise.all(
+      uniqueIds.map(async (el) => {
+        const product = await this.prisma.productEmbeding.findUnique({ where: { id: Number(el) } });
         if (!product) {
           console.log(`Product embedding with ID ${el} is not exist`);
           return;
@@ -104,35 +126,14 @@ export class RecommendationService {
       }),
     );
 
-    const existedIds = simProdIds.filter((el) => el !== 'null' && !!el);
+    const existedProductsIdByVectors = productsIdByVectors.filter((el) => el !== 'null' && !!el);
+    return existedProductsIdByVectors;
 
-    const products = await this.prisma.product.findMany({
-      where: { id: { in: existedIds } },
-    });
-
-    return products;
-
-    // Возвращаем найденные товары, отсортированные по схожести
-    // return this.prisma.product.findMany({
-    //   where: { id: { in: similarProductIds } },
-    //   orderBy: {
-    //     id: { in: similarProductIds }, // сохраняем порядок
-    //   },
+    // const products = await this.prisma.product.findMany({
+    //   where: { id: { in: existedProductsIdByVectors } },
     // });
-  }
 
-  private averageVectors(vectors: any): number[] {
-    // private averageVectors(vectors: number[][]): number[] {
-    const length = vectors[0].length;
-    const avgVector = new Array(length).fill(0);
-
-    vectors.forEach((vector) => {
-      for (let i = 0; i < length; i++) {
-        avgVector[i] += vector[i];
-      }
-    });
-
-    return avgVector.map((value) => value / vectors.length);
+    // return products;
   }
 
   private async findNearestNeighbors(queryVector: any[], allVectors: any[]): Promise<string[]> {
@@ -148,9 +149,8 @@ export class RecommendationService {
           pythonPath: PYTHON_PATH,
         });
         if (!result) return reject('No result from Python script');
-        const embedding = JSON.parse(result[0]);
 
-        console.log('result:', result);
+        const embedding = JSON.parse(result[result.length - 1]);
 
         resolve(embedding);
       } catch (e) {

@@ -169,7 +169,11 @@ let AccountService = class AccountService {
             return;
         }
         let viewedProducts = user.viewedProducts;
-        if (viewedProducts.length >= 10) {
+        const isProductExistInViewed = viewedProducts.some((id) => id === productId);
+        if (isProductExistInViewed) {
+            return true;
+        }
+        if (viewedProducts.length >= 5) {
             viewedProducts.unshift(productId);
             viewedProducts.pop();
         }
