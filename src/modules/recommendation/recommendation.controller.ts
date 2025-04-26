@@ -9,7 +9,7 @@ export class RecommendationController {
 
   @Post('/create')
   createProduct(@Body() dto: CreateVectorInput) {
-    return this.recommendationService.createProduct(dto);
+    return this.recommendationService.createProductVector(dto);
   }
 
   @Get('/find')

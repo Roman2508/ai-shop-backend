@@ -22,6 +22,7 @@ const update_product_input_1 = require("./inputs/update-product.input");
 const auth_decorator_1 = require("../../shared/decorators/auth.decorator");
 const products_and_total_model_1 = require("./models/products-and-total.model");
 const paginate_and_filter_input_1 = require("./inputs/paginate-and-filter.input");
+const authorized_decorator_1 = require("../../shared/decorators/authorized.decorator");
 let ProductResolver = class ProductResolver {
     constructor(productService) {
         this.productService = productService;
@@ -44,8 +45,8 @@ let ProductResolver = class ProductResolver {
     async getMostPopular() {
         return this.productService.getMostPopular();
     }
-    async getSimilar(productId) {
-        return this.productService.getSimilar(productId);
+    async getSimilar(userId) {
+        return this.productService.getSimilar(userId);
     }
     async create(input) {
         return this.productService.create(input);
@@ -58,6 +59,9 @@ let ProductResolver = class ProductResolver {
     }
     async createMany() {
         return this.productService.createMany();
+    }
+    async createAllEmbeddings() {
+        return this.productService.createAllEmbeddings();
     }
     async update(input) {
         return this.productService.update(input);
@@ -107,8 +111,9 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "getMostPopular", null);
 __decorate([
+    (0, auth_decorator_1.Authorization)(),
     (0, graphql_1.Query)(() => product_model_1.ProductModel, { name: 'getSimilarProducts' }),
-    __param(0, (0, graphql_1.Args)('productId')),
+    __param(0, (0, authorized_decorator_1.Authorized)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
@@ -145,6 +150,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "createMany", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'createAllEmbeddings' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "createAllEmbeddings", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
     (0, graphql_1.Mutation)(() => product_model_1.ProductModel, { name: 'updateProduct' }),

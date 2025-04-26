@@ -192,6 +192,7 @@ export declare class ProductService {
         materials: string;
         deliverySet: string;
     }[]>;
+<<<<<<< HEAD
     getSimilar(id: string): Promise<{
         id: string;
         createdAt: Date;
@@ -215,6 +216,9 @@ export declare class ProductService {
         materials: string;
         deliverySet: string;
     }[]>;
+=======
+    getSimilar(userId: string): Promise<any[]>;
+>>>>>>> a5311527448f04e6319ae57003f2fcb32071584c
     create(input: CreateProductInput): Promise<{
         id: string;
         createdAt: Date;
@@ -241,6 +245,7 @@ export declare class ProductService {
     addPhoto(id: string, file: any): Promise<boolean>;
     removePhotos(id: string, filename: string): Promise<boolean>;
     createMany(): Promise<boolean>;
+    createAllEmbeddings(): Promise<boolean>;
     update(input: UpdateProductInput): Promise<{
         id: string;
         createdAt: Date;

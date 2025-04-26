@@ -13,6 +13,7 @@ import { Authorized } from 'src/shared/decorators/authorized.decorator';
 import { AddToCartInput } from './inputs/add-to-cart.input';
 import { ChangeCartItemCountInput } from './inputs/change-cart-item-count.input';
 import { UpdateRoleInput } from './inputs/update-role-input';
+import { AddToViewedInput } from './inputs/add-to-viewed.input';
 
 @Resolver('Account')
 export class AccountResolver {
@@ -75,6 +76,12 @@ export class AccountResolver {
   @Mutation(() => Boolean, { name: 'uploadAvatar' })
   async uploadAvatar(@Authorized('id') userId: string, @Args({ name: 'file', type: () => GraphQLUpload }) file: any) {
     return this.accountService.uploadAvatar(userId, file);
+  }
+
+  @Authorization()
+  @Mutation(() => Boolean, { name: 'addProductToViewed' })
+  async addToViewed(@Args('input') input: AddToViewedInput) {
+    return this.accountService.addToViewed(input);
   }
 
   @Authorization()

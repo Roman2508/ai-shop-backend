@@ -165,6 +165,24 @@ export declare class ProductResolver {
     }[]>;
     getMostPopular(): Promise<{
         id: string;
+        images: string[];
+        title: string;
+        price: number;
+        brand: string;
+        ram: number;
+        builtInMemory: number;
+        color: string;
+        frontCamera: number;
+        mainCamera: number;
+        screenDiagonal: number;
+        simCount: number;
+        simFormat: string[];
+        os: string;
+        processorName: string;
+        processorCores: string;
+        battery: number;
+        materials: string;
+        deliverySet: string;
         createdAt: Date;
         updatedAt: Date;
         price: number;
@@ -186,29 +204,7 @@ export declare class ProductResolver {
         materials: string;
         deliverySet: string;
     }[]>;
-    getSimilar(productId: string): Promise<{
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        price: number;
-        images: string[];
-        title: string;
-        brand: string;
-        ram: number;
-        builtInMemory: number;
-        color: string;
-        frontCamera: number;
-        mainCamera: number;
-        screenDiagonal: number;
-        simCount: number;
-        simFormat: string[];
-        os: string;
-        processorName: string;
-        processorCores: string;
-        battery: number;
-        materials: string;
-        deliverySet: string;
-    }[]>;
+    getSimilar(userId: string): Promise<any[]>;
     create(input: CreateProductInput): Promise<{
         id: string;
         createdAt: Date;
@@ -235,6 +231,7 @@ export declare class ProductResolver {
     addPhoto(productId: string, file: any): Promise<boolean>;
     removePhotos(productId: string, filename: string): Promise<boolean>;
     createMany(): Promise<boolean>;
+    createAllEmbeddings(): Promise<boolean>;
     update(input: UpdateProductInput): Promise<{
         id: string;
         createdAt: Date;

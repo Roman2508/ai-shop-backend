@@ -8,6 +8,7 @@ import { ChangeEmailInput } from './inputs/change-email.input';
 import { ChangePasswordInput } from './inputs/change-password.input';
 import { ChangeCartItemCountInput } from './inputs/change-cart-item-count.input';
 import { UpdateRoleInput } from './inputs/update-role-input';
+import { AddToViewedInput } from './inputs/add-to-viewed.input';
 export declare class AccountService {
     private readonly prismaService;
     private readonly fileService;
@@ -201,5 +202,6 @@ export declare class AccountService {
     updateUserData(id: string, user: UpdateUserInput): Promise<boolean>;
     updateRole(id: string, input: UpdateRoleInput): Promise<boolean>;
     uploadAvatar(id: string, file: any): Promise<boolean>;
+    addToViewed(input: AddToViewedInput): Promise<boolean>;
     changeCartItemCount(input: ChangeCartItemCountInput): Promise<boolean>;
 }

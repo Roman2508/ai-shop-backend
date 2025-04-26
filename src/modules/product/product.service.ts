@@ -9,6 +9,103 @@ import { UpdateProductInput } from './inputs/update-product.input';
 import { convertKeysToCamel } from 'src/shared/utils/convert-keys-to-camel.util';
 import { RecommendationService } from '../recommendation/recommendation.service';
 
+const desc = {
+  айфон: 'iphone',
+  'айфон 12': 'iphone 12',
+  'айфон 12 про': 'iphone 12 pro',
+  'айфон 12 про макс': 'iphone 12 pro max',
+  iphone: 'iphone',
+  'iphone 12': 'iphone 12',
+  'iphone 12 pro': 'iphone 12 pro',
+  'iphone 12 pro max': 'iphone 12 pro max',
+  'айфон 13': 'iphone 13',
+  'айфон 13 про': 'iphone 13 pro',
+  'айфон 13 про макс': 'iphone 13 pro max',
+  'iphone 13': 'iphone 13',
+  'iphone 13 pro': 'iphone 13 pro',
+  'iphone 13 pro max': 'iphone 13 pro max',
+  'айфон 14': 'iphone 14',
+  'айфон 14 про': 'iphone 14 pro',
+  'айфон 14 про макс': 'iphone 14 pro max',
+  'iphone 14': 'iphone 14',
+  'iphone 14 pro': 'iphone 14 pro',
+  'iphone 14 pro max': 'iphone 14 pro max',
+  'айфон 15': 'iphone 15',
+  'айфон 15 про': 'iphone 15 pro',
+  'айфон 15 про макс': 'iphone 15 pro max',
+  'iphone 15': 'iphone 15',
+  'iphone 15 pro': 'iphone 15 pro',
+  'iphone 15 pro max': 'iphone 15 pro max',
+  'айфон 16': 'iphone 16',
+  'айфон 16 про': 'iphone 16 pro',
+  'айфон 16 про макс': 'iphone 16 pro max',
+  'iphone 16': 'iphone 16',
+  'iphone 16 pro': 'iphone 16 pro',
+  'iphone 16 pro max': 'iphone 16 pro max',
+  samsung: 'samsung',
+  'samsung s22': 'samsung galaxy s22',
+  'samsung s 22': 'samsung galaxy s22',
+  'самсунг с22': 'samsung galaxy s22',
+  'самсунг с 22': 'samsung galaxy s22',
+  'samsung s22 ultra': 'samsung galaxy s22 ultra',
+  'samsung s 22 ultra': 'samsung galaxy s22 ultra',
+  'самсунг с22 ультра': 'samsung galaxy s22 ultra',
+  'самсунг с 22 ультра': 'samsung galaxy s22 ultra',
+  'samsung s23': 'samsung galaxy s23',
+  'samsung s 23': 'samsung galaxy s23',
+  'самсунг с23': 'samsung galaxy s23',
+  'самсунг с 23': 'samsung galaxy s23',
+  'samsung s23 ultra': 'samsung galaxy s23 ultra',
+  'samsung s 23 ultra': 'samsung galaxy s23 ultra',
+  'самсунг с23 ультра': 'samsung galaxy s23 ultra',
+  'самсунг с 23 ультра': 'samsung galaxy s23 ultra',
+  'samsung s24': 'samsung galaxy s24',
+  'samsung s 24': 'samsung galaxy s24',
+  'самсунг с24': 'samsung galaxy s24',
+  'самсунг с 24': 'samsung galaxy s24',
+  'samsung s24 ultra': 'samsung galaxy s24 ultra',
+  'samsung s 24 ultra': 'samsung galaxy s24 ultra',
+  'самсунг с24 ультра': 'samsung galaxy s24 ultra',
+  'самсунг с 24 ультра': 'samsung galaxy s24 ultra',
+  'samsung s25': 'samsung galaxy s25',
+  'samsung s 25': 'samsung galaxy s25',
+  'самсунг с25': 'samsung galaxy s25',
+  'самсунг с 25': 'samsung galaxy s25',
+  'samsung s25 ultra': 'samsung galaxy s25 ultra',
+  'samsung s 25 ultra': 'samsung galaxy s25 ultra',
+  'самсунг с25 ультра': 'samsung galaxy s25 ultra',
+  'самсунг с 25 ультра': 'samsung galaxy s25 ultra',
+  xiaomi: 'xiaomi',
+  'xiaomi redmi 12': 'xiaomi redmi 12',
+  'xiaomi redmi note 12': 'xiaomi redmi note 12',
+  'сяомі редмі 12': 'xiaomi redmi 12',
+  'сяомі редмі ноут 12': 'xiaomi redmi note 12',
+  'xiaomi redmi 13': 'xiaomi redmi 13',
+  'xiaomi redmi note 13': 'xiaomi redmi note 13',
+  'сяомі редмі 13': 'xiaomi redmi 13',
+  сяомі: 'xiaomi',
+  'сяомі редмі ноут 13': 'xiaomi redmi note 13',
+  'xiaomi redmi 14': 'xiaomi redmi 14',
+  'xiaomi redmi note 14': 'xiaomi redmi note 14',
+  'сяомі редмі 14': 'xiaomi redmi 14',
+  'сяомі редмі ноут 14': 'xiaomi redmi note 14',
+  'xiaomi redmi 15': 'xiaomi redmi 15',
+  'xiaomi redmi note 15': 'xiaomi redmi note 15',
+  'сяомі редмі 15': 'xiaomi redmi 15',
+  'сяомі редмі ноут 15': 'xiaomi redmi note 15',
+  'oneplus one plus ванплас ван плас': 'oneplus',
+  'google pixel/гугл піксель/піксель/гугл': 'google pixel',
+  'motorola/моторола/мото': 'motorola',
+  'nokia/нокіа': 'nokia',
+  'poco/поко': 'poco',
+  'oppo/оппо': 'oppo',
+  'realme/реалмі': 'realme',
+  'huawei/хуавей': 'huawei',
+  'honor/хонор/онор': 'honor',
+  'meizu/мейзу': 'meizu',
+  'sony/соні': 'sony',
+};
+
 @Injectable()
 export class ProductService {
   constructor(
@@ -19,103 +116,6 @@ export class ProductService {
   ) {}
 
   private getDescriptionQuery(text: string): { title: { contains: string; mode: 'insensitive' } } {
-    const desc = {
-      айфон: 'iphone',
-      'айфон 12': 'iphone 12',
-      'айфон 12 про': 'iphone 12 pro',
-      'айфон 12 про макс': 'iphone 12 pro max',
-      iphone: 'iphone',
-      'iphone 12': 'iphone 12',
-      'iphone 12 pro': 'iphone 12 pro',
-      'iphone 12 pro max': 'iphone 12 pro max',
-      'айфон 13': 'iphone 13',
-      'айфон 13 про': 'iphone 13 pro',
-      'айфон 13 про макс': 'iphone 13 pro max',
-      'iphone 13': 'iphone 13',
-      'iphone 13 pro': 'iphone 13 pro',
-      'iphone 13 pro max': 'iphone 13 pro max',
-      'айфон 14': 'iphone 14',
-      'айфон 14 про': 'iphone 14 pro',
-      'айфон 14 про макс': 'iphone 14 pro max',
-      'iphone 14': 'iphone 14',
-      'iphone 14 pro': 'iphone 14 pro',
-      'iphone 14 pro max': 'iphone 14 pro max',
-      'айфон 15': 'iphone 15',
-      'айфон 15 про': 'iphone 15 pro',
-      'айфон 15 про макс': 'iphone 15 pro max',
-      'iphone 15': 'iphone 15',
-      'iphone 15 pro': 'iphone 15 pro',
-      'iphone 15 pro max': 'iphone 15 pro max',
-      'айфон 16': 'iphone 16',
-      'айфон 16 про': 'iphone 16 pro',
-      'айфон 16 про макс': 'iphone 16 pro max',
-      'iphone 16': 'iphone 16',
-      'iphone 16 pro': 'iphone 16 pro',
-      'iphone 16 pro max': 'iphone 16 pro max',
-      samsung: 'samsung',
-      'samsung s22': 'samsung galaxy s22',
-      'samsung s 22': 'samsung galaxy s22',
-      'самсунг с22': 'samsung galaxy s22',
-      'самсунг с 22': 'samsung galaxy s22',
-      'samsung s22 ultra': 'samsung galaxy s22 ultra',
-      'samsung s 22 ultra': 'samsung galaxy s22 ultra',
-      'самсунг с22 ультра': 'samsung galaxy s22 ultra',
-      'самсунг с 22 ультра': 'samsung galaxy s22 ultra',
-      'samsung s23': 'samsung galaxy s23',
-      'samsung s 23': 'samsung galaxy s23',
-      'самсунг с23': 'samsung galaxy s23',
-      'самсунг с 23': 'samsung galaxy s23',
-      'samsung s23 ultra': 'samsung galaxy s23 ultra',
-      'samsung s 23 ultra': 'samsung galaxy s23 ultra',
-      'самсунг с23 ультра': 'samsung galaxy s23 ultra',
-      'самсунг с 23 ультра': 'samsung galaxy s23 ultra',
-      'samsung s24': 'samsung galaxy s24',
-      'samsung s 24': 'samsung galaxy s24',
-      'самсунг с24': 'samsung galaxy s24',
-      'самсунг с 24': 'samsung galaxy s24',
-      'samsung s24 ultra': 'samsung galaxy s24 ultra',
-      'samsung s 24 ultra': 'samsung galaxy s24 ultra',
-      'самсунг с24 ультра': 'samsung galaxy s24 ultra',
-      'самсунг с 24 ультра': 'samsung galaxy s24 ultra',
-      'samsung s25': 'samsung galaxy s25',
-      'samsung s 25': 'samsung galaxy s25',
-      'самсунг с25': 'samsung galaxy s25',
-      'самсунг с 25': 'samsung galaxy s25',
-      'samsung s25 ultra': 'samsung galaxy s25 ultra',
-      'samsung s 25 ultra': 'samsung galaxy s25 ultra',
-      'самсунг с25 ультра': 'samsung galaxy s25 ultra',
-      'самсунг с 25 ультра': 'samsung galaxy s25 ultra',
-      xiaomi: 'xiaomi',
-      'xiaomi redmi 12': 'xiaomi redmi 12',
-      'xiaomi redmi note 12': 'xiaomi redmi note 12',
-      'сяомі редмі 12': 'xiaomi redmi 12',
-      'сяомі редмі ноут 12': 'xiaomi redmi note 12',
-      'xiaomi redmi 13': 'xiaomi redmi 13',
-      'xiaomi redmi note 13': 'xiaomi redmi note 13',
-      'сяомі редмі 13': 'xiaomi redmi 13',
-      сяомі: 'xiaomi',
-      'сяомі редмі ноут 13': 'xiaomi redmi note 13',
-      'xiaomi redmi 14': 'xiaomi redmi 14',
-      'xiaomi redmi note 14': 'xiaomi redmi note 14',
-      'сяомі редмі 14': 'xiaomi redmi 14',
-      'сяомі редмі ноут 14': 'xiaomi redmi note 14',
-      'xiaomi redmi 15': 'xiaomi redmi 15',
-      'xiaomi redmi note 15': 'xiaomi redmi note 15',
-      'сяомі редмі 15': 'xiaomi redmi 15',
-      'сяомі редмі ноут 15': 'xiaomi redmi note 15',
-      'oneplus one plus ванплас ван плас': 'oneplus',
-      'google pixel/гугл піксель/піксель/гугл': 'google pixel',
-      'motorola/моторола/мото': 'motorola',
-      'nokia/нокіа': 'nokia',
-      'poco/поко': 'poco',
-      'oppo/оппо': 'oppo',
-      'realme/реалмі': 'realme',
-      'huawei/хуавей': 'huawei',
-      'honor/хонор/онор': 'honor',
-      'meizu/мейзу': 'meizu',
-      'sony/соні': 'sony',
-    };
-
     const lowerText = text.toLowerCase();
 
     for (const key in desc) {
@@ -298,26 +298,42 @@ export class ProductService {
     return products;
   }
 
-  /* FAISS */
-  async getSimilar(id: string) {
-    const currentProduct = await this.getById(id);
+  async getSimilar(userId: string) {
+    // const viewedProducts = ['1e84255f-987c-41e5-978e-ffa957c4be81', 'b926f8e4-b095-44f2-9ac9-372043a9f4ce'];
+    const user = await this.prismaService.user.findUnique({ where: { id: userId } });
 
-    if (!currentProduct) throw new NotFoundException('Поточний товар не знайдений');
+    if (!user) {
+      throw new BadRequestException();
+    }
 
-    const products = await this.prismaService.product.findMany({
-      where: {
-        title: currentProduct.title,
-        NOT: { id: currentProduct.id },
-      },
-      orderBy: { createdAt: 'desc' },
+    if (user.viewedProducts.length < 5) {
+      return this.prismaService.product.findMany({ take: 10 });
+    }
+
+    const similarProductsIds = await this.recommendationService.findSimilarProducts(user.viewedProducts);
+
+    const prioritizedProducts = await this.prismaService.product.findMany({
+      where: { id: { in: similarProductsIds } },
     });
 
-    return products;
+    const remainingCount = 10 - prioritizedProducts.length;
+
+    let otherProducts = [];
+
+    if (remainingCount > 0) {
+      otherProducts = await this.prismaService.product.findMany({
+        where: { id: { notIn: similarProductsIds } },
+        take: remainingCount,
+      });
+    }
+
+    const result = [...prioritizedProducts, ...otherProducts];
+    return result;
   }
 
   async create(input: CreateProductInput) {
     const newProduct = await this.prismaService.product.create({ data: input });
-    await this.recommendationService.createProduct(newProduct);
+    await this.recommendationService.createProductVector(newProduct);
     return newProduct;
   }
 
@@ -373,7 +389,30 @@ export class ProductService {
           return;
         }
 
-        await this.recommendationService.createProduct(el);
+        await this.recommendationService.createProductVector(el);
+      }),
+    );
+
+    console.log('Дані успішно імпортовано');
+    return true;
+  }
+
+  async createAllEmbeddings() {
+    const allProducts = await this.prismaService.product.findMany();
+    const allEmbeddings = await this.prismaService.productEmbeding.findMany();
+
+    const productsWithoutEmbeddings = [];
+
+    for (let i = 0; i < allProducts.length; i++) {
+      const isExist = allEmbeddings.some((emb) => emb.productId === allProducts[i].id);
+      if (!isExist) {
+        productsWithoutEmbeddings.push(allProducts[i]);
+      }
+    }
+
+    await Promise.all(
+      productsWithoutEmbeddings.map(async (el) => {
+        await this.recommendationService.createProductVector(el);
       }),
     );
 

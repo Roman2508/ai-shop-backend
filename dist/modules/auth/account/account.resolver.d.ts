@@ -7,6 +7,7 @@ import { ChangePasswordInput } from './inputs/change-password.input';
 import { AddToCartInput } from './inputs/add-to-cart.input';
 import { ChangeCartItemCountInput } from './inputs/change-cart-item-count.input';
 import { UpdateRoleInput } from './inputs/update-role-input';
+import { AddToViewedInput } from './inputs/add-to-viewed.input';
 export declare class AccountResolver {
     private readonly accountService;
     constructor(accountService: AccountService);
@@ -199,5 +200,6 @@ export declare class AccountResolver {
     updateUserData(id: string, input: UpdateUserInput): Promise<boolean>;
     updateRole(id: string, input: UpdateRoleInput): Promise<boolean>;
     uploadAvatar(userId: string, file: any): Promise<boolean>;
+    addToViewed(input: AddToViewedInput): Promise<boolean>;
     changeCartItemCount(input: ChangeCartItemCountInput): Promise<boolean>;
 }
