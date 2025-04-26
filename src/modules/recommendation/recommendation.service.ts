@@ -1,13 +1,13 @@
 const path = require('path');
 import { join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
-import { spawn } from 'child_process';
 import { PythonShell } from 'python-shell';
 import { Injectable } from '@nestjs/common';
 import { writeFileSync, unlinkSync } from 'fs';
 
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { CreateVectorInput } from './inputs/create.vector.input';
+import { ConfigService } from '@nestjs/config';
 
 const TMP_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/tmp');
 const MAIN_SCRIPT_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/main.py');
@@ -16,7 +16,14 @@ const PYTHON_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/
 
 @Injectable()
 export class RecommendationService {
-  constructor(private prisma: PrismaService) {}
+  private readonly PYTHON_PATH: string;
+
+  constructor(
+    private prisma: PrismaService,
+    private readonly configService: ConfigService,
+  ) {
+    this.PYTHON_PATH = this.configService.getOrThrow<string>('PYTHON_PATH') || 'python';
+  }
 
   async createProductVector(dto: CreateVectorInput) {
     const textRepresentation = this.createTextRepresentation(dto);
@@ -55,7 +62,7 @@ export class RecommendationService {
   private async generateEmbedding(text: string): Promise<number[]> {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await PythonShell.run(MAIN_SCRIPT_PATH, { args: [text], pythonPath: PYTHON_PATH });
+        const result = await PythonShell.run(MAIN_SCRIPT_PATH, { args: [text], pythonPath: this.PYTHON_PATH });
         if (!result) return reject('No result from Python script');
         const embedding = JSON.parse(result[0]);
         resolve(embedding);
@@ -88,24 +95,6 @@ export class RecommendationService {
       distances: string[];
     };
 
-    // const simProdIds = await Promise.all(
-    //   similarProductIds.ids.map(async (el) => {
-    //     const product = await this.prisma.productEmbeding.findUnique({ where: { id: Number(el) } });
-    //     if (!product) {
-    //       console.log(`Product embedding with ID ${el} is not exist`);
-    //       return;
-    //     }
-
-    //     return product.productId;
-    //   }),
-    // );
-
-    // const existedIds = simProdIds.filter((el) => el !== 'null' && !!el);
-
-    // const products = await this.prisma.product.findMany({
-    //   where: { id: { in: existedIds } },
-    // });
-
     const result = similarProductIds.ids.map((id, index) => ({
       id,
       distance: similarProductIds.distances[index],
@@ -119,7 +108,7 @@ export class RecommendationService {
         const product = await this.prisma.productEmbeding.findUnique({ where: { id: Number(el) } });
         if (!product) {
           console.log(`Product embedding with ID ${el} is not exist`);
-          return;
+          return '';
         }
 
         return product.productId;
@@ -146,7 +135,7 @@ export class RecommendationService {
 
         const result = await PythonShell.run(SEARCH_SCRIPT_PATH, {
           args: [filepath],
-          pythonPath: PYTHON_PATH,
+          pythonPath: this.PYTHON_PATH,
         });
         if (!result) return reject('No result from Python script');
 

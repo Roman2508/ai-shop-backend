@@ -6,6 +6,8 @@ import faiss
 # Получаем путь к JSON-файлу из аргументов командной строки
 json_file_path = sys.argv[1]
 
+print('json path:', json_file_path)
+
 # Читаем JSON из файла
 with open(json_file_path, 'r', encoding='utf-8') as f:
     data = json.load(f)
@@ -27,10 +29,11 @@ user_viewed_vectors = user_viewed_vectors.reshape(user_viewed_vectors.shape[0], 
 all_similar_products = []
 
 for query_vector in user_viewed_vectors:
+    print(1)
     query_vector = numpy.array(query_vector, dtype='float32').reshape(1, -1)
     distances, indices = index.search(query_vector, 5)  # Ищем 5 ближайших товаров для каждого товара
 
-    print(indices)
+    print('indices', indices)
 
     # Добавляем найденные товары в общий список
     for i in range(len(indices[0])):

@@ -238,7 +238,7 @@ type Query {
   getMostPopularProducts: [ProductModel!]!
   getProductById(productId: String!): ProductModel!
   getReviewByUserId: [ReviewModel!]!
-  getSimilarProducts: ProductModel!
+  getSimilarProducts: [ProductModel!]!
   paginateAndFilter(data: PaginateAndFilterInput!): ProductsAndTotalModel!
   searchProduct(data: String!): [ProductModel!]!
 }

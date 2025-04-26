@@ -27,8 +27,8 @@ let ProductResolver = class ProductResolver {
     constructor(productService) {
         this.productService = productService;
     }
-    async getAll() {
-        return this.productService.getAll();
+    async getAll(userId) {
+        return this.productService.getAll(userId);
     }
     async getTotalCount() {
         return this.productService.getTotalCount();
@@ -72,9 +72,11 @@ let ProductResolver = class ProductResolver {
 };
 exports.ProductResolver = ProductResolver;
 __decorate([
+    (0, auth_decorator_1.Authorization)(),
     (0, graphql_1.Query)(() => products_and_total_model_1.ProductsAndTotalModel, { name: 'getAllProducts' }),
+    __param(0, (0, authorized_decorator_1.Authorized)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "getAll", null);
 __decorate([
@@ -112,7 +114,7 @@ __decorate([
 ], ProductResolver.prototype, "getMostPopular", null);
 __decorate([
     (0, auth_decorator_1.Authorization)(),
-    (0, graphql_1.Query)(() => product_model_1.ProductModel, { name: 'getSimilarProducts' }),
+    (0, graphql_1.Query)(() => [product_model_1.ProductModel], { name: 'getSimilarProducts' }),
     __param(0, (0, authorized_decorator_1.Authorized)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

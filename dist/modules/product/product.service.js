@@ -128,14 +128,31 @@ let ProductService = class ProductService {
             }
         }
     }
-    async getAll() {
-        const total = await this.prismaService.product.count();
-        const products = await this.prismaService.product.findMany({
-            orderBy: { createdAt: 'desc' },
-            take: 24,
-            skip: 0,
+    async getAll(userId) {
+        const user = await this.prismaService.user.findUnique({ where: { id: userId } });
+        if (!user || user.viewedProducts.length < 5) {
+            const total = await this.prismaService.product.count();
+            const products = await this.prismaService.product.findMany({
+                orderBy: { createdAt: 'desc' },
+                take: 24,
+                skip: 0,
+            });
+            return { products, total };
+        }
+        const similarProductsIds = await this.recommendationService.findSimilarProducts(user.viewedProducts);
+        const prioritizedProducts = await this.prismaService.product.findMany({
+            where: { id: { in: similarProductsIds } },
         });
-        return { products, total };
+        const remainingCount = 24 - prioritizedProducts.length;
+        let otherProducts = [];
+        if (remainingCount > 0) {
+            otherProducts = await this.prismaService.product.findMany({
+                where: { id: { notIn: similarProductsIds } },
+                take: remainingCount,
+            });
+        }
+        const total = await this.prismaService.product.count();
+        return { products: [...prioritizedProducts, ...otherProducts], total };
     }
     getTotalCount() {
         return this.prismaService.product.count();
@@ -212,14 +229,7 @@ let ProductService = class ProductService {
     async getById(id) {
         const product = await this.prismaService.product.findUnique({
             where: { id },
-            include: {
-                reviews: {
-                    include: {
-                        user: true,
-                        product: true,
-                    },
-                },
-            },
+            include: { reviews: { include: { user: true, product: true } } },
         });
         if (!product)
             throw new common_1.NotFoundException('Товар не знайдено');
@@ -244,7 +254,6 @@ let ProductService = class ProductService {
         if (!products.length) {
             const query = this.getDescriptionQuery(input);
             const newQuery = query ? query : { title: { contains: input, mode: 'insensitive' } };
-            console.log(newQuery);
             const products = await this.prismaService.product.findMany({ where: newQuery });
             if (!products.length) {
                 throw new common_1.NotFoundException('Нічого не знайдено');
@@ -267,11 +276,9 @@ let ProductService = class ProductService {
     }
     async getSimilar(userId) {
         const user = await this.prismaService.user.findUnique({ where: { id: userId } });
-        if (!user) {
-            throw new common_1.BadRequestException();
-        }
-        if (user.viewedProducts.length < 5) {
-            return this.prismaService.product.findMany({ take: 10 });
+        if (!user || user.viewedProducts.length < 5) {
+            const products = await this.prismaService.product.findMany({ take: 10, orderBy: { id: 'desc' } });
+            return products;
         }
         const similarProductsIds = await this.recommendationService.findSimilarProducts(user.viewedProducts);
         const prioritizedProducts = await this.prismaService.product.findMany({

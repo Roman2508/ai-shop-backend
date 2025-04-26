@@ -14,9 +14,10 @@ import { Authorized } from 'src/shared/decorators/authorized.decorator';
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
 
+  @Authorization()
   @Query(() => ProductsAndTotalModel, { name: 'getAllProducts' })
-  async getAll() {
-    return this.productService.getAll();
+  async getAll(@Authorized('id') userId: string) {
+    return this.productService.getAll(userId);
   }
 
   @Query(() => Number, { name: 'getAllProductsCount' })
@@ -45,7 +46,7 @@ export class ProductResolver {
   }
 
   @Authorization()
-  @Query(() => ProductModel, { name: 'getSimilarProducts' })
+  @Query(() => [ProductModel], { name: 'getSimilarProducts' })
   async getSimilar(@Authorized('id') userId: string) {
     return this.productService.getSimilar(userId);
   }

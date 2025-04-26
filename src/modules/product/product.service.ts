@@ -125,15 +125,39 @@ export class ProductService {
     }
   }
 
-  async getAll() {
-    const total = await this.prismaService.product.count();
+  async getAll(userId: string) {
+    const user = await this.prismaService.user.findUnique({ where: { id: userId } });
 
-    const products = await this.prismaService.product.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: 24,
-      skip: 0,
+    if (!user || user.viewedProducts.length < 5) {
+      const total = await this.prismaService.product.count();
+
+      const products = await this.prismaService.product.findMany({
+        orderBy: { createdAt: 'desc' },
+        take: 24,
+        skip: 0,
+      });
+      return { products, total };
+    }
+
+    const similarProductsIds = await this.recommendationService.findSimilarProducts(user.viewedProducts);
+
+    const prioritizedProducts = await this.prismaService.product.findMany({
+      where: { id: { in: similarProductsIds } },
     });
-    return { products, total };
+
+    const remainingCount = 24 - prioritizedProducts.length;
+
+    let otherProducts = [];
+
+    if (remainingCount > 0) {
+      otherProducts = await this.prismaService.product.findMany({
+        where: { id: { notIn: similarProductsIds } },
+        take: remainingCount,
+      });
+    }
+
+    const total = await this.prismaService.product.count();
+    return { products: [...prioritizedProducts, ...otherProducts], total };
   }
 
   getTotalCount() {
@@ -231,18 +255,10 @@ export class ProductService {
   async getById(id: string) {
     const product = await this.prismaService.product.findUnique({
       where: { id },
-      include: {
-        reviews: {
-          include: {
-            user: true,
-            product: true,
-          },
-        },
-      },
+      include: { reviews: { include: { user: true, product: true } } },
     });
 
     if (!product) throw new NotFoundException('Товар не знайдено');
-
     return product;
   }
 
@@ -269,7 +285,6 @@ export class ProductService {
     if (!products.length) {
       const query = this.getDescriptionQuery(input);
       const newQuery = query ? query : ({ title: { contains: input, mode: 'insensitive' } } as const);
-      console.log(newQuery);
       const products = await this.prismaService.product.findMany({ where: newQuery });
 
       if (!products.length) {
@@ -299,15 +314,11 @@ export class ProductService {
   }
 
   async getSimilar(userId: string) {
-    // const viewedProducts = ['1e84255f-987c-41e5-978e-ffa957c4be81', 'b926f8e4-b095-44f2-9ac9-372043a9f4ce'];
     const user = await this.prismaService.user.findUnique({ where: { id: userId } });
 
-    if (!user) {
-      throw new BadRequestException();
-    }
-
-    if (user.viewedProducts.length < 5) {
-      return this.prismaService.product.findMany({ take: 10 });
+    if (!user || user.viewedProducts.length < 5) {
+      const products = await this.prismaService.product.findMany({ take: 10, orderBy: { id: 'desc' } });
+      return products;
     }
 
     const similarProductsIds = await this.recommendationService.findSimilarProducts(user.viewedProducts);
