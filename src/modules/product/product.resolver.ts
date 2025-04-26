@@ -14,9 +14,8 @@ import { Authorized } from 'src/shared/decorators/authorized.decorator';
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
 
-  @Authorization()
   @Query(() => ProductsAndTotalModel, { name: 'getAllProducts' })
-  async getAll(@Authorized('id') userId: string) {
+  async getAll(@Args('userId') userId: string) {
     return this.productService.getAll(userId);
   }
 
@@ -45,9 +44,8 @@ export class ProductResolver {
     return this.productService.getMostPopular();
   }
 
-  @Authorization()
   @Query(() => [ProductModel], { name: 'getSimilarProducts' })
-  async getSimilar(@Authorized('id') userId: string) {
+  async getSimilar(@Args('userId') userId: string) {
     return this.productService.getSimilar(userId);
   }
 

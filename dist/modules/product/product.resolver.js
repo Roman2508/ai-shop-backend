@@ -22,7 +22,6 @@ const update_product_input_1 = require("./inputs/update-product.input");
 const auth_decorator_1 = require("../../shared/decorators/auth.decorator");
 const products_and_total_model_1 = require("./models/products-and-total.model");
 const paginate_and_filter_input_1 = require("./inputs/paginate-and-filter.input");
-const authorized_decorator_1 = require("../../shared/decorators/authorized.decorator");
 let ProductResolver = class ProductResolver {
     constructor(productService) {
         this.productService = productService;
@@ -72,9 +71,8 @@ let ProductResolver = class ProductResolver {
 };
 exports.ProductResolver = ProductResolver;
 __decorate([
-    (0, auth_decorator_1.Authorization)(),
     (0, graphql_1.Query)(() => products_and_total_model_1.ProductsAndTotalModel, { name: 'getAllProducts' }),
-    __param(0, (0, authorized_decorator_1.Authorized)('id')),
+    __param(0, (0, graphql_1.Args)('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
@@ -113,9 +111,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "getMostPopular", null);
 __decorate([
-    (0, auth_decorator_1.Authorization)(),
     (0, graphql_1.Query)(() => [product_model_1.ProductModel], { name: 'getSimilarProducts' }),
-    __param(0, (0, authorized_decorator_1.Authorized)('id')),
+    __param(0, (0, graphql_1.Args)('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)

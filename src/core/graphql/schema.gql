@@ -232,13 +232,13 @@ type Query {
   findProfile: UserModel!
   findSessionsByUser: [SessionModel!]!
   getAllOrders: [OrderModel!]!
-  getAllProducts: ProductsAndTotalModel!
+  getAllProducts(userId: String!): ProductsAndTotalModel!
   getAllProductsCount: Float!
   getAverageRating: Float!
   getMostPopularProducts: [ProductModel!]!
   getProductById(productId: String!): ProductModel!
   getReviewByUserId: [ReviewModel!]!
-  getSimilarProducts: [ProductModel!]!
+  getSimilarProducts(userId: String!): [ProductModel!]!
   paginateAndFilter(data: PaginateAndFilterInput!): ProductsAndTotalModel!
   searchProduct(data: String!): [ProductModel!]!
 }
