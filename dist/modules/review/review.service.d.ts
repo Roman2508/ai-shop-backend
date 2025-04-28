@@ -6,11 +6,28 @@ export declare class ReviewService {
     private readonly productService;
     constructor(prismaService: PrismaService, productService: ProductService);
     getByUserId(userId: string): Promise<({
+        user: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            email: string;
+            username: string;
+            password: string;
+            displayName: string;
+            avatar: string | null;
+            city: string | null;
+            street: string | null;
+            postOffice: string | null;
+            role: import("prisma/generated").$Enums.EnumUserRoles;
+            viewedProducts: string[];
+        };
         product: {
             id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            price: number;
             images: string[];
             title: string;
-            price: number;
             brand: string;
             ram: number;
             builtInMemory: number;
@@ -26,32 +43,15 @@ export declare class ReviewService {
             battery: number;
             materials: string;
             deliverySet: string;
-            createdAt: Date;
-            updatedAt: Date;
-        };
-        user: {
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            email: string;
-            password: string;
-            username: string;
-            displayName: string;
-            avatar: string | null;
-            city: string | null;
-            street: string | null;
-            postOffice: string | null;
-            role: import("prisma/generated").$Enums.EnumUserRoles;
-            viewedProducts: string[];
         };
     } & {
+        text: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        productId: string | null;
-        text: string;
-        rating: number;
         userId: string | null;
+        productId: string | null;
+        rating: number;
     })[]>;
     getAverage(): Promise<string>;
     create(userId: string, input: CreateReviewInput): Promise<boolean>;

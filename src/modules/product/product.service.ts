@@ -165,7 +165,12 @@ export class ProductService {
   }
 
   async paginateAndFilter(query: any) {
-    const { sortBy, limit, skip, priceFrom, priceTo, ...filterParams } = query;
+    const filtredEntries = Object.entries(query).filter(
+      ([_, value]) => value !== null && value !== undefined && value !== '',
+    );
+    const filtredQuery = Object.fromEntries(filtredEntries);
+
+    const { sortBy, limit, skip, priceFrom, priceTo, ...filterParams } = filtredQuery as any;
 
     const filter = [] as any;
     const order = {} as any;
@@ -222,12 +227,12 @@ export class ProductService {
         //
         else {
           const query = filterParams[key].split(';');
-          const queryFilter = query.map((q: string) => ({ [key]: { contains: q } }));
+          const queryFilter = query.map((q: string) => ({ [key]: { contains: q, mode: 'insensitive' } }));
           filter.push({ OR: queryFilter });
         }
       }
     }
-    console.log(filter);
+
     const products = await this.prismaService.product.findMany({
       where: { AND: filter },
       orderBy: order,
