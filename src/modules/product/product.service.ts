@@ -181,24 +181,24 @@ export class ProductService {
       } else if (sortBy === 'price:desc') {
         order.price = 'desc';
       } else if (sortBy === 'new') {
-        order.createdAt = 'asc';
-      } else if (sortBy === 'rating') {
         order.createdAt = 'desc';
+      } else if (sortBy === 'rating') {
+        order.createdAt = 'asc';
       }
     } else {
       order.createdAt = 'desc';
     }
 
     if (priceFrom && priceTo) {
-      filter.push({ OR: { gte: query.priceFrom, lte: query.priceTo } });
+      filter.push({ price: { gte: query.priceFrom, lte: query.priceTo } });
     }
 
     if (priceFrom && !priceTo) {
-      filter.push({ OR: { gte: query.priceFrom } });
+      filter.push({ price: { gte: query.priceFrom } });
     }
 
     if (!priceFrom && priceTo) {
-      filter.push({ OR: { lte: query.priceTo } });
+      filter.push({ price: { lte: query.priceTo } });
     }
 
     // Int = ram builtInMemory frontCamera mainCamera screenDiagonal battery
@@ -232,6 +232,8 @@ export class ProductService {
         }
       }
     }
+
+    console.log('filter', JSON.stringify(filter));
 
     const products = await this.prismaService.product.findMany({
       where: { AND: filter },
@@ -285,12 +287,50 @@ export class ProductService {
 
     const titleQuery = this.getDescriptionQuery(input);
     const query = titleQuery ? { ...prismaQueryObject, ...titleQuery } : prismaQueryObject;
+
     const products = await this.prismaService.product.findMany({ where: query });
 
     if (!products.length) {
       const query = this.getDescriptionQuery(input);
-      const newQuery = query ? query : ({ title: { contains: input, mode: 'insensitive' } } as const);
-      const products = await this.prismaService.product.findMany({ where: newQuery });
+      const filterObject: any = {};
+
+      const priceQuery =
+        input.toLocaleLowerCase().includes('дешевий') || input.toLocaleLowerCase().includes('бюджетний');
+      const cameraQuery =
+        input.toLocaleLowerCase().includes('якісна камера') ||
+        input.toLocaleLowerCase().includes('гарна камера') ||
+        input.toLocaleLowerCase().includes('якісною камерою') ||
+        input.toLocaleLowerCase().includes('гарною камерою');
+      const osAndroidQuery =
+        input.toLocaleLowerCase().includes('андроїд') ||
+        input.toLocaleLowerCase().includes('андроід') ||
+        input.toLocaleLowerCase().includes('android');
+      const osIosQuery =
+        input.toLocaleLowerCase().includes('айос') ||
+        input.toLocaleLowerCase().includes('ios') ||
+        input.toLocaleLowerCase().includes('епл');
+
+      if (query) {
+        filterObject.title = { contains: input, mode: 'insensitive' };
+      }
+
+      if (priceQuery) {
+        filterObject.price = { lte: 10000 };
+      }
+
+      if (cameraQuery) {
+        filterObject.mainCamera = { gte: 40 };
+      }
+
+      if (osAndroidQuery) {
+        filterObject.os = { contains: 'android', mode: 'insensitive' };
+      }
+
+      if (osIosQuery) {
+        filterObject.os = { contains: 'ios', mode: 'insensitive' };
+      }
+
+      const products = await this.prismaService.product.findMany({ where: query ? query : filterObject });
 
       if (!products.length) {
         throw new NotFoundException('Нічого не знайдено');

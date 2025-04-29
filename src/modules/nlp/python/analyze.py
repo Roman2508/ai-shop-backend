@@ -33,8 +33,10 @@ KEY_MAP = {
     "PROCESSOR_CORES_GT": "processor_cores_gt",
     "PROCESSOR_CORES_LT": "processor_cores_lt",
     "BATTERY": "battery",
-    "BATTERY_GT": "battery_gt",
-    "BATTERY_LT": "battery_lt",
+    "BATTERY_GT": "price_gt",
+    "BATTERY_LT": "price_lt",
+    # "BATTERY_GT": "battery_gt",
+    # "BATTERY_LT": "battery_lt",
     "MATERIALS": "materials",
     "DELIVERY_SET": "delivery_set",
 }
