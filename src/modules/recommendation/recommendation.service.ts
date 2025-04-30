@@ -1,15 +1,17 @@
 const path = require('path');
+import * as fs from 'fs';
+import * as os from 'os';
 import { join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { PythonShell } from 'python-shell';
 import { Injectable } from '@nestjs/common';
 import { writeFileSync, unlinkSync } from 'fs';
+import { ConfigService } from '@nestjs/config';
 
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { CreateVectorInput } from './inputs/create.vector.input';
-import { ConfigService } from '@nestjs/config';
 
-const TMP_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/tmp');
+// const TMP_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/tmp');
 const MAIN_SCRIPT_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/main.py');
 const SEARCH_SCRIPT_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/search.py');
 const PYTHON_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/venv/Scripts/python.exe');
@@ -127,7 +129,8 @@ export class RecommendationService {
 
   private async findNearestNeighbors(queryVector: any[], allVectors: any[]): Promise<string[]> {
     const filename = `input_${uuidv4()}.json`;
-    const filepath = join(TMP_PATH, filename);
+    const filepath = join(os.tmpdir(), filename);
+    // const filepath = join(TMP_PATH, filename);
 
     return new Promise(async (resolve, reject) => {
       try {
@@ -145,7 +148,13 @@ export class RecommendationService {
       } catch (e) {
         reject(e);
       } finally {
-        unlinkSync(filepath);
+        try {
+          if (fs.existsSync(filepath)) {
+            fs.unlinkSync(filepath);
+          }
+        } catch (cleanupError) {
+          console.error('Помилка при видаленні тимчасового файлу:', cleanupError);
+        }
       }
     });
   }
