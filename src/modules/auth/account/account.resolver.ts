@@ -4,22 +4,21 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { User } from 'prisma/generated';
 import { UserModel } from './models/user.model';
 import { AccountService } from './account.service';
+import { AddToCartInput } from './inputs/add-to-cart.input';
 import { UpdateUserInput } from './inputs/update-user.input';
 import { CreateUserInput } from './inputs/create-user.input';
+import { UpdateRoleInput } from './inputs/update-role-input';
 import { ChangeEmailInput } from './inputs/change-email.input';
+import { AddToViewedInput } from './inputs/add-to-viewed.input';
 import { Authorization } from 'src/shared/decorators/auth.decorator';
 import { ChangePasswordInput } from './inputs/change-password.input';
 import { Authorized } from 'src/shared/decorators/authorized.decorator';
-import { AddToCartInput } from './inputs/add-to-cart.input';
 import { ChangeCartItemCountInput } from './inputs/change-cart-item-count.input';
-import { UpdateRoleInput } from './inputs/update-role-input';
-import { AddToViewedInput } from './inputs/add-to-viewed.input';
 
 @Resolver('Account')
 export class AccountResolver {
   constructor(private readonly accountService: AccountService) {}
 
-  /* Метод не используется (возможно понадобится позже для изменения ролей администраторам) */
   @Query(() => [UserModel], { name: 'findAllUsers' })
   async findAll() {
     return this.accountService.findAll();

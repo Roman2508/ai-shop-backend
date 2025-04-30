@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
+import { ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NlpModule } from '../modules/nlp/nlp.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 import { RedisModule } from './redis/redis.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { IS_DEV_ENV } from 'src/shared/utils/is-dev.util';
 import { FileModule } from 'src/modules/file/file.module';
 import { CronModule } from 'src/modules/cron/cron.module';
+import { getGraphglConfig } from './config/graphql.config';
 import { OrderModule } from 'src/modules/order/order.module';
 import { ReviewModule } from 'src/modules/review/review.module';
 import { OrderModel } from 'src/modules/order/models/order.model';
@@ -23,15 +24,10 @@ import { SessionModule } from 'src/modules/auth/session/session.module';
 import { CartItemModel } from 'src/modules/auth/account/models/cart-item.model';
 import { RecommendationModule } from 'src/modules/recommendation/recommendation.module';
 import { FavoriteItemModel } from 'src/modules/auth/account/models/favorite-item.model';
-import { getGraphglConfig } from './config/graphql.config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      ignoreEnvFile: !IS_DEV_ENV,
-      isGlobal: true,
-      // envFilePath: '.env', // Specifies the path to the .env file (optional if using the default)
-    }),
+    ConfigModule.forRoot({ ignoreEnvFile: !IS_DEV_ENV, isGlobal: true }),
 
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -40,46 +36,18 @@ import { getGraphglConfig } from './config/graphql.config';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      ssl: {
-        rejectUnauthorized: false,
-      },
-      entities: [
-        UserModel,
-        OrderModel,
-        ReviewModel,
-        ProductModel,
-        CartItemModel,
-        FavoriteItemModel,
-        //
-      ],
-      extra: {
-        max: 1, // set pool max size
-      },
+      ssl: { rejectUnauthorized: false },
+      entities: [UserModel, OrderModel, ReviewModel, ProductModel, CartItemModel, FavoriteItemModel],
+      extra: { max: 1 },
       synchronize: true,
     }),
 
-    // GraphQLModule.forRootAsync<ApolloDriverConfig>({
-    //   driver: ApolloDriver,
-    //   imports: [ConfigModule],
-    //   useFactory: async (configService: ConfigService) => ({
-    //     autoSchemaFile: true,
-    //     uploads: false,
-    //     csrfPrevention: false,
-    //     introspection: true,
-    //     context: ({ req, res }) => ({ req, res }),
-    //     installSubscriptionHandlers: true,
-    //     sortSchema: true,
-    //     playground: true,
-    //   }),
-
-    //   inject: [ConfigService],
-    // }),
     GraphQLModule.forRootAsync({
-			driver: ApolloDriver,
-			imports: [ConfigModule],
-			useFactory: getGraphglConfig,
-			inject: [ConfigService]
-		}),
+      driver: ApolloDriver,
+      imports: [ConfigModule],
+      useFactory: getGraphglConfig,
+      inject: [ConfigService],
+    }),
 
     NlpModule,
     FileModule,

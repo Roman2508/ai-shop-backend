@@ -12,7 +12,6 @@ const file_util_1 = require("../utils/file.util");
 const MAX_FILE_SIZE_MB = 10;
 let FileValidationPipe = class FileValidationPipe {
     async transform(value, metadata) {
-        console.log(metadata);
         if (!value.filename) {
             throw new common_1.BadRequestException('Файл не загружен');
         }

@@ -31,7 +31,6 @@ let PaymentService = class PaymentService {
         const BASE_URL = ENVIRONMENT === 'development' ? NGROCK_FORWARDING_URL : APPLICATION_URL;
         const orderedItemsString = JSON.stringify(dto.items);
         const order_id = `name=${dto.name}//price=${dto.price}//userId=${dto.userId}//items=${orderedItemsString}//createdAt=${Date.now()}`;
-        console.log('CREATE PAYMENT', FRONTEND_URL, BASE_URL);
         const orderBody = {
             response_url: `${FRONTEND_URL}/checkout/thank-you`,
             server_callback_url: `${BASE_URL}/payment/confirmation`,
@@ -112,7 +111,6 @@ let PaymentService = class PaymentService {
                 }, { name: '', userId: '', price: 0, items: [] });
                 const { userId, items } = orderData;
                 const isOrderExist = await this.orderService.checkIsExist(dto.order_id);
-                console.log('isOrderExist:', isOrderExist);
                 if (!isOrderExist) {
                     const order = await this.orderService.create({ userId, orderId: dto.order_id, items });
                     await Promise.all(items.map(async (el) => {

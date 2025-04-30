@@ -8,7 +8,6 @@ import { UpdateProductInput } from './inputs/update-product.input';
 import { Authorization } from 'src/shared/decorators/auth.decorator';
 import { ProductsAndTotalModel } from './models/products-and-total.model';
 import { PaginateAndFilterInput } from './inputs/paginate-and-filter.input';
-import { Authorized } from 'src/shared/decorators/authorized.decorator';
 
 @Resolver('Product')
 export class ProductResolver {

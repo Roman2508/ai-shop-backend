@@ -14,7 +14,6 @@ import { LoginInput } from './inputs/login.input';
 import { RedisService } from 'src/core/redis/redis.service';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { getSessionMetadata } from 'src/shared/utils/session-metadata.util';
-import { ms, StringValue } from 'src/shared/utils/ms.util';
 
 @Injectable()
 export class SessionService {

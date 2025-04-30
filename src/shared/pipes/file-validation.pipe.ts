@@ -8,8 +8,6 @@ const MAX_FILE_SIZE_MB = 10;
 @Injectable()
 export class FileValidationPipe implements PipeTransform {
   public async transform(value: any, metadata: ArgumentMetadata) {
-    console.log(metadata);
-
     if (!value.filename) {
       throw new BadRequestException('Файл не загружен');
     }

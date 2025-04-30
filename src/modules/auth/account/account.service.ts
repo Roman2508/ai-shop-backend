@@ -1,23 +1,23 @@
-import { hash, verify } from 'argon2';
-import { User } from 'prisma/generated';
 import {
-  ConflictException,
-  ForbiddenException,
   Injectable,
   NotFoundException,
+  ConflictException,
+  ForbiddenException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { hash, verify } from 'argon2';
+import { User } from 'prisma/generated';
 
 import { FileService } from 'src/modules/file/file.service';
 import { AddToCartInput } from './inputs/add-to-cart.input';
 import { CreateUserInput } from './inputs/create-user.input';
 import { UpdateUserInput } from './inputs/update-user.input';
+import { UpdateRoleInput } from './inputs/update-role-input';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { ChangeEmailInput } from './inputs/change-email.input';
+import { AddToViewedInput } from './inputs/add-to-viewed.input';
 import { ChangePasswordInput } from './inputs/change-password.input';
 import { ChangeCartItemCountInput } from './inputs/change-cart-item-count.input';
-import { UpdateRoleInput } from './inputs/update-role-input';
-import { AddToViewedInput } from './inputs/add-to-viewed.input';
 
 @Injectable()
 export class AccountService {

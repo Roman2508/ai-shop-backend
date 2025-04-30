@@ -10,13 +10,4 @@ export class CreatePaymentInput {
 
   @Field()
   price: any;
-
-//   @Field()
-//   startAt: any;
-
-//   @Field()
-//   student: any;
-
-//   @Field()
-//   tutor: any;
 }

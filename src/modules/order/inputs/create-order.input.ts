@@ -1,7 +1,6 @@
 import { Type } from 'class-transformer';
 import { Field, InputType } from '@nestjs/graphql';
-import { EnumOrderStatus } from 'prisma/generated';
-import { IsArray, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 @InputType()
 export class CreateOrderInput {

@@ -212,7 +212,6 @@ let ProductService = class ProductService {
                 }
             }
         }
-        console.log('filter', JSON.stringify(filter));
         const products = await this.prismaService.product.findMany({
             where: { AND: filter },
             orderBy: order,

@@ -28,8 +28,6 @@ export class PaymentService {
     const orderedItemsString = JSON.stringify(dto.items);
     const order_id = `name=${dto.name}//price=${dto.price}//userId=${dto.userId}//items=${orderedItemsString}//createdAt=${Date.now()}`;
 
-    console.log('CREATE PAYMENT', FRONTEND_URL, BASE_URL);
-
     const orderBody = {
       response_url: `${FRONTEND_URL}/checkout/thank-you`,
       server_callback_url: `${BASE_URL}/payment/confirmation`,
@@ -128,7 +126,7 @@ export class PaymentService {
         const { userId, items } = orderData;
 
         const isOrderExist = await this.orderService.checkIsExist(dto.order_id);
-        console.log('isOrderExist:', isOrderExist);
+
         if (!isOrderExist) {
           const order = await this.orderService.create({ userId, orderId: dto.order_id, items });
 
