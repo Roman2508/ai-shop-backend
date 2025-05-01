@@ -1,12 +1,19 @@
 #!/bin/bash
-curl -sSL https://install.python-poetry.org | python3 -
-export PATH="$HOME/.local/bin:$PATH"
 
+# Встановлення Poetry в дозволену директорію
+export POETRY_HOME="/opt/render/project/.poetry"
+export PATH="$POETRY_HOME/bin:$PATH"
+
+# Встановлення Poetry
+curl -sSL https://install.python-poetry.org | python3 -
+
+# Node.js частина
 npm install
 npm run build
 
+# Python-залежності
 cd src/modules/recommendation/python
-$HOME/.local/bin/poetry install
+poetry install
 
 cd ../../nlp/python
-$HOME/.local/bin/poetry install
+poetry install
