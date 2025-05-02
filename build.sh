@@ -16,14 +16,24 @@ cd src/modules/recommendation/python
 poetry install
 
 # Зберігаємо шлях до Python з poetry-середовища
-export PYTHON_PATH_REC=$(poetry env info -p)/bin/python
+# export PYTHON_PATH_REC=$(poetry env info -p)/bin/python
+PYTHON_PATH_REC=$(poetry env info -p)/bin/python
 
 # Python-залежності (nlp)
 cd ../../nlp/python
 poetry install
 
-export PYTHON_PATH_NLP=$(poetry env info -p)/bin/python
+# export PYTHON_PATH_NLP=$(poetry env info -p)/bin/python
+PYTHON_PATH_NLP=$(poetry env info -p)/bin/python
 
 # (Опціонально) записати ці шляхи у файл .env або передати у NestJS
-echo "PYTHON_PATH_REC=$PYTHON_PATH_REC" >> /etc/environment
-echo "PYTHON_PATH_NLP=$PYTHON_PATH_NLP" >> /etc/environment
+# echo "PYTHON_PATH_REC=$PYTHON_PATH_REC" >> /etc/environment
+# echo "PYTHON_PATH_NLP=$PYTHON_PATH_NLP" >> /etc/environment
+
+# Отримуємо шляхи до poetry-середовищ
+# PYTHON_PATH_REC=$(cd src/modules/recommendation/python && poetry env info -p)/bin/python
+# PYTHON_PATH_NLP=$(cd src/modules/nlp/python && poetry env info -p)/bin/python
+
+# Записуємо у .env (або створюємо якщо його не існує)
+echo "PYTHON_PATH_REC=$PYTHON_PATH_REC" >> .env
+echo "PYTHON_PATH_NLP=$PYTHON_PATH_NLP" >> .env
