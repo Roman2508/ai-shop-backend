@@ -1,0 +1,44 @@
+Це для локальних тестів
+
+В PowerShell вставити:
+[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";C:\Users\Administrator\AppData\Roaming\Python\Scripts", "User")
+
+Можна перевірити чи все ок:
+poetry --version
+
+Далі треба відкрити по черзі директорії nlp та recommendation
+Потім:
+poetry install
+poetry env activate
+poetry env info --path
+Далі скопіювати результат та вставити в env змінну
+
+Має вийти щось таке:
+PYTHON_PATH_NLP='C:\\Users\\Administrator\\AppData\\Local\\pypoetry\\Cache\\virtualenvs\\nlp-KAow3FV8-py3.12\\Scripts\\python.exe'
+PYTHON_PATH_REC='C:\\Users\\Administrator\\AppData\\Local\\pypoetry\\Cache\\virtualenvs\\recommendation-O7Zv4fiA-py3.12\\Scripts\\python.exe'
+
+
+Для хостингу можна вказати змінні PYTHON_PATH_NLP та PYTHON_PATH_REC просто 'python' або 'python3'
+
+На хостингу (наприклад, Render, Railway, Heroku тощо) команда poetry shell (poetry env activate) не потрібна 
+і не повинна використовуватись, бо:
+1. Хостинг не підтримує інтерактивний режим shell (на кшталт того, як ти входиш у середовище на локальному комп'ютері).
+2. Натомість хостинг автоматично активує віртуальне середовище при виконанні poetry install, poetry run, або poetry export.
+
+
+========= Як діяти правильно на хостингу =========
+Встановлюй залежності так:
+poetry install --no-root
+
+--no-root каже Poetry не встановлювати сам проект, що зручно, якщо pyproject.toml не містить packages = [...].
+
+
+Запускай команди через poetry run:
+
+Наприклад, якщо у тебе є скрипт main.py, або ти хочеш протестити щось:
+
+poetry run python path/to/main.py
+Для деплою не використовуй poetry shell — у скриптах CI/CD, Docker або Render завжди використовуй poetry run.
+
+🧪 На локальній машині
+Ти можеш використовувати poetry shell локально для зручності, щоби опинитись у віртуальному середовищі й запускати python, pip, тощо напряму.

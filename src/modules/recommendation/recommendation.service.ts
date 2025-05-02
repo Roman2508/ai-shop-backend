@@ -1,11 +1,12 @@
 const path = require('path');
+
 import * as fs from 'fs';
 import * as os from 'os';
 import { join } from 'path';
+import { writeFileSync } from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import { PythonShell } from 'python-shell';
 import { Injectable } from '@nestjs/common';
-import { writeFileSync, unlinkSync } from 'fs';
 import { ConfigService } from '@nestjs/config';
 
 import { PrismaService } from 'src/core/prisma/prisma.service';
@@ -18,13 +19,13 @@ const PYTHON_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/
 
 @Injectable()
 export class RecommendationService {
-  private readonly PYTHON_PATH: string;
+  private readonly PYTHON_PATH_REC: string;
 
   constructor(
     private prisma: PrismaService,
     private readonly configService: ConfigService,
   ) {
-    this.PYTHON_PATH = this.configService.getOrThrow<string>('PYTHON_PATH') || 'python';
+    this.PYTHON_PATH_REC = this.configService.getOrThrow<string>('PYTHON_PATH_REC') || 'python';
   }
 
   async createProductVector(dto: CreateVectorInput) {
@@ -64,7 +65,7 @@ export class RecommendationService {
   private async generateEmbedding(text: string): Promise<number[]> {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await PythonShell.run(MAIN_SCRIPT_PATH, { args: [text], pythonPath: this.PYTHON_PATH });
+        const result = await PythonShell.run(MAIN_SCRIPT_PATH, { args: [text], pythonPath: this.PYTHON_PATH_REC });
         if (!result) return reject('No result from Python script');
         const embedding = JSON.parse(result[0]);
         resolve(embedding);
@@ -119,18 +120,11 @@ export class RecommendationService {
 
     const existedProductsIdByVectors = productsIdByVectors.filter((el) => el !== 'null' && !!el);
     return existedProductsIdByVectors;
-
-    // const products = await this.prisma.product.findMany({
-    //   where: { id: { in: existedProductsIdByVectors } },
-    // });
-
-    // return products;
   }
 
   private async findNearestNeighbors(queryVector: any[], allVectors: any[]): Promise<string[]> {
     const filename = `input_${uuidv4()}.json`;
     const filepath = join(os.tmpdir(), filename);
-    // const filepath = join(TMP_PATH, filename);
 
     return new Promise(async (resolve, reject) => {
       try {
@@ -138,12 +132,11 @@ export class RecommendationService {
 
         const result = await PythonShell.run(SEARCH_SCRIPT_PATH, {
           args: [filepath],
-          pythonPath: this.PYTHON_PATH,
+          pythonPath: this.PYTHON_PATH_REC,
         });
         if (!result) return reject('No result from Python script');
 
         const embedding = JSON.parse(result[result.length - 1]);
-
         resolve(embedding);
       } catch (e) {
         reject(e);

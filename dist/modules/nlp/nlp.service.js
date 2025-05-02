@@ -5,26 +5,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NlpService = void 0;
-const common_1 = require("@nestjs/common");
 const path = require('path');
 const python_shell_1 = require("python-shell");
-const PYTHON_PATH = path.join(process.cwd(), 'src/modules/nlp/python/venv/Scripts/python.exe');
-const VENV_ACTIVATE = path.join(process.cwd(), 'src/modules/nlp/python/venv/Scripts/activate');
+const common_1 = require("@nestjs/common");
+const config_1 = require("@nestjs/config");
 const SCRIPT_PATH = path.join(process.cwd(), 'src/modules/nlp/python/analyze.py');
 let NlpService = class NlpService {
+    constructor(configService) {
+        this.configService = configService;
+        this.PYTHON_PATH_NLP = this.configService.getOrThrow('PYTHON_PATH_NLP') || 'python';
+    }
     async analyze(text) {
         return new Promise(async (resolve, reject) => {
             try {
                 const result = await python_shell_1.PythonShell.run(SCRIPT_PATH, {
                     args: [text],
-                    pythonPath: PYTHON_PATH,
-                    env: {
-                        ...process.env,
-                        PATH: PYTHON_PATH,
-                        VIRTUAL_ENV: VENV_ACTIVATE,
-                    },
+                    pythonPath: this.PYTHON_PATH_NLP || 'python',
                 });
                 console.log('result:', result);
                 if (!result)
@@ -40,6 +41,7 @@ let NlpService = class NlpService {
 };
 exports.NlpService = NlpService;
 exports.NlpService = NlpService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [config_1.ConfigService])
 ], NlpService);
 //# sourceMappingURL=nlp.service.js.map
