@@ -2,7 +2,6 @@
 name = "recommendation"
 version = "0.1.0"
 description = "Recommendation system module"
-package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
