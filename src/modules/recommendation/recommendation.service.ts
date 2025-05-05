@@ -19,13 +19,13 @@ const PYTHON_PATH = path.join(process.cwd(), 'src/modules/recommendation/python/
 
 @Injectable()
 export class RecommendationService {
-  private readonly PYTHON_PATH_REC: string;
+  private readonly PYTHON_PATH: string;
 
   constructor(
     private prisma: PrismaService,
     private readonly configService: ConfigService,
   ) {
-    this.PYTHON_PATH_REC = this.configService.getOrThrow<string>('PYTHON_PATH_REC') || 'python';
+    this.PYTHON_PATH = this.configService.getOrThrow<string>('PYTHON_PATH') || 'python';
   }
 
   async createProductVector(dto: CreateVectorInput) {
@@ -65,7 +65,7 @@ export class RecommendationService {
   private async generateEmbedding(text: string): Promise<number[]> {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await PythonShell.run(MAIN_SCRIPT_PATH, { args: [text], pythonPath: this.PYTHON_PATH_REC });
+        const result = await PythonShell.run(MAIN_SCRIPT_PATH, { args: [text], pythonPath: this.PYTHON_PATH });
         if (!result) return reject('No result from Python script');
         const embedding = JSON.parse(result[0]);
         resolve(embedding);
@@ -132,7 +132,7 @@ export class RecommendationService {
 
         const result = await PythonShell.run(SEARCH_SCRIPT_PATH, {
           args: [filepath],
-          pythonPath: this.PYTHON_PATH_REC,
+          pythonPath: this.PYTHON_PATH,
         });
         if (!result) return reject('No result from Python script');
 

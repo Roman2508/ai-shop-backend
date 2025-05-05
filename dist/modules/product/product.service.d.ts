@@ -124,29 +124,7 @@ export declare class ProductService {
         materials: string;
         deliverySet: string;
     }>;
-    search(input: string): Promise<{
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        price: number;
-        images: string[];
-        title: string;
-        brand: string;
-        ram: number;
-        builtInMemory: number;
-        color: string;
-        frontCamera: number;
-        mainCamera: number;
-        screenDiagonal: number;
-        simCount: number;
-        simFormat: string[];
-        os: string;
-        processorName: string;
-        processorCores: string;
-        battery: number;
-        materials: string;
-        deliverySet: string;
-    }[]>;
+    search(input: string): Promise<any[]>;
     getMostPopular(): Promise<{
         id: string;
         createdAt: Date;

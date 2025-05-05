@@ -239,10 +239,7 @@ let ProductService = class ProductService {
     }
     async search(input) {
         const response = await this.nlpService.analyze(input);
-        if (!response) {
-            throw new common_1.BadRequestException('Помилка');
-        }
-        const queryObject = JSON.parse(response);
+        const queryObject = JSON.parse(response ? response : '{}');
         let prismaQueryObject;
         if (typeof (0, convert_keys_to_camel_util_1.convertKeysToCamel)(queryObject) === 'string') {
             prismaQueryObject = JSON.parse((0, convert_keys_to_camel_util_1.convertKeysToCamel)(queryObject));
@@ -252,7 +249,10 @@ let ProductService = class ProductService {
         }
         const titleQuery = this.getDescriptionQuery(input);
         const query = titleQuery ? { ...prismaQueryObject, ...titleQuery } : prismaQueryObject;
-        const products = await this.prismaService.product.findMany({ where: query });
+        let products = [];
+        if (Object.keys(query).length) {
+            products = await this.prismaService.product.findMany({ where: query });
+        }
         if (!products.length) {
             const query = this.getDescriptionQuery(input);
             const filterObject = {};

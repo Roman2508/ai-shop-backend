@@ -18,24 +18,48 @@ const SCRIPT_PATH = path.join(process.cwd(), 'src/modules/nlp/python/analyze.py'
 let NlpService = class NlpService {
     constructor(configService) {
         this.configService = configService;
-        this.PYTHON_PATH_NLP = this.configService.getOrThrow('PYTHON_PATH_NLP') || 'python';
+        this.PYTHON_PATH = this.configService.getOrThrow('PYTHON_PATH') || 'python';
     }
     async analyze(text) {
         return new Promise(async (resolve, reject) => {
-            try {
-                const result = await python_shell_1.PythonShell.run(SCRIPT_PATH, {
-                    args: [text],
-                    pythonPath: this.PYTHON_PATH_NLP || 'python',
-                });
-                console.log('result:', result);
-                if (!result)
-                    return reject('No result from Python script');
-                const embedding = JSON.parse(result[1]);
-                resolve(embedding);
-            }
-            catch (e) {
-                reject(e);
-            }
+            const pyshell = new python_shell_1.PythonShell(SCRIPT_PATH, {
+                args: [text],
+                pythonPath: this.PYTHON_PATH || 'python',
+            });
+            let result = '';
+            let isResolved = false;
+            const timeout = setTimeout(() => {
+                if (!isResolved) {
+                    isResolved = true;
+                    pyshell.terminate();
+                    console.log('timeout');
+                    resolve('');
+                }
+            }, 10000);
+            pyshell.on('message', (message) => {
+                result += message;
+            });
+            pyshell.end((err) => {
+                if (isResolved)
+                    return;
+                clearTimeout(timeout);
+                if (err) {
+                    isResolved = true;
+                    reject(err);
+                    console.log('err:', err);
+                }
+                else {
+                    isResolved = true;
+                    try {
+                        const entities = JSON.parse(result ? result : '{}');
+                        console.log('entities:', entities);
+                        resolve(entities);
+                    }
+                    catch (parseError) {
+                        reject('Неможливо розпарсити відповідь Python скрипта');
+                    }
+                }
+            });
         });
     }
 };

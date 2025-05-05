@@ -7,7 +7,6 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DB_URI")
-  // url      = env("POSTGRES_URI")
 }
 
 model User {
@@ -44,8 +43,6 @@ enum EnumUserRoles {
   USER
   ADMIN
 }
-
-// npx prisma db push
 
 model Product {
   id String @id @default(uuid())
@@ -89,7 +86,7 @@ model ProductEmbeding {
   product   Product @relation(fields: [productId], references: [id])
   productId String
 
-  vector Json // Хранение эмбеддинга как JSON
+  vector Json
 
   @@unique([productId])
   @@map("products_embeding")
