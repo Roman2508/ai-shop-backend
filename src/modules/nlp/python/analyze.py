@@ -3,10 +3,7 @@ import sys
 import json
 import spacy
 
-MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'models', 'trained_model_new'))
-
-# MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'model'))
-# MODEL_PATH = 'C:\\PAPKA\\projects\\ai-shop\\MAIN\\backend\\model'
+MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'models', 'uk_core_news_sm'))
 
 KEY_MAP = {
     "TITLE": "title",
@@ -173,7 +170,6 @@ def rename_keys(original_dict, key_map):
 def analyze(text):
     doc = nlp(text)
     entities_dict = {ent.label_: ent.text for ent in doc.ents}
-    # print('analyze.py:176', entities_dict)
     result = rename_keys(entities_dict, KEY_MAP)
     return json.dumps(result, ensure_ascii=False)
 

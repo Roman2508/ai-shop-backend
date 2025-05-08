@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { NlpService } from './../nlp/nlp.service';
 import { FileService } from '../file/file.service';
@@ -11,10 +11,12 @@ import { RecommendationService } from '../recommendation/recommendation.service'
 
 const desc = {
   айфон: 'iphone',
+  'айфон ': 'iphone',
   'айфон 12': 'iphone 12',
   'айфон 12 про': 'iphone 12 pro',
   'айфон 12 про макс': 'iphone 12 pro max',
   iphone: 'iphone',
+  'iphone ': 'iphone',
   'iphone 12': 'iphone 12',
   'iphone 12 pro': 'iphone 12 pro',
   'iphone 12 pro max': 'iphone 12 pro max',
@@ -119,6 +121,7 @@ export class ProductService {
     const lowerText = text.toLowerCase();
 
     for (const key in desc) {
+      // if (key === lowerText) {
       if (key.includes(lowerText)) {
         return { title: { contains: desc[key], mode: 'insensitive' } };
       }
@@ -265,6 +268,45 @@ export class ProductService {
 
     if (!product) throw new NotFoundException('Товар не знайдено');
     return product;
+  }
+
+  private localSearch(input: string, isQueryExists: boolean) {
+    const filterObject: any = {};
+
+    const priceQuery = input.toLocaleLowerCase().includes('дешевий') || input.toLocaleLowerCase().includes('бюджетний');
+    const cameraQuery =
+      input.toLocaleLowerCase().includes('якісна камера') ||
+      input.toLocaleLowerCase().includes('гарна камера') ||
+      input.toLocaleLowerCase().includes('якісною камерою') ||
+      input.toLocaleLowerCase().includes('гарною камерою');
+    const osAndroidQuery =
+      input.toLocaleLowerCase().includes('андроїд') ||
+      input.toLocaleLowerCase().includes('андроід') ||
+      input.toLocaleLowerCase().includes('android');
+    const osIosQuery =
+      input.toLocaleLowerCase().includes('айос') ||
+      input.toLocaleLowerCase().includes('ios') ||
+      input.toLocaleLowerCase().includes('епл');
+
+    if (isQueryExists) {
+      filterObject.title = { contains: input, mode: 'insensitive' };
+    }
+
+    if (priceQuery) {
+      filterObject.price = { lte: 10000 };
+    }
+
+    if (cameraQuery) {
+      filterObject.mainCamera = { gte: 40 };
+    }
+
+    if (osAndroidQuery) {
+      filterObject.os = { contains: 'android', mode: 'insensitive' };
+    }
+
+    if (osIosQuery) {
+      filterObject.os = { contains: 'ios', mode: 'insensitive' };
+    }
   }
 
   async search(input: string) {
