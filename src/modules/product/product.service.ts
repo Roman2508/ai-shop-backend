@@ -44,6 +44,7 @@ const desc = {
   'iphone 16': 'iphone 16',
   'iphone 16 pro': 'iphone 16 pro',
   'iphone 16 pro max': 'iphone 16 pro max',
+  самсунг: 'samsung',
   samsung: 'samsung',
   'samsung s22': 'samsung galaxy s22',
   'samsung s 22': 'samsung galaxy s22',
@@ -108,6 +109,50 @@ const desc = {
   'sony/соні': 'sony',
 };
 
+const PHONE_BRANDS_NAMES = {
+  iphone: 'iphone/apple/айфон/епл',
+  samsung: 'samsung/самсунг',
+  xiaomi: 'xiaomi/сяомі/ксяомі',
+  oneplus: 'oneplus/one plus/ванплас/ван плас',
+  'google pixel': 'google pixel/гугл піксель/піксель/гугл',
+  motorola: 'motorola/моторола/мото',
+  nokia: 'nokia/нокіа',
+  poco: 'poco/поко',
+  oppo: 'oppo/оппо',
+  realme: 'realme/реалмі',
+  huawei: 'huawei/хуавей',
+  honor: 'honor/хонор/онор',
+  meizu: 'meizu/мейзу',
+  sony: 'sony/соні',
+  vivo: 'vivo/віво',
+  nubia: 'nubia',
+  tecno: 'tecno spark',
+  zte: 'zte/zte blade',
+  infinix: 'infinix',
+  blackview: 'blackview',
+  sigma: 'sigma',
+  hmd: 'hmd',
+  gigaset: 'gigaset',
+  oukitel: 'oukitel',
+  ulefone: 'ulefone',
+  asus: 'asus/асус',
+  doogee: 'doogee',
+  myphone: 'myphone',
+  evelatus: 'evelatus',
+  agm: 'agm',
+  doro: 'doro',
+  nomi: 'nomi',
+  ergo: 'ergo',
+  beafon: 'beafon',
+  emporia: 'emporia',
+  swisstone: 'swisstone',
+  el: 'el',
+  cmf: 'cmf',
+  nothing: 'nothing phone',
+  crosscall: 'crosscall',
+  jablocom: 'jablocom',
+};
+
 @Injectable()
 export class ProductService {
   constructor(
@@ -116,17 +161,6 @@ export class ProductService {
     private readonly prismaService: PrismaService,
     private readonly recommendationService: RecommendationService,
   ) {}
-
-  private getDescriptionQuery(text: string): { title: { contains: string; mode: 'insensitive' } } {
-    const lowerText = text.toLowerCase();
-
-    for (const key in desc) {
-      // if (key === lowerText) {
-      if (key.includes(lowerText)) {
-        return { title: { contains: desc[key], mode: 'insensitive' } };
-      }
-    }
-  }
 
   async getAll(userId: string) {
     const user = await this.prismaService.user.findUnique({ where: { id: userId } });
@@ -270,10 +304,105 @@ export class ProductService {
     return product;
   }
 
-  private localSearch(input: string, isQueryExists: boolean) {
+  /* SEARCH */
+  /* SEARCH */
+  /* SEARCH */
+
+  // private getDescriptionQuery(text: string): { title: { contains: string; mode: 'insensitive' } } {
+  //   const lowerText = text.toLowerCase();
+
+  //   for (const key in desc) {
+  //     if (lowerText.includes(key)) {
+  //       return { title: { contains: desc[key], mode: 'insensitive' } };
+  //     }
+  //   }
+  // }
+
+  // private getDescriptionQuery(text: string): { title: { contains: string; mode: 'insensitive' } } | undefined {
+  private getDescriptionQuery(text: string): string | undefined {
+    const lowerText = text.toLowerCase();
+
+    for (const key in desc) {
+      if (lowerText.includes(key)) {
+        console.log(key, desc[key]);
+        // const brandSynonyms = desc[key];
+
+        // for (const brand in PHONE_BRANDS_NAMES) {
+        //   const variants = PHONE_BRANDS_NAMES[brand].toLowerCase().split('/');
+        //   for (const variant of variants) {
+        //     if (brandSynonyms.toLowerCase().includes(variant) || lowerText.includes(variant)) {
+        //       return {
+        //         title: { contains: brand, mode: 'insensitive' },
+        //       };
+        //     }
+        //   }
+        // }
+
+        return desc[key];
+        // return {
+        //   title: { contains: desc[key], mode: 'insensitive' },
+        // };
+      }
+    }
+
+    return undefined;
+  }
+
+  private checkMemoryQuery(str: string, keywords: string[], max: number = 32) {
+    const words = str.toLowerCase().split(/\s+/);
+
+    for (let i = 0; i < words.length; i++) {
+      for (const keyword of keywords) {
+        const keywordParts = keyword.toLowerCase().split(/\s+/);
+
+        let match = true;
+        for (let k = 0; k < keywordParts.length; k++) {
+          if (words[i + k] !== keywordParts[k]) {
+            match = false;
+            break;
+          }
+        }
+
+        if (match) {
+          const before = words[i - 1];
+          const after = words[i + keywordParts.length];
+
+          /* @ts-ignore */
+          const beforeNum = before && !isNaN(before) ? Number(before) : null;
+          /* @ts-ignore */
+          const afterNum = after && !isNaN(after) ? Number(after) : null;
+
+          if (beforeNum !== null) {
+            if (beforeNum <= 32) {
+              return beforeNum;
+            } else {
+              if (afterNum !== null && afterNum <= max) {
+                return afterNum;
+              } else {
+                return null;
+              }
+            }
+          }
+
+          if (afterNum !== null && afterNum <= max) {
+            return afterNum;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  private async localSearch(input: string) {
+    const titleQuery = this.getDescriptionQuery(input);
     const filterObject: any = {};
 
-    const priceQuery = input.toLocaleLowerCase().includes('дешевий') || input.toLocaleLowerCase().includes('бюджетний');
+    const priceQuery =
+      input.toLocaleLowerCase().includes('дешевий') ||
+      input.toLocaleLowerCase().includes('бюджетний') ||
+      input.toLocaleLowerCase().includes('недорогий') ||
+      input.toLocaleLowerCase().includes('не дорогий');
     const cameraQuery =
       input.toLocaleLowerCase().includes('якісна камера') ||
       input.toLocaleLowerCase().includes('гарна камера') ||
@@ -287,9 +416,26 @@ export class ProductService {
       input.toLocaleLowerCase().includes('айос') ||
       input.toLocaleLowerCase().includes('ios') ||
       input.toLocaleLowerCase().includes('епл');
+    const ramKeywords = [
+      'озу',
+      'гб озу',
+      'озу гб',
+      'рам',
+      'рам гб',
+      'гб рам',
+      'ram',
+      'ram gb',
+      'gb ram',
+      // 'оперативна память',
+      // "оперативна пам'ять",
+    ];
+    const ramQuery = this.checkMemoryQuery(input, ramKeywords, 256);
 
-    if (isQueryExists) {
-      filterObject.title = { contains: input, mode: 'insensitive' };
+    const builtInMemoryKeywords = ['память', "пам'ять", 'вбудована память', "вбудована пам'ять", 'momory'];
+    const builtInMemoryQuery = this.checkMemoryQuery(input, builtInMemoryKeywords, 9999);
+
+    if (titleQuery) {
+      filterObject.title = { contains: titleQuery, mode: 'insensitive' };
     }
 
     if (priceQuery) {
@@ -307,8 +453,34 @@ export class ProductService {
     if (osIosQuery) {
       filterObject.os = { contains: 'ios', mode: 'insensitive' };
     }
-  }
 
+    if (ramQuery) {
+      filterObject.ram = { equals: ramQuery };
+    }
+
+    if (builtInMemoryQuery) {
+      filterObject.builtInMemory = builtInMemoryQuery;
+    }
+
+    console.log('_____________________________________________________');
+    console.log('filterObject', filterObject);
+    console.log('_____________________________________________________');
+
+    if (!Object.keys(filterObject).length) {
+      return [];
+    }
+
+    const products = await this.prismaService.product.findMany({ where: filterObject });
+
+    if (!products.length) {
+      return [];
+    }
+
+    return products;
+  }
+  /*  */
+  /*  */
+  /*  */
   async search(input: string) {
     const response: string = await this.nlpService.analyze(input);
     const queryObject = JSON.parse(response ? response : '{}');
@@ -321,66 +493,21 @@ export class ProductService {
       prismaQueryObject = convertKeysToCamel(queryObject);
     }
 
-    const titleQuery = this.getDescriptionQuery(input);
-    const query = titleQuery ? { ...prismaQueryObject, ...titleQuery } : prismaQueryObject;
-
     let products = [];
 
-    if (Object.keys(query).length) {
-      products = await this.prismaService.product.findMany({ where: query });
+    if (Object.keys(prismaQueryObject).length) {
+      products = await this.prismaService.product.findMany({ where: prismaQueryObject });
     }
 
     if (!products.length) {
-      const query = this.getDescriptionQuery(input);
-      const filterObject: any = {};
-
-      const priceQuery =
-        input.toLocaleLowerCase().includes('дешевий') || input.toLocaleLowerCase().includes('бюджетний');
-      const cameraQuery =
-        input.toLocaleLowerCase().includes('якісна камера') ||
-        input.toLocaleLowerCase().includes('гарна камера') ||
-        input.toLocaleLowerCase().includes('якісною камерою') ||
-        input.toLocaleLowerCase().includes('гарною камерою');
-      const osAndroidQuery =
-        input.toLocaleLowerCase().includes('андроїд') ||
-        input.toLocaleLowerCase().includes('андроід') ||
-        input.toLocaleLowerCase().includes('android');
-      const osIosQuery =
-        input.toLocaleLowerCase().includes('айос') ||
-        input.toLocaleLowerCase().includes('ios') ||
-        input.toLocaleLowerCase().includes('епл');
-
-      if (query) {
-        filterObject.title = { contains: input, mode: 'insensitive' };
-      }
-
-      if (priceQuery) {
-        filterObject.price = { lte: 10000 };
-      }
-
-      if (cameraQuery) {
-        filterObject.mainCamera = { gte: 40 };
-      }
-
-      if (osAndroidQuery) {
-        filterObject.os = { contains: 'android', mode: 'insensitive' };
-      }
-
-      if (osIosQuery) {
-        filterObject.os = { contains: 'ios', mode: 'insensitive' };
-      }
-
-      const products = await this.prismaService.product.findMany({ where: query ? query : filterObject });
-
-      if (!products.length) {
-        throw new NotFoundException('Нічого не знайдено');
-      }
-
-      return products;
+      return this.localSearch(input);
     }
 
     return products;
   }
+  /* SEARCH */
+  /* SEARCH */
+  /* SEARCH */
 
   async getMostPopular() {
     const mostPopularProducts = await this.prismaService.orderItem.groupBy({
