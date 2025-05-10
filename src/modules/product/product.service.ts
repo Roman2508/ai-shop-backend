@@ -9,6 +9,8 @@ import { UpdateProductInput } from './inputs/update-product.input';
 import { convertKeysToCamel } from 'src/shared/utils/convert-keys-to-camel.util';
 import { RecommendationService } from '../recommendation/recommendation.service';
 
+type Comparison = 'lt' | 'lte' | 'eq' | 'gte' | 'gt';
+
 const desc = {
   айфон: 'iphone',
   'айфон ': 'iphone',
@@ -307,18 +309,6 @@ export class ProductService {
   /* SEARCH */
   /* SEARCH */
   /* SEARCH */
-
-  // private getDescriptionQuery(text: string): { title: { contains: string; mode: 'insensitive' } } {
-  //   const lowerText = text.toLowerCase();
-
-  //   for (const key in desc) {
-  //     if (lowerText.includes(key)) {
-  //       return { title: { contains: desc[key], mode: 'insensitive' } };
-  //     }
-  //   }
-  // }
-
-  // private getDescriptionQuery(text: string): { title: { contains: string; mode: 'insensitive' } } | undefined {
   private getDescriptionQuery(text: string): string | undefined {
     const lowerText = text.toLowerCase();
 
@@ -346,6 +336,97 @@ export class ProductService {
     }
 
     return undefined;
+  }
+
+  private extractPriceQuery(text: string): {
+    value: number;
+    comparison: Comparison;
+  } | null {
+    const lowerText = text.toLowerCase();
+
+    // Всі числа з контекстом, що НЕ стосуються ціни
+    const noiseUnits = [
+      'гб',
+      'гіг',
+      'гігабайт',
+      'gb',
+      'мп',
+      'mp',
+      'мегапікселів',
+      'мегапікселі',
+      'мегапіксель',
+      'дюймів',
+      'дюйм',
+      'мпх',
+      'мпх',
+    ];
+    const noiseRegex = new RegExp(`(\\d+[\\.,]?\\d*)\\s*(${noiseUnits.join('|')})`, 'gi');
+
+    // Видаляємо "шумові" одиниці (ГБ, Мп тощо)
+    const cleanedText = lowerText.replace(noiseRegex, '');
+
+    // Регекс для визначення чисел з контекстом валюти або ціни
+    const priceRegex =
+      /(?:ціна|вартість)?\s*(до|менше ніж|менше|від|більше ніж|більше|за|≈|приблизно)?\s*(\d+(?:[.,]\d+)?)(?:\s*(грн|гривень)?)?/i;
+
+    const match = cleanedText.match(priceRegex);
+    if (!match) return null;
+
+    const [, comparatorRaw, valueRaw] = match;
+    const value = parseFloat(valueRaw.replace(',', '.'));
+    const comp = comparatorRaw?.trim();
+
+    let comparison: Comparison = 'eq';
+
+    if (comp) {
+      if (comp.includes('до') || comp.includes('менше')) comparison = 'lt';
+      else if (comp.includes('від') || comp.includes('більше')) comparison = 'gt';
+    }
+
+    return { value, comparison };
+  }
+
+  private extractRamQuery(text: string): { value: number; comparison: Comparison } | null {
+    const lower = text.toLowerCase();
+
+    // Основні ключові слова
+    const ramKeywords = [
+      'озу',
+      'ram',
+      'рам',
+      "оперативна пам'ять",
+      'оперативна память',
+      "оперативної пам'ятті",
+      "оперативної пам'яті",
+      'оперативної памяті',
+      'оперативки',
+      'оперативка',
+    ];
+
+    // Пошук чисел перед або після ключових слів
+    const regex =
+      /(?:до|менше|<)\s*(\d+)\s*(?:гб|гігабайт)|(?:від|більше|>|мінімум|не менше)\s*(\d+)\s*(?:гб|гігабайт)|(\d+)\s*(?:гб|гігабайт)/g;
+
+    if (!ramKeywords.some((k) => lower.includes(k))) {
+      return null; // не схоже на запит про ОЗУ
+    }
+
+    let match;
+    while ((match = regex.exec(lower)) !== null) {
+      const less = match[1];
+      const more = match[2];
+      const exact = match[3];
+
+      if (less) {
+        return { value: parseInt(less), comparison: 'lte' };
+      } else if (more) {
+        return { value: parseInt(more), comparison: 'gte' };
+      } else if (exact) {
+        return { value: parseInt(exact), comparison: 'eq' };
+      }
+    }
+
+    return null;
   }
 
   private checkMemoryQuery(str: string, keywords: string[], max: number = 32) {
@@ -398,11 +479,12 @@ export class ProductService {
     const titleQuery = this.getDescriptionQuery(input);
     const filterObject: any = {};
 
-    const priceQuery =
+    const chipPriceQuery =
       input.toLocaleLowerCase().includes('дешевий') ||
       input.toLocaleLowerCase().includes('бюджетний') ||
       input.toLocaleLowerCase().includes('недорогий') ||
       input.toLocaleLowerCase().includes('не дорогий');
+    const priceQuery = this.extractPriceQuery(input);
     const cameraQuery =
       input.toLocaleLowerCase().includes('якісна камера') ||
       input.toLocaleLowerCase().includes('гарна камера') ||
@@ -416,20 +498,10 @@ export class ProductService {
       input.toLocaleLowerCase().includes('айос') ||
       input.toLocaleLowerCase().includes('ios') ||
       input.toLocaleLowerCase().includes('епл');
-    const ramKeywords = [
-      'озу',
-      'гб озу',
-      'озу гб',
-      'рам',
-      'рам гб',
-      'гб рам',
-      'ram',
-      'ram gb',
-      'gb ram',
-      // 'оперативна память',
-      // "оперативна пам'ять",
-    ];
-    const ramQuery = this.checkMemoryQuery(input, ramKeywords, 256);
+
+    // const ramKeywords = ['озу', 'гб озу', 'озу гб', 'рам', 'рам гб', 'гб рам', 'ram', 'ram gb', 'gb ram'];
+    // const ramQuery = this.checkMemoryQuery(input, ramKeywords, 256);
+    const ramQuery = this.extractRamQuery(input);
 
     const builtInMemoryKeywords = ['память', "пам'ять", 'вбудована память', "вбудована пам'ять", 'momory'];
     const builtInMemoryQuery = this.checkMemoryQuery(input, builtInMemoryKeywords, 9999);
@@ -438,8 +510,12 @@ export class ProductService {
       filterObject.title = { contains: titleQuery, mode: 'insensitive' };
     }
 
-    if (priceQuery) {
+    if (chipPriceQuery) {
       filterObject.price = { lte: 10000 };
+    }
+
+    if (priceQuery) {
+      filterObject.price = { [priceQuery.comparison]: priceQuery.value };
     }
 
     if (cameraQuery) {
@@ -455,7 +531,8 @@ export class ProductService {
     }
 
     if (ramQuery) {
-      filterObject.ram = { equals: ramQuery };
+      filterObject.ram = { [priceQuery.comparison]: priceQuery.value };
+      //   filterObject.ram = { equals: ramQuery };
     }
 
     if (builtInMemoryQuery) {
@@ -479,8 +556,6 @@ export class ProductService {
     return products;
   }
   /*  */
-  /*  */
-  /*  */
   async search(input: string) {
     const response: string = await this.nlpService.analyze(input);
     const queryObject = JSON.parse(response ? response : '{}');
@@ -495,9 +570,9 @@ export class ProductService {
 
     let products = [];
 
-    if (Object.keys(prismaQueryObject).length) {
-      products = await this.prismaService.product.findMany({ where: prismaQueryObject });
-    }
+    // if (Object.keys(prismaQueryObject).length) {
+    //   products = await this.prismaService.product.findMany({ where: prismaQueryObject });
+    // }
 
     if (!products.length) {
       return this.localSearch(input);

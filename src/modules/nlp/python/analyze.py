@@ -27,8 +27,8 @@ KEY_MAP = {
     "OS": "os",
     "PROCESSOR_NAME": "processor_name",
     "PROCESSOR_CORES": "processor_cores",
-    "PROCESSOR_CORES_GT": "processor_cores_gt",
-    "PROCESSOR_CORES_LT": "processor_cores_lt",
+    "PROCESSOR_CORES_GT": "processor_cores",
+    "PROCESSOR_CORES_LT": "processor_cores",
     "BATTERY": "battery",
     "BATTERY_GT": "price_gt",
     "BATTERY_LT": "price_lt",
@@ -96,8 +96,8 @@ def rename_keys(original_dict, key_map):
     keys_has = ["sim_format"]
     keys_contains = ["brand", "title", "color", "os", "processor_name", "processor_cores", "materials", "delivery_set"]
     keys_equals = ["ram", "front_camera", "main_camera", "battery"]
-    keys_gt = ["price_gt", "built_in_memory_gt", "main_camera_gt", "screen_diagonal_gt", "processor_cores_gt"]
-    keys_lt = ["price_lt", "built_in_memory_lt", "screen_diagonal_lt", "processor_cores_lt"]
+    keys_gt = ["price_gt", "built_in_memory_gt", "main_camera_gt", "screen_diagonal_gt"]
+    keys_lt = ["price_lt", "built_in_memory_lt", "screen_diagonal_lt"]
 
     new_dict = {}
 
