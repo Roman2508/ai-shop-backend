@@ -9,7 +9,7 @@ import { UpdateProductInput } from './inputs/update-product.input';
 import { convertKeysToCamel } from 'src/shared/utils/convert-keys-to-camel.util';
 import { RecommendationService } from '../recommendation/recommendation.service';
 
-type Comparison = 'lt' | 'lte' | 'eq' | 'gte' | 'gt';
+type Comparison = 'lt' | 'lte' | 'equals' | 'gte' | 'gt';
 
 const desc = {
   айфон: 'iphone',
@@ -114,8 +114,8 @@ const desc = {
 const PHONE_BRANDS_NAMES = {
   iphone: 'iphone/apple/айфон/епл',
   samsung: 'samsung/самсунг',
-  xiaomi: 'xiaomi/сяомі/ксяомі',
-  oneplus: 'oneplus/one plus/ванплас/ван плас',
+  xiaomi: 'xiaomi/сяомі/сяоми/сяомы/ксяомі',
+  'one plus': 'oneplus/one plus/ванплас/ван плас/ван плюс/ванплюс',
   'google pixel': 'google pixel/гугл піксель/піксель/гугл',
   motorola: 'motorola/моторола/мото',
   nokia: 'nokia/нокіа',
@@ -314,28 +314,34 @@ export class ProductService {
 
     for (const key in desc) {
       if (lowerText.includes(key)) {
-        console.log(key, desc[key]);
-        // const brandSynonyms = desc[key];
-
-        // for (const brand in PHONE_BRANDS_NAMES) {
-        //   const variants = PHONE_BRANDS_NAMES[brand].toLowerCase().split('/');
-        //   for (const variant of variants) {
-        //     if (brandSynonyms.toLowerCase().includes(variant) || lowerText.includes(variant)) {
-        //       return {
-        //         title: { contains: brand, mode: 'insensitive' },
-        //       };
-        //     }
-        //   }
-        // }
-
         return desc[key];
-        // return {
-        //   title: { contains: desc[key], mode: 'insensitive' },
-        // };
+      }
+    }
+  }
+
+  private getBrandQuery(text: string): string[] {
+    const lowerText = text.toLowerCase();
+    const foundBrands = new Set<string>();
+
+    for (const [brandKey, aliases] of Object.entries(PHONE_BRANDS_NAMES)) {
+      const variants = aliases.split('/').map((alias) => alias.trim().toLowerCase());
+
+      for (const alias of variants) {
+        const escapedPattern = alias
+          .split(/\s+/)
+          .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+          .join('[\\s\\-]+');
+
+        const pattern = new RegExp(`${escapedPattern}`, 'i'); // без \b
+
+        if (pattern.test(lowerText)) {
+          foundBrands.add(brandKey);
+          break;
+        }
       }
     }
 
-    return undefined;
+    return Array.from(foundBrands);
   }
 
   private extractPriceQuery(text: string): {
@@ -374,9 +380,10 @@ export class ProductService {
 
     const [, comparatorRaw, valueRaw] = match;
     const value = parseFloat(valueRaw.replace(',', '.'));
+    if (value < 1000) return null;
     const comp = comparatorRaw?.trim();
 
-    let comparison: Comparison = 'eq';
+    let comparison: Comparison = 'equals';
 
     if (comp) {
       if (comp.includes('до') || comp.includes('менше')) comparison = 'lt';
@@ -422,7 +429,7 @@ export class ProductService {
       } else if (more) {
         return { value: parseInt(more), comparison: 'gte' };
       } else if (exact) {
-        return { value: parseInt(exact), comparison: 'eq' };
+        return { value: parseInt(exact), comparison: 'equals' };
       }
     }
 
@@ -479,6 +486,7 @@ export class ProductService {
     const titleQuery = this.getDescriptionQuery(input);
     const filterObject: any = {};
 
+    const brandQuery = this.getBrandQuery(input);
     const chipPriceQuery =
       input.toLocaleLowerCase().includes('дешевий') ||
       input.toLocaleLowerCase().includes('бюджетний') ||
@@ -510,6 +518,11 @@ export class ProductService {
       filterObject.title = { contains: titleQuery, mode: 'insensitive' };
     }
 
+    if (!titleQuery && brandQuery.length) {
+      filterObject.brand = { contains: brandQuery[0], mode: 'insensitive' };
+      // filterObject.brand = { in: brandQuery };
+    }
+
     if (chipPriceQuery) {
       filterObject.price = { lte: 10000 };
     }
@@ -531,8 +544,7 @@ export class ProductService {
     }
 
     if (ramQuery) {
-      filterObject.ram = { [priceQuery.comparison]: priceQuery.value };
-      //   filterObject.ram = { equals: ramQuery };
+      filterObject.ram = { [ramQuery.comparison]: ramQuery.value };
     }
 
     if (builtInMemoryQuery) {

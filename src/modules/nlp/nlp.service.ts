@@ -30,7 +30,7 @@ export class NlpService {
           console.log('timeout');
           resolve('');
         }
-      }, 5000);
+      }, 2000);
 
       pyshell.on('message', (message) => {
         result += message;
