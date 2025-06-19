@@ -21,6 +21,15 @@ async function bootstrap() {
   const expressApp = app.getHttpAdapter().getInstance();
   expressApp.set('trust proxy', true);
 
+  app.enableCors({
+    origin: config
+      .getOrThrow<string>('ALLOWED_ORIGIN')
+      .split(',')
+      .map((origin) => origin.trim()),
+    credentials: true,
+    exposedHeaders: ['set-cookie'],
+  });
+
   app.use(cookieParser(config.getOrThrow<string>('COOKIES_SECRET')));
   app.use(graphqlUploadExpress());
   app.use('/uploads', express.static(join(__dirname, '..', 'uploads')));
@@ -50,15 +59,6 @@ async function bootstrap() {
       }),
     }),
   );
-
-  app.enableCors({
-    origin: config
-      .getOrThrow<string>('ALLOWED_ORIGIN')
-      .split(',')
-      .map((origin) => origin.trim()),
-    credentials: true,
-    exposedHeaders: ['set-cookie'],
-  });
 
   await app.listen(config.getOrThrow<number>('PORT'));
 }
